@@ -27,7 +27,7 @@
                 <section id="content">
                     <article>
                         <header>
-                            <h2>Header van artikel 7</h2>
+                            <h2>Header van artikel 2</h2>
                         </header>
                         <p>Test van Anke's pc,ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
                         et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
