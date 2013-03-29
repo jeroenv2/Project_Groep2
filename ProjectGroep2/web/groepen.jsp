@@ -23,11 +23,7 @@
     <body>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
-            <div align="center" style="margin-top: 10px;"> <!-- ::VERWIJDEREN NA STATISCH MAKEN:: -->
-                <a href="index.jsp"><img src="img/HomeWhite.png" alt="Home" height="30px" /></a> 
-                <a href="Festivals.jsp"><img src="img/FestivalsWhite.png" alt="Festivals" height="30px" /></a> 
-                <a href="Groepen.jsp"><img src="img/Groepen_Sel.png" alt="Groepen" height="30px" /></a> 
-            </div>
+            <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">

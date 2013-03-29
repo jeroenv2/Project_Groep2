@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <header id="header_wrapper">
-        <a href="index.jsp"><img src="img/Logo.png" alt="Logo" width="250px" style="padding-top: 10px; padding-left: 20px;"/></a>
+        <a href="index.jsp"><img src="img/logo.png" alt="Logo" width="250px" style="padding-top: 10px; padding-left: 20px;"/></a>
         <div align="right">
             <input type="text" placeholder="Zoeken" name="Zoeken" size="30px" />
             &nbsp;<img src="img/zoeken.png" alt="Zoeken" width="24px" style="float: right;" />
