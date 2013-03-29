@@ -99,6 +99,17 @@ textarea {
     color: #222;
 }
 
+/* ----------------------------
+            HTML/BODY 
+   ----------------------------*/
+
+/*
+ * De body van elke pagina (inclusief statische header & footer) worden de parents van de child elements op de pagina
+ * De eigenlijke grootte van de pagina's worden bepaald in de page_wrapper en content wrapper
+ * 
+ * -webkit-box-pack = verticale positie (main-axis)
+ * -webkit-box-align = horizontale positie (cross-axis)
+ */
 html,
 body {
     /*IE heeft width nodig en flexbox heeft afmetingen nodig om op te vullen*/
@@ -114,19 +125,22 @@ body {
     /*Firefox ondersteuning*/
     display: -moz-box;
     -moz-box-pack: center;
-    -moz-box-align: top;
+    -moz-box-align: start;
     /*Internet explorer ondersteuning*/
     display: -ms-flexbox;
     -ms-flex-pack: center;
-    -ms-flex-align: top;
+    -ms-flex-align: start;
     /*Nieuwste vorm (gebruikt wanneer ondersteund door browser)*/
     display: flexbox;
     -flexbox-pack: center;
-    -flexbox-align: top;
+    -flexbox-align: start;
     
     background-image: url("../img/achtergrond.png");
 }
 
+/* ----------------------------
+        EIGENLIJKE PAGINA 
+   ----------------------------*/
 #page_wrapper {
     /*Flexbox vult alles op, daarom geven we max-width mee*/
     max-width: 1000px;
@@ -139,11 +153,31 @@ body {
    
     background-color: rgba(255, 255, 255, 0.2);
 }
-
 #page_wrapper input[type="text"] {
     padding-left: 2px;
+    background-color: #dfeedd;
+    border-color: #d288ba;
+}
+#page_wrapper input[type="password"] {
+    padding-left: 2px;
+    background-color: #dfeedd;
+    border-color: #d288ba;
 }
 
+#page_wrapper input[type="submit"] {
+    background: #14742a;
+    padding:3px 1px;
+    color:#fff;
+    font-size:16px;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:1px solid #d288ba;
+}
+
+/* ----------------------------
+             HEADER 
+   ----------------------------*/
 #header_wrapper {
     padding: 20px;
     min-height: 100px;
@@ -152,6 +186,9 @@ body {
     float: left;
 }
 
+/* ----------------------------
+              LOGIN 
+   ----------------------------*/
 #login {
     float: right;
     text-align: right;
@@ -176,24 +213,33 @@ body {
     padding-left: 2px;
 }
 
+/* ----------------------------
+              MENU 
+   ----------------------------*/
 #nav_wrapper {
     text-align: center; /*Menu centreren*/
     margin-top: 10px;
 }
 
-#content_wrapper {
+/* ----------------------------
+             INHOUD 
+   ----------------------------*/
+#content_wrapper { /*Witte rand*/
     margin: 35px 20px 15px 20px;
     border:1px solid white; 
     padding-left: 25px;
     padding-right: 10px;
 }
 
-#content {
+#content { /*Eigenlijke tekst/artikels*/
     padding: 10px;
     color: white; 
     font-size: 16px;
 }
 
+/* ----------------------------
+             FOOTER 
+   ----------------------------*/
 #footer_wrapper {
     height:35px;
     color: #fff;
