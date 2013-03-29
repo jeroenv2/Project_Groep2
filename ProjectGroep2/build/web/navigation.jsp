@@ -14,7 +14,7 @@
     <body>
         <nav id="nav_wrapper">
             <a href="index.jsp"><img src="img/HomeWhite.png" alt="Home" height="30px" /></a> 
-            <a href="#"><img src="img/FestivalsWhite.png" alt="Festivals" height="30px" /></a> 
+            <a href="Festivals.jsp"><img src="img/FestivalsWhite.png" alt="Festivals" height="30px" /></a> 
             <a href="Groepen.jsp"><img src="img/GroepenWhite.png" alt="Groepen" height="30px" /></a> 		
         </nav>
     </body>

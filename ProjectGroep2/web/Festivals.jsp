@@ -15,7 +15,7 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Groepen</title>
+        <title>Festivals</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
@@ -25,8 +25,8 @@
             <jsp:include page="header.jsp" />
             <div align="center" style="margin-top: 10px;"> <!-- ::VERWIJDEREN NA STATISCH MAKEN:: -->
                 <a href="index.jsp"><img src="img/HomeWhite.png" alt="Home" height="30px" /></a> 
-                <a href="Festivals.jsp"><img src="img/FestivalsWhite.png" alt="Festivals" height="30px" /></a> 
-                <a href="Groepen.jsp"><img src="img/Groepen_Sel.png" alt="Groepen" height="30px" /></a> 
+                <a href="Festivals.jsp"><img src="img/Festivals_Sel.png" alt="Festivals" height="30px" /></a> 
+                <a href="Groepen.jsp"><img src="img/GroepenWhite.png" alt="Groepen" height="30px" /></a> 
             </div>
             <div id="content_wrapper">
                 <section id="content">
@@ -55,7 +55,7 @@
                         <table width="600px" style="border: 1px solid white;">
                             <tbody style="padding: 10px;">
                                 <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;"><b>De Floskes</b></td>
+                                    <td style="padding-left: 10px; padding-top: 10px;"><b>Pukkelpop</b></td>
                                     <td style="padding-left: 10px; padding-top: 10px;">Begindatum: 20-12-2012</td>
                                     <td></td>
                                 </tr>
@@ -76,7 +76,7 @@
                         <table width="600px" style="border: 1px solid white;">
                             <tbody style="padding: 10px;">
                                 <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;"><b>De Floskes</b></td>
+                                    <td style="padding-left: 10px; padding-top: 10px;"><b>Rock Werchter</b></td>
                                     <td style="padding-left: 10px; padding-top: 10px;">Begindatum: 20-12-2012</td>
                                     <td></td>
                                 </tr>
