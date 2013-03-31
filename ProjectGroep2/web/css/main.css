@@ -150,7 +150,6 @@ body {
     -moz-box-flex: 1;
     -ms-flex-flex: 1;
     -flexbox-flex: 1;
-   
     background-color: rgba(255, 255, 255, 0.2);
 }
 #page_wrapper input[type="text"] {
@@ -227,14 +226,14 @@ body {
 #content_wrapper { /*Witte rand*/
     margin: 35px 20px 15px 20px;
     border:1px solid white; 
-    padding-left: 25px;
-    padding-right: 10px;
 }
 
 #content { /*Eigenlijke tekst/artikels*/
     padding: 10px;
     color: white; 
     font-size: 16px;
+    margin-left: 25px;
+    margin-right: 10px;
 }
 
 /* ----------------------------
