@@ -63,7 +63,9 @@
                                 <tr>
                                     <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
                                     <td></td>
-                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;"><input type="button" name="Detail" value=" Detail " /></td>
+                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;">
+                                        <input type="button" name="Detail" value=" Detail " onclick="location.href='./festival_details.jsp';" />
+                                    </td>
                                 </tr>
                             </tbody>
                         </table><br />
@@ -84,7 +86,9 @@
                                 <tr>
                                     <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
                                     <td></td>
-                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;"><input type="button" name="Detail" value=" Detail " /></td>
+                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;">
+                                        <input type="button" name="Detail" value=" Detail " onclick="location.href='./festival_details.jsp';" />
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
