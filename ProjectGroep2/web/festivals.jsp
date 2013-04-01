@@ -4,6 +4,8 @@
     Author     : robbie
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,22 +31,31 @@
                     <div align="center">
                         <%
                             ArrayList<String> lijstLetters = new ArrayList<String>();
-                            
-                            //Genereren uit bestaande groepen (DB) (substring)
-                            lijstLetters.add("A");
-                            lijstLetters.add("B");
-                            lijstLetters.add("C");
-                            lijstLetters.add("D");
-                            lijstLetters.add("E");
-                            lijstLetters.add("F");
 
-                            for(int i=0; i<lijstLetters.size()-1; i++) //Ervoor zorgen dat het niet eindigt met '|'
-                            {
-                                out.println(lijstLetters.get(i) + " | ");
+                            Connectie_Databank connectie = new Connectie_Databank();
+
+                            connectie.maakConnectie();
+                            connectie.voerQueryUit("SELECT * FROM festivals", null); //null = geen parameter
+                            ResultSet res = connectie.haalResultSetOp();
+
+                            while (res.next()) {
+                                String letter = res.getString("fest_naam").substring(0, 1);
+
+                                if (!lijstLetters.contains(letter)) {
+                                    lijstLetters.add(letter);
+                                }
+
                             }
-                            out.println(lijstLetters.get(lijstLetters.size()-1));
+
+                            for (int i = 0; i < lijstLetters.size() - 1; i++) //Ervoor zorgen dat het niet eindigt met '|'
+                            {
+                                out.println("<a href='#'>" + lijstLetters.get(i) + "</a> | ");
+                            }
+                            out.println("<a href='#'>" + lijstLetters.get(lijstLetters.size() - 1) + "</a>");
+
+                            connectie.sluitConnectie();
                         %>
-                        
+
                     </div>
                     <div align="center" style="padding-top: 25px; padding-bottom: 10px;">
                         <!-- HTML5 table (doorlopen met foreach van gegevens uit DB (aantal records) -->
@@ -64,7 +75,7 @@
                                     <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
                                     <td></td>
                                     <td align="right" style="padding-right: 10px; padding-bottom: 10px;">
-                                        <input type="button" name="Detail" value=" Detail " onclick="location.href='./festival_details.jsp';" />
+                                        <input type="button" name="Detail" value=" Detail " onclick="location.href = './festival_details.jsp';" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -87,7 +98,7 @@
                                     <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
                                     <td></td>
                                     <td align="right" style="padding-right: 10px; padding-bottom: 10px;">
-                                        <input type="button" name="Detail" value=" Detail " onclick="location.href='./festival_details.jsp';" />
+                                        <input type="button" name="Detail" value=" Detail " onclick="location.href = './festival_details.jsp';" />
                                     </td>
                                 </tr>
                             </tbody>

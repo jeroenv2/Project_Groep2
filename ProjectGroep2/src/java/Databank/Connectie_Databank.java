@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 public class Connectie_Databank
@@ -12,18 +13,21 @@ public class Connectie_Databank
     private String connectieString = "";
     private Connection connectie = null;
     private PreparedStatement prepStatement = null;
+    private Statement TEMP_Statement = null;    //Tijdelijk om dingen uit te testen
     private ResultSet inhoudQuery = null;
     
     //Inloggegevens PhpMyAdmin
-    private String gebruikersnaam = "root", wachtwoord = ""; //Standaardinstellingen van XAMPP
+    private String gebruikersnaam, wachtwoord;
     
-    //Constructor voor enkel de connection string en query
-    public Connectie_Databank(String connectionString)
+    //Constructor met standaardinstellingen
+    public Connectie_Databank()
     {
-        this.connectieString = connectionString;
+        connectieString = "jdbc:mysql://localhost/groep2_festivals";
+        gebruikersnaam = "root";
+        wachtwoord = "";
     }
     
-    //Constructor om een andere gebruikersnaam en wachtwoord te gebruiken
+    //Constructor met nieuwe data
     public Connectie_Databank(String connectionString, String gebruikersnaam, String wachtwoord)
     {
         this.connectieString = connectionString;
@@ -47,16 +51,19 @@ public class Connectie_Databank
     {
         try
         {
+            TEMP_Statement = connectie.createStatement();
+            
             //Reden preparedStatement: geen SQL-Injectie!
-            prepStatement = connectie.prepareStatement(query);
+            //prepStatement = connectie.prepareStatement(query);
             
             //Lijst met parameters uitlezen om de preparedStatement op te vullen
-            for(int i=1; i<=parameters.size(); i++)
-            {
-                prepStatement.setString(i, parameters.get(i));
-            }
+            //for(int i=1; i<=parameters.size(); i++)
+           // {
+             //   prepStatement.setString(i, parameters.get(i));
+           // }
             
-            inhoudQuery = prepStatement.executeQuery();
+            inhoudQuery = TEMP_Statement.executeQuery(query);
+            //inhoudQuery = prepStatement.executeQuery();
         }
         catch(Exception e)
         {
@@ -64,11 +71,31 @@ public class Connectie_Databank
         }
     }
     
+    public ResultSet haalResultSetOp()
+    {
+        return inhoudQuery;
+    }
+    
     public void sluitConnectie()
     {
-        connectieString = "";
-        connectie = null;
-        prepStatement = null;
-        inhoudQuery = null;
+        //ConnectieString leegmaken en alle objecten die te maken hebben met de connectie sluiten
+        try
+        {
+            connectieString = "";
+            if(connectie != null)
+            {
+                connectie.close();
+            }
+            if(prepStatement != null)
+            {
+                prepStatement.close();
+            }
+            if(inhoudQuery != null)
+            {
+                inhoudQuery.close();
+            }
+        }
+        catch(Exception e)
+        {}
     }
 }
