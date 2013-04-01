@@ -35,7 +35,7 @@ hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid white;
     margin: 1em 0;
     padding: 0;
 }
@@ -154,24 +154,37 @@ body {
 }
 #page_wrapper input[type="text"] {
     padding-left: 2px;
-    background-color: #dfeedd;
-    border-color: #d288ba;
 }
+
 #page_wrapper input[type="password"] {
     padding-left: 2px;
-    background-color: #dfeedd;
-    border-color: #d288ba;
 }
 
 #page_wrapper input[type="submit"] {
     background: #14742a;
-    padding:3px 1px;
-    color:#fff;
-    font-size:16px;
-    border-radius:5px;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border:1px solid #d288ba;
+    padding: 2px 1px;
+    color: #fff;
+    border-color: #14742a;
+}
+
+a:link
+{
+    color: palegreen;
+}
+
+a:visited
+{
+    color: mediumseagreen;
+}
+
+a:hover
+{
+    color: limegreen;
+}
+
+a:active
+{
+    color: #14742a;
 }
 
 /* ----------------------------
@@ -203,13 +216,19 @@ body {
 }
 #login input[type="text"] {
     font-style: italic;
+    font-size: 15px;
     margin-bottom: 2px;
     width: 200px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 #login input[type="password"] {
     font-style: italic;
+    font-size: 15px;
     width: 200px;
     padding-left: 2px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 /* ----------------------------
