@@ -1,8 +1,8 @@
 package Databank;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class Connectie_Databank
     //Eigenschappen databank
     private String connectieString = "";
     private Connection connectie = null;
-    private Statement statement = null;
+    private PreparedStatement prepStatement = null;
     private ResultSet inhoudQuery = null;
     
     //Inloggegevens PhpMyAdmin
@@ -36,7 +36,6 @@ public class Connectie_Databank
         try
         {
             connectie = DriverManager.getConnection(connectieString, gebruikersnaam, wachtwoord);
-            statement = connectie.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         }
         catch(Exception e)
         {
@@ -49,11 +48,27 @@ public class Connectie_Databank
         try
         {
             //Reden preparedStatement: geen SQL-Injectie!
+            prepStatement = connectie.prepareStatement(query);
             
+            //Lijst met parameters uitlezen om de preparedStatement op te vullen
+            for(int i=1; i<=parameters.size(); i++)
+            {
+                prepStatement.setString(i, parameters.get(i));
+            }
+            
+            inhoudQuery = prepStatement.executeQuery();
         }
         catch(Exception e)
         {
             System.err.println(e.getMessage()); //Later verwijderen en gepaste meldingen en wijze van boodschap tonen
         }
+    }
+    
+    public void sluitConnectie()
+    {
+        connectieString = "";
+        connectie = null;
+        prepStatement = null;
+        inhoudQuery = null;
     }
 }
