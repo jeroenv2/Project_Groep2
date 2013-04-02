@@ -46,16 +46,7 @@
                 <section id="content">
                     <div align="center">
                         <%
-                            <div class="layer1">
-<p class="heading">Header-1 </p>
-<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-<p class="heading">Header-2</p>
-<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-<p class="heading">Header-3</p>
-<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-</div>
-                            
-                            
+                            <div class="layer1">                            
                             out.println("<form action='festivals_filter.jsp' method='GET'>");
                             out.println("<table width='625px' style='border: 1px solid white;'>");
                             out.println("<tbody>");
