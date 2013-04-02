@@ -42,7 +42,16 @@
                             connectie.maakConnectie();
                             connectie.voerQueryUit("SELECT * FROM festivals", null); //null = geen parameter
                             ResultSet res = connectie.haalResultSetOp();
-
+                            
+                            out.println("<form action='festival_filter' method='GET'>");
+                            out.println("<table width='625px' style='border: 1px solid white;'>");
+                            out.println("<tbody style='padding: 10px;'>");
+                            out.println("<tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Filteren</b></td>");
+                            out.println("</tr>");
+                            out.println("<tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 5px;'>Naam begint met:<br />");
+                            
                             while (res.next()) {
                                 String letter = res.getString("fest_naam").substring(0, 1);
 
@@ -50,15 +59,51 @@
                                     lijstLetters.add(letter);
                                 }
                             }
-
+                            
                             //De ArrayList alfabetisch ordenen
                             java.util.Collections.sort(lijstLetters);
-
-                            for (int i = 0; i < lijstLetters.size() - 1; i++) //Ervoor zorgen dat het niet eindigt met '|'
+                            
+                            for(String letter : lijstLetters)
                             {
-                                out.println("<a href='#'>" + lijstLetters.get(i) + "</a> | ");
+                                out.println("&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='" + letter + "' /> " + letter + "");
                             }
-                            out.println("<a href='#'>" + lijstLetters.get(lijstLetters.size() - 1) + "</a>");
+                            out.println("</td>");
+                            
+                            out.println("</tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 5px;'>Locatie:<br />");
+                            
+                            res.first();
+                            res.previous();
+                            while(res.next()) //Alle mogelijke locaties ophalen en in een selectiebox steken
+                            {
+                                out.println("&nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='" + res.getString("fest_locatie") + "' /> " + res.getString("fest_locatie"));
+                            }
+                            out.println("</select></td>");
+                            out.println("</tr><tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 5px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
+                            out.println("en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /></td>");
+                            out.println("</tr><tr>");
+                            out.println("<td style='padding-left: 5px; padding-bottom: 5px; padding-top: 5px;'><input type='submit' name='ZoekFilter' value=' Zoeken ' /></td></tr>");
+                            out.println("</tbody></table>");
+                            out.println("</form>");;
+        
+//                            while (res.next()) {
+//                                String letter = res.getString("fest_naam").substring(0, 1);
+//
+//                                if (!lijstLetters.contains(letter)) {
+//                                    lijstLetters.add(letter);
+//                                }
+//                            }
+//
+//                            //De ArrayList alfabetisch ordenen
+//                            java.util.Collections.sort(lijstLetters);
+//
+//                            for (int i = 0; i < lijstLetters.size() - 1; i++) //Ervoor zorgen dat het niet eindigt met '|'
+//                            {
+//                                out.println("<a href='#'>" + lijstLetters.get(i) + "</a> | ");
+//                            }
+//                            out.println("<a href='#'>" + lijstLetters.get(lijstLetters.size() - 1) + "</a>");
+//                            out.println("<br /><a href='festivals.jsp'>Toon Alles</a>");
 
                             //Elke regel apart voor betere leesbaarheid
                             out.println("</div>");
@@ -79,17 +124,17 @@
 
                                 //** Duur (dagen) optellen met de begindatum **
                                 DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
-                                
+
                                 Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //Datum uit DB (String) omzetten naar Date
-                                
+
                                 //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
                                 Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
                                 cal.setTime(begindatum);                //De begindatum in cal steken
                                 cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
-                                
-                                Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum
+
+                                Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                 String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                
+
                                 out.println("<td style='padding-left: 10px; padding-top: 10px;'>Einddatum: " + strEinddatum + "</td>");
                                 out.println("<td></td>");
                                 out.println("</tr>");
@@ -109,7 +154,7 @@
                             }
 
                             connectie.sluitConnectie(); //Connectie met de databank sluiten
-%>
+                        %>
                     </div>
                 </section>
             </div>
