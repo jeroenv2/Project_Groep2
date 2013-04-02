@@ -77,17 +77,20 @@
                                 out.println("<tr>");
                                 out.println("<td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: " + res.getString("fest_locatie") + "</td>");
 
-                                //Duur (dagen) optellen met de begindatum
-                                DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");
-                                Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //new SimpleDateFormat("EEE, yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("fest_datum"));
-                                String einddatum = formaatDatum.format(begindatum);
+                                //** Duur (dagen) optellen met de begindatum **
+                                DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
                                 
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(begindatum);
-                                cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));
+                                Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //Datum uit DB (String) omzetten naar Date
                                 
+                                //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
+                                Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
+                                cal.setTime(begindatum);                //De begindatum in cal steken
+                                cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
                                 
-                                out.println("<td style='padding-left: 10px; padding-top: 10px;'>Einddatum: " + cal + "</td>");
+                                Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum
+                                String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+                                
+                                out.println("<td style='padding-left: 10px; padding-top: 10px;'>Einddatum: " + strEinddatum + "</td>");
                                 out.println("<td></td>");
                                 out.println("</tr>");
                                 out.println("<tr>");
