@@ -167,6 +167,13 @@ body {
     border-color: #14742a;
 }
 
+#page_wrapper input[type="reset"] {
+    background: #14742a;
+    padding: 2px 1px;
+    color: #fff;
+    border-color: #14742a;
+}
+
 a:link
 {
     color: palegreen;
@@ -187,6 +194,18 @@ a:active
     color: #14742a;
 }
 
+.layer1 /* LATEN STAAN! */
+{
+    margin: 0;
+    padding: 0;
+    width: 625px;
+}
+
+.content /* LATEN STAAN! */
+{
+    padding: 5px 10px;
+    background-color:#fafafa;
+}
 /* ----------------------------
              HEADER 
    ----------------------------*/

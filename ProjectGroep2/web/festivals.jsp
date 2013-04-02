@@ -26,6 +26,17 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script type="text/javascript">
+        jQuery(document).ready(function() {
+          jQuery(".content").hide();
+          //toggle the componenet with class msg_body
+          jQuery(".heading").click(function()
+          {
+            jQuery(this).next(".content").slideToggle(500);
+          });
+        });
+        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -35,22 +46,35 @@
                 <section id="content">
                     <div align="center">
                         <%
+                            <div class="layer1">
+<p class="heading">Header-1 </p>
+<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+<p class="heading">Header-2</p>
+<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+<p class="heading">Header-3</p>
+<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit orem ipsum dolor sit amet, consectetuer adipiscing elit</div>
+</div>
+                            
+                            
+                            out.println("<form action='festivals_filter.jsp' method='GET'>");
+                            out.println("<table width='625px' style='border: 1px solid white;'>");
+                            out.println("<tbody>");
+                            out.println("<tr>");
+                            out.println("<div class='layer1'>");
+                            out.println("<td class='heading' style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
+                            out.println("</tr>");
+                            out.println("<div class='content'");
+                            out.println("<tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Naam begint met:</u><br />");
+
                             ArrayList<String> lijstLetters = new ArrayList<String>();
+                            ArrayList<String> lijstLocaties = new ArrayList<String>();
 
                             Connectie_Databank connectie = new Connectie_Databank();
 
                             connectie.maakConnectie();
                             connectie.voerQueryUit("SELECT * FROM festivals", null); //null = geen parameter
                             ResultSet res = connectie.haalResultSetOp();
-                            
-                            out.println("<form action='festival_filter' method='GET'>");
-                            out.println("<table width='625px' style='border: 1px solid white;'>");
-                            out.println("<tbody style='padding: 10px;'>");
-                            out.println("<tr>");
-                            out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Filteren</b></td>");
-                            out.println("</tr>");
-                            out.println("<tr>");
-                            out.println("<td style='padding-left: 5px; padding-top: 5px;'>Naam begint met:<br />");
                             
                             while (res.next()) {
                                 String letter = res.getString("fest_naam").substring(0, 1);
@@ -59,34 +83,44 @@
                                     lijstLetters.add(letter);
                                 }
                             }
-                            
+
                             //De ArrayList alfabetisch ordenen
                             java.util.Collections.sort(lijstLetters);
-                            
-                            for(String letter : lijstLetters)
-                            {
-                                out.println("&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='" + letter + "' /> " + letter + "");
+                            for (String letter : lijstLetters) {
+                                out.println("&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='" + letter + "' /> " + letter + "<br />");
                             }
                             out.println("</td>");
-                            
                             out.println("</tr>");
-                            out.println("<td style='padding-left: 5px; padding-top: 5px;'>Locatie:<br />");
+                            out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Locatie:</u><br />");
+
                             
+                            //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
                             res.first();
                             res.previous();
-                            while(res.next()) //Alle mogelijke locaties ophalen en in een selectiebox steken
-                            {
-                                out.println("&nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='" + res.getString("fest_locatie") + "' /> " + res.getString("fest_locatie"));
+                            while (res.next()) {
+                                String locatie = res.getString("fest_locatie");
+
+                                if (!lijstLocaties.contains(locatie)) {
+                                    lijstLocaties.add(locatie);
+                                }
                             }
-                            out.println("</select></td>");
+                            
+                            //De ArrayList alfabetisch ordenen
+                            java.util.Collections.sort(lijstLocaties);
+                            for (String locatie : lijstLocaties)
+                            {
+                                out.println("&nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='" + locatie + "' /> " + locatie + "<br />");
+                            }
+                            out.println("</td>");
                             out.println("</tr><tr>");
-                            out.println("<td style='padding-left: 5px; padding-top: 5px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
+                            out.println("<td style='padding-left: 5px; padding-top: 15px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
                             out.println("en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /></td>");
                             out.println("</tr><tr>");
-                            out.println("<td style='padding-left: 5px; padding-bottom: 5px; padding-top: 5px;'><input type='submit' name='ZoekFilter' value=' Zoeken ' /></td></tr>");
-                            out.println("</tbody></table>");
+                            out.println("<td style='padding-left: 5px; padding-bottom: 5px; padding-top: 10px;'>");
+                            out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td></tr>");
+                            out.println("</tbody></div></div></table>");
                             out.println("</form>");;
-        
+
 //                            while (res.next()) {
 //                                String letter = res.getString("fest_naam").substring(0, 1);
 //
@@ -105,8 +139,6 @@
 //                            out.println("<a href='#'>" + lijstLetters.get(lijstLetters.size() - 1) + "</a>");
 //                            out.println("<br /><a href='festivals.jsp'>Toon Alles</a>");
 
-                            //Elke regel apart voor betere leesbaarheid
-                            out.println("</div>");
                             out.println("<div align='center' style='padding-top: 25px; padding-bottom: 10px;'>");
 
                             res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -154,7 +186,7 @@
                             }
 
                             connectie.sluitConnectie(); //Connectie met de databank sluiten
-                        %>
+%>
                     </div>
                 </section>
             </div>
