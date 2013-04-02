@@ -17,7 +17,7 @@
         <footer id="footer_wrapper">
             Deze webapplicatie is gemaakt door Groep 2 voor het vak Geïntegreerd Softwareproject.
             <br />
-            Leden van groep 2: Anke Appeltans, Wouter Peeters, Jeroen Vanlessen, Robbie Vercammen en Steven Verheyen.
+            De leden van Groep 2 zijn Anke Appeltans, Wouter Peeters, Jeroen Vanlessen, Robbie Vercammen en Steven Verheyen.
         </footer>
     </body>
 </html>
