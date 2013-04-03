@@ -26,17 +26,6 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-        <script type="text/javascript">
-        jQuery(document).ready(function() {
-          jQuery(".content").hide();
-          //toggle the componenet with class msg_body
-          jQuery(".heading").click(function()
-          {
-            jQuery(this).next(".content").slideToggle(500);
-          });
-        });
-        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -45,16 +34,13 @@
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
-                        <%
-                            out.println("<div class='layer1'>");                            
+                        <%                        
                             out.println("<form action='festivals_filter.jsp' method='GET'>");
                             out.println("<table width='625px' style='border: 1px solid white;'>");
                             out.println("<tbody>");
                             out.println("<tr>");
-                            out.println("<div class='layer1'>");
-                            out.println("<td class='heading' style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
+                            out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
                             out.println("</tr>");
-                            out.println("<div class='content'");
                             out.println("<tr>");
                             out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Naam begint met:</u><br />");
 
@@ -109,8 +95,8 @@
                             out.println("</tr><tr>");
                             out.println("<td style='padding-left: 5px; padding-bottom: 5px; padding-top: 10px;'>");
                             out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td></tr>");
-                            out.println("</tbody></div></div></table>");
-                            out.println("</form>");;
+                            out.println("</tbody></table>");
+                            out.println("</form>");
 
 //                            while (res.next()) {
 //                                String letter = res.getString("fest_naam").substring(0, 1);
