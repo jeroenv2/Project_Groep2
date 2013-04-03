@@ -46,7 +46,7 @@
                 <section id="content">
                     <div align="center">
                         <%
-                            <div class="layer1">                            
+                            out.println("<div class='layer1'>");                            
                             out.println("<form action='festivals_filter.jsp' method='GET'>");
                             out.println("<table width='625px' style='border: 1px solid white;'>");
                             out.println("<tbody>");

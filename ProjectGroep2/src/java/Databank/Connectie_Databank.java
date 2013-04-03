@@ -58,9 +58,9 @@ public class Connectie_Databank
             
             //Lijst met parameters uitlezen om de preparedStatement op te vullen
             //for(int i=1; i<=parameters.size(); i++)
-           // {
-             //   prepStatement.setString(i, parameters.get(i));
-           // }
+            //{
+            //   prepStatement.setString(i, parameters.get(i));
+            //}
             
             inhoudQuery = TEMP_Statement.executeQuery(query);
             //inhoudQuery = prepStatement.executeQuery();
