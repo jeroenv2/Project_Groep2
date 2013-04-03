@@ -11,13 +11,23 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
-	<!--<![endif]-->
+    <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Details van de Netsky</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <style>
+            #table
+            {
+                border-collapse:separate;
+                border-spacing:  50px 20px ;
+            }
+            
+
+        </style>
+
     </head>
     <body>
         <div id="page_wrapper">
@@ -25,30 +35,52 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <article>
-                        <header>
-                            <h2>Header van artikel 5</h2>
-                        </header>
-                        <p>Test van Anke's pc,ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
-                        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                        <footer>
-                            <h3>Footer van artike1 1</h3>
-                        </footer>
-                    </article>
-                    <article>
-                        <header>
-                            <h2>Header van artikel 2</h2>
-                        </header>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-                            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
-                            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
-                        <footer>
-                            <h3>Footer van artike1 2</h3>
-                        </footer>
-                    </article>
+                    <div align="center" style="font-family: sans-serif;  color: #fff; font-size:20px; font-weight:bold; " >
+                        Netsky
+                    </div>
+
+                    <table  id="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="img/test_afbeelding_groepen.jpg" width="300px"  />
+                                </td>
+                                <td>
+                                    <div align="center"> 
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td >Naam: </td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Netsky</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Land herkomst:</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; België</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Genre:</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Drum and base</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><a href="http://netskymusic.com/">Site groep </a></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <ul style="list-style-type: none; border:1px solid black; float:right; padding:10px; margin-top: 10px;  ">
+                                        <li>festivals:</li>
+                                        <li >&nbsp;&nbsp;&nbsp;<a href="http://www.rockwerchter.be/nl">Rock Werchter </a></li>
+                                        <li>&nbsp;&nbsp;&nbsp;<a href="http://www.pukkelpop.be/nl/">Pukkelpop</a></li>
+                                        <li>&nbsp;&nbsp;&nbsp;<a href="http://www.werchterboutique.be/fr">Werchter Boutique</a></li>
+                                        <li>&nbsp;&nbsp;&nbsp;<a href="http://www.pinkpop.nl/2013/">Pinkpop</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
