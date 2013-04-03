@@ -4,6 +4,13 @@
     Author     : robbie
 --%>
 
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,73 +34,136 @@
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
-                        <%
+                        <%                        
+                            out.println("<form action='festivals_filter.jsp' method='GET'>");
+                            out.println("<table width='625px' style='border: 1px solid white;'>");
+                            out.println("<tbody>");
+                            out.println("<tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
+                            out.println("</tr>");
+                            out.println("<tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Naam begint met:</u><br />");
+
                             ArrayList<String> lijstLetters = new ArrayList<String>();
+                            ArrayList<String> lijstLocaties = new ArrayList<String>();
+
+                            Connectie_Databank connectie = new Connectie_Databank();
+
+                            connectie.maakConnectie();
+                            connectie.voerQueryUit("SELECT * FROM festivals", null); //null = geen parameter
+                            ResultSet res = connectie.haalResultSetOp();
                             
-                            //Genereren uit bestaande groepen (DB) (substring)
-                            lijstLetters.add("A");
-                            lijstLetters.add("B");
-                            lijstLetters.add("C");
-                            lijstLetters.add("D");
-                            lijstLetters.add("E");
-                            lijstLetters.add("F");
+                            while (res.next()) {
+                                String letter = res.getString("fest_naam").substring(0, 1);
 
-                            for(int i=0; i<lijstLetters.size()-1; i++) //Ervoor zorgen dat het niet eindigt met '|'
-                            {
-                                out.println(lijstLetters.get(i) + " | ");
+                                if (!lijstLetters.contains(letter)) {
+                                    lijstLetters.add(letter);
+                                }
                             }
-                            out.println(lijstLetters.get(lijstLetters.size()-1));
-                        %>
-                        
-                    </div>
-                    <div align="center" style="padding-top: 25px; padding-bottom: 10px;">
-                        <!-- HTML5 table (doorlopen met foreach van gegevens uit DB (aantal records) -->
-                        <table width="600px" style="border: 1px solid white;">
-                            <tbody style="padding: 10px;">
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;"><b>Pukkelpop</b></td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Begindatum: 20-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px">Locatie: hier en daar</td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Einddatum: 21-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
-                                    <td></td>
-                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;">
-                                        <input type="button" name="Detail" value=" Detail " onclick="location.href='./festival_details.jsp';" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table><br />
 
-                        <!-- ::VERWIJDEREN NA UITLEZEN DB:: -->
-                        <table width="600px" style="border: 1px solid white;">
-                            <tbody style="padding: 10px;">
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;"><b>Rock Werchter</b></td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Begindatum: 20-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px">Locatie: hier en daar</td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Einddatum: 21-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
-                                    <td></td>
-                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;">
-                                        <input type="button" name="Detail" value=" Detail " onclick="location.href='./festival_details.jsp';" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- ::EINDE VERWIJDERING:: -->
+                            //De ArrayList alfabetisch ordenen
+                            java.util.Collections.sort(lijstLetters);
+                            for (String letter : lijstLetters) {
+                                out.println("&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='" + letter + "' /> " + letter + "<br />");
+                            }
+                            out.println("</td>");
+                            out.println("</tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Locatie:</u><br />");
 
+                            
+                            //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
+                            res.first();
+                            res.previous();
+                            while (res.next()) {
+                                String locatie = res.getString("fest_locatie");
+
+                                if (!lijstLocaties.contains(locatie)) {
+                                    lijstLocaties.add(locatie);
+                                }
+                            }
+                            
+                            //De ArrayList alfabetisch ordenen
+                            java.util.Collections.sort(lijstLocaties);
+                            for (String locatie : lijstLocaties)
+                            {
+                                out.println("&nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='" + locatie + "' /> " + locatie + "<br />");
+                            }
+                            out.println("</td>");
+                            out.println("</tr><tr>");
+                            out.println("<td style='padding-left: 5px; padding-top: 15px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
+                            out.println("en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /></td>");
+                            out.println("</tr><tr>");
+                            out.println("<td style='padding-left: 5px; padding-bottom: 5px; padding-top: 10px;'>");
+                            out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td></tr>");
+                            out.println("</tbody></table>");
+                            out.println("</form>");
+
+//                            while (res.next()) {
+//                                String letter = res.getString("fest_naam").substring(0, 1);
+//
+//                                if (!lijstLetters.contains(letter)) {
+//                                    lijstLetters.add(letter);
+//                                }
+//                            }
+//
+//                            //De ArrayList alfabetisch ordenen
+//                            java.util.Collections.sort(lijstLetters);
+//
+//                            for (int i = 0; i < lijstLetters.size() - 1; i++) //Ervoor zorgen dat het niet eindigt met '|'
+//                            {
+//                                out.println("<a href='#'>" + lijstLetters.get(i) + "</a> | ");
+//                            }
+//                            out.println("<a href='#'>" + lijstLetters.get(lijstLetters.size() - 1) + "</a>");
+//                            out.println("<br /><a href='festivals.jsp'>Toon Alles</a>");
+
+                            out.println("<div align='center' style='padding-top: 25px; padding-bottom: 10px;'>");
+
+                            res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                            res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                            while (res.next()) {
+                                out.println("<table width='600px' style='border: 1px solid white;'>");
+                                out.println("<tbody style='padding: 10px;'>");
+                                out.println("<tr>");
+                                out.println("<td width='300px' style='padding-left: 10px; padding-top: 10px;'><b>" + res.getString("fest_naam") + "</b></td>");
+                                out.println("<td style='padding-left: 10px; padding-top: 10px;'>Begindatum: " + res.getString("fest_datum") + "</td>");
+                                out.println("<td></td>");
+                                out.println("</tr>");
+                                out.println("<tr>");
+                                out.println("<td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: " + res.getString("fest_locatie") + "</td>");
+
+                                //** Duur (dagen) optellen met de begindatum **
+                                DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+
+                                Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //Datum uit DB (String) omzetten naar Date
+
+                                //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
+                                Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
+                                cal.setTime(begindatum);                //De begindatum in cal steken
+                                cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+
+                                Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
+                                String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+
+                                out.println("<td style='padding-left: 10px; padding-top: 10px;'>Einddatum: " + strEinddatum + "</td>");
+                                out.println("<td></td>");
+                                out.println("</tr>");
+                                out.println("<tr>");
+                                if (res.getString("fest_url") != null) {
+                                    out.println("<td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://" + res.getString("fest_url") + "' target='_blank'>Site</a></td>");
+                                } else {
+                                    out.println("<td></td>");
+                                }
+                                out.println("<td></td>");
+                                out.println("<td align='right' style='padding-right: 10px; padding-bottom: 10px;'>");
+                                out.println("<input type='button' name='Detail' value=' Detail ' onclick='location.href = './festival_details.jsp';' />");
+                                out.println("</td>");
+                                out.println("</tr>");
+                                out.println("</tbody>");
+                                out.println("</table><br />");
+                            }
+
+                            connectie.sluitConnectie(); //Connectie met de databank sluiten
+%>
                     </div>
                 </section>
             </div>
