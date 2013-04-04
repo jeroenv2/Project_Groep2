@@ -46,7 +46,7 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM festivals WHERE fest_locatie = 'lol'", lijstParams);
+                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();                           
 
                                 res.last();
@@ -62,10 +62,10 @@
                                     out.println("<table width='625px' style='border: 1px solid white;'>");
                                     out.println("<tbody>");
                                     out.println("<tr>");
-                                    out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
+                                    out.println("<td colspan=2 style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
                                     out.println("</tr>");
                                     out.println("<tr>");
-                                    out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Naam begint met:</u><br />");
+                                    out.println("<td width=250px style='padding-left: 10px;'><u>Naam begint met:</u><br />");
 
                                     while (res.next()) {
                                         String letter = res.getString("fest_naam").substring(0, 1);
@@ -81,8 +81,8 @@
                                         out.println("&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='" + letter + "' /> " + letter + "<br />");
                                     }
                                     out.println("</td>");
-                                    out.println("</tr>");
-                                    out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Locatie:</u><br />");
+                                    //out.println("</tr>");
+                                    out.println("<td style='padding-left: 5px; padding-top: 15px;'><u>Locatie:</u><br />");
 
 
                                     //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
@@ -104,15 +104,18 @@
                                     }
                                     out.println("</td>");
                                     out.println("</tr><tr>");
-                                    out.println("<td style='padding-left: 5px; padding-top: 15px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
+                                    out.println("<td colspan=2 style='padding-left: 10px; padding-top: 15px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
                                     out.println("en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /></td>");
                                     out.println("</tr><tr>");
-                                    out.println("<td style='padding-left: 5px; padding-bottom: 5px; padding-top: 10px;'>");
-                                    out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td></tr>");
+                                    out.println("<td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>");
+                                    out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>");
+                                    out.println("<td></td></tr>");
                                     out.println("</tbody></table>");
                                     out.println("</form>");
                                     out.println("<div align='center' style='padding-top: 25px; padding-bottom: 10px;'>");
 
+                                    
+                                    //Informatie festivals
                                     res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                     res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                     while (res.next()) {
