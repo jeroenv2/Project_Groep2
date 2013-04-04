@@ -63,7 +63,8 @@
                        Connectie_Databank connectie = new Connectie_Databank();
                         connectie.maakConnectie();
                         List<String> lijstParams = new ArrayList<String>();
-                       connectie.voerQueryUit("SELECT * FROM bands", lijstParams);
+                        lijstParams.add("Nirvana");
+                       connectie.voerQueryUit("SELECT * FROM bands WHERE band_naam = ?", lijstParams);
                         ResultSet res = connectie.haalResultSetOp();
 
                       while(res.next()){
