@@ -1,10 +1,15 @@
 <%-- 
     Document   : layout
     Created on : 28-mrt-2013, 9:04:18
-    Author     : robbie
+    Author     : anke
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Databank.Connectie_Databank" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.ResultSetMetaData"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -14,6 +19,8 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       
+        
         <title>Details van de Netsky</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
@@ -25,6 +32,18 @@
                 border-spacing:  50px 20px ;
             }
             
+            #opmaak{
+              font-family: sans-serif;
+              color: #fff; 
+              font-size:20px;
+              font-weight:bold; 
+            }
+            #lijst{
+                list-style-type: none;
+                border:1px solid black;
+                float:right; padding:10px;
+                margin-top: 10px;  
+            }
 
         </style>
 
@@ -35,17 +54,34 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center" style="font-family: sans-serif;  color: #fff; font-size:20px; font-weight:bold; " >
-                        Netsky
+                   
+                    <div id="opmaak" align="center"  >
+                        Nirvana
                     </div>
+                    <% 
+                        
+                       Connectie_Databank connectie = new Connectie_Databank();
+                        connectie.maakConnectie();
+                        List<String> lijstParams = new ArrayList<String>();
+                       connectie.voerQueryUit("SELECT * FROM bands", lijstParams);
+                        ResultSet res = connectie.haalResultSetOp();
 
+                      while(res.next()){
+                      String g= res.getString("band_soortMuziek");
+                      out.println(g);
+                       }
+                      
+                       
+                    
+                    %>
                     <table  id="table">
                         <tbody>
                             <tr>
                                 <td>
-                                    <img src="img/test_afbeelding_groepen.jpg" width="300px"  />
+                                    <img src="img/test_afb_groepen_Nirvana.jpg" width="300px"  />
                                 </td>
                                 <td>
+                                    
                                     <div align="center"> 
                                         <table>
                                             <tbody>
@@ -55,7 +91,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Land herkomst:</td>
-                                                    <td>&nbsp;&nbsp;&nbsp; België</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Amerika</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Genre:</td>
@@ -70,7 +106,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <ul style="list-style-type: none; border:1px solid black; float:right; padding:10px; margin-top: 10px;  ">
+                                    <ul id="lijst">
                                         <li>festivals:</li>
                                         <li >&nbsp;&nbsp;&nbsp;<a href="http://www.rockwerchter.be/nl">Rock Werchter </a></li>
                                         <li>&nbsp;&nbsp;&nbsp;<a href="http://www.pukkelpop.be/nl/">Pukkelpop</a></li>
