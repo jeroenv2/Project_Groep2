@@ -44,11 +44,9 @@
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
-                                String query = "SELECT * FROM festivals WHERE fest_locatie = ?";
-                                List<String> lijstParameters = new ArrayList<String>();
-                                lijstParameters.add("Werchter - Belgie");
+                                List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit(query, lijstParameters);
+                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();
                                 
                                 out.println("<form action='festivals_filter.jsp' method='GET'>");

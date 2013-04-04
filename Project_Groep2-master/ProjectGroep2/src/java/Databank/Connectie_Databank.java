@@ -13,7 +13,7 @@ public class Connectie_Databank
     private String connectieString = "";
     private Connection connectie = null;
     private PreparedStatement prepStatement = null;
-    private Statement TEMP_Statement = null;    //Tijdelijk om dingen uit te testen
+    private Statement statement = null;
     private ResultSet inhoudQuery = null;
     
     //Inloggegevens PhpMyAdmin
@@ -51,15 +51,23 @@ public class Connectie_Databank
     {
         try
         {
-            //Reden preparedStatement: geen SQL-Injectie!
-            prepStatement = connectie.prepareStatement(query);
-
-            //Lijst met parameters uitlezen om de preparedStatement op te vullen
-            for(int i=1; i<=parameters.size(); i++)
+            if(parameters != null)
             {
-               prepStatement.setString(i, parameters.get(i-1));
+                //Reden preparedStatement: geen SQL-Injectie!
+                prepStatement = connectie.prepareStatement(query);
+
+                //Lijst met parameters uitlezen om de preparedStatement op te vullen
+                for(int i=1; i<=parameters.size(); i++)
+                {
+                   prepStatement.setString(i, parameters.get(i-1));
+                }
+                inhoudQuery = prepStatement.executeQuery();
             }
-            inhoudQuery = prepStatement.executeQuery();
+            else
+            {
+                statement = connectie.createStatement();
+                inhoudQuery = statement.executeQuery(query);
+            }
         }
         catch(Exception e)
         {
