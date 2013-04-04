@@ -1,7 +1,7 @@
 <%-- 
     Document   : layout
     Created on : 28-mrt-2013, 9:04:18
-    Author     : robbie
+    Author     : Steven
 --%>
 
 <%@page import="java.util.List"%>
@@ -46,17 +46,8 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();
-                                
-                                out.println("<form action='festivals_filter.jsp' method='GET'>");
-                                out.println("<table width='625px' style='border: 1px solid white;'>");
-                                out.println("<tbody>");
-                                out.println("<tr>");
-                                out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
-                                out.println("</tr>");
-                                out.println("<tr>");
-                                out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Naam begint met:</u><br />");
+                                connectie.voerQueryUit("SELECT * FROM festivals WHERE fest_locatie = 'lol'", lijstParams);
+                                ResultSet res = connectie.haalResultSetOp();                           
 
                                 res.last();
                                 int lengteResultSet = res.getRow();
@@ -66,6 +57,16 @@
 
                                 if(lengteResultSet > 0)
                                 {
+                                    
+                                    out.println("<form action='festivals_filter.jsp' method='GET'>");
+                                    out.println("<table width='625px' style='border: 1px solid white;'>");
+                                    out.println("<tbody>");
+                                    out.println("<tr>");
+                                    out.println("<td style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
+                                    out.println("</tr>");
+                                    out.println("<tr>");
+                                    out.println("<td style='padding-left: 5px; padding-top: 10px;'><u>Naam begint met:</u><br />");
+
                                     while (res.next()) {
                                         String letter = res.getString("fest_naam").substring(0, 1);
 
@@ -110,25 +111,6 @@
                                     out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td></tr>");
                                     out.println("</tbody></table>");
                                     out.println("</form>");
-
-        //                            while (res.next()) {
-        //                                String letter = res.getString("fest_naam").substring(0, 1);
-        //
-        //                                if (!lijstLetters.contains(letter)) {
-        //                                    lijstLetters.add(letter);
-        //                                }
-        //                            }
-        //
-        //                            //De ArrayList alfabetisch ordenen
-        //                            java.util.Collections.sort(lijstLetters);
-        //
-        //                            for (int i = 0; i < lijstLetters.size() - 1; i++) //Ervoor zorgen dat het niet eindigt met '|'
-        //                            {
-        //                                out.println("<a href='#'>" + lijstLetters.get(i) + "</a> | ");
-        //                            }
-        //                            out.println("<a href='#'>" + lijstLetters.get(lijstLetters.size() - 1) + "</a>");
-        //                            out.println("<br /><a href='festivals.jsp'>Toon Alles</a>");
-
                                     out.println("<div align='center' style='padding-top: 25px; padding-bottom: 10px;'>");
 
                                     res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -177,7 +159,7 @@
                                 }
                                 else
                                 {
-                                    out.println("Geen records gevonden...");
+                                    out.println("<h3>Helaas! Er zijn geen records gevonden...</h3>");
                                 }
                                 connectie.sluitConnectie(); //Connectie met de databank sluiten
                             }
