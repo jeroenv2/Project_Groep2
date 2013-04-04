@@ -51,7 +51,7 @@ public class Connectie_Databank
     {
         try
         {
-            if(parameters != null)
+            if(parameters.size() > 0)
             {
                 //Reden preparedStatement: geen SQL-Injectie!
                 prepStatement = connectie.prepareStatement(query);
