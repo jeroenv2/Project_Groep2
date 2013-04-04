@@ -31,6 +31,10 @@
                     <a href="index.jsp"><img src="img/home.png" alt="Home" height="33px" /></a> 
                     <a href="festivals.jsp"><img src="img/festivals.png" alt="Festivals" height="33px" /></a>
                     <a href="groepen.jsp"><img src="img/groepen_selected.png" alt="Groepen" height="33px" /></a>
+                <%} else if (pageName.equals("festivals_filter")) { %>
+                    <a href="index.jsp"><img src="img/home.png" alt="Home" height="33px" /></a> 
+                    <a href="festivals.jsp"><img src="img/festivals_selected.png" alt="Festivals" height="33px" /></a>
+                    <a href="groepen.jsp"><img src="img/groepen.png" alt="Groepen" height="33px" /></a>
                 <%}
             %>
         </nav>

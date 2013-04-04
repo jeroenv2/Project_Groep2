@@ -58,14 +58,14 @@
                                 if(lengteResultSet > 0)
                                 {
                                     
-                                    out.println("<form action='festivals_filter.jsp' method='GET'>");
+                                    out.println("<form action='festivals_filter.jsp' method='POST'>"); //POST: geen waarden in URL
                                     out.println("<table width='625px' style='border: 1px solid white;'>");
                                     out.println("<tbody>");
                                     out.println("<tr>");
                                     out.println("<td colspan=2 style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>");
                                     out.println("</tr>");
                                     out.println("<tr>");
-                                    out.println("<td width=250px style='padding-left: 10px;'><u>Naam begint met:</u><br />");
+                                    out.println("<td width=300px style='padding-left: 10px;'><u>Naam begint met:</u><br />");
 
                                     while (res.next()) {
                                         String letter = res.getString("fest_naam").substring(0, 1);
