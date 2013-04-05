@@ -112,7 +112,7 @@
                                     out.println("<td></td></tr>");
                                     out.println("</tbody></table>");
                                     out.println("</form>");
-                                    out.println("<div align='center' style='padding-top: 25px; padding-bottom: 10px;'>");
+                                    out.println("<div style='padding-top: 25px; padding-bottom: 10px;'>");
 
                                     
                                     //Informatie festivals

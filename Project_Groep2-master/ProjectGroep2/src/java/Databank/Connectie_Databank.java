@@ -10,21 +10,19 @@ import java.util.List;
 public class Connectie_Databank
 {
     //Eigenschappen databank
-    private String connectieString = "";
+    private String connectieString = "jdbc:mysql://localhost/groep2_festivals";;
     private Connection connectie = null;
     private PreparedStatement prepStatement = null;
     private Statement statement = null;
     private ResultSet inhoudQuery = null;
     
     //Inloggegevens PhpMyAdmin
-    private String gebruikersnaam, wachtwoord;
+    private String gebruikersnaam = "root", wachtwoord = "";
+    
     
     //Constructor met standaardinstellingen
     public Connectie_Databank()
     {
-        connectieString = "jdbc:mysql://localhost/groep2_festivals";
-        gebruikersnaam = "root";
-        wachtwoord = "";
     }
     
     //Constructor met nieuwe data

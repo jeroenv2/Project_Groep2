@@ -23,7 +23,7 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Festivals</title>
+        <title>Festivals Gefilterd</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
@@ -94,9 +94,9 @@
 
                                 if(lengteResultSet > 0)
                                 {
-                                    out.println("<div align='center' style='padding-top: 25px; padding-bottom: 10px;'>");
-
-                                    
+                                    out.println("<h1>Gefilterd Resultaat</h1>");
+                                    out.println("Klik <a href='festivals.jsp'>hier</a> om terug te keren");
+                                    out.println("<div style='padding-top: 25px; padding-bottom: 10px;'>");
                                     //Informatie festivals
                                     res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                     res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
