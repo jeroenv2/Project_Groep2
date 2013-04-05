@@ -91,7 +91,6 @@
                                 {
                                     
                                     
-                                    //Hier verder werken...
                                 }
                                 
                                 connectie.voerQueryUit(query, lijstParams);
