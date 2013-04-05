@@ -27,6 +27,24 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <!-- controleren of de checkbox van de datums aangevinkt is of niet -->
+        <script>
+            //Ervoor zorgen dat de datums niet getoond worden (of juist wel)
+            //Bron: http://stackoverflow.com/questions/9280037/javascript-toggle-function-to-hide-and-display-text-how-to-add-images
+            function onChangeCheckboxDatums()
+            {
+                var checked = document.getElementById("datumTonen").checked;
+                var ele = document.getElementById("datums");
+                if(checked)
+                {
+                    ele.style.display = "inline";
+                }
+                else
+                {
+                    ele.style.display = "none";
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -46,7 +64,7 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT fest_naam, fest_locatie, fest_datum, fest_duur, fest_url FROM festivals", lijstParams);
+                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();                           
 
                                 res.last();
@@ -84,7 +102,6 @@
                                     //out.println("</tr>");
                                     out.println("<td style='padding-left: 5px; padding-top: 15px;'><u>Locatie:</u><br />");
 
-
                                     //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
                                     res.first();
                                     res.previous();
@@ -104,8 +121,12 @@
                                     }
                                     out.println("</td>");
                                     out.println("</tr><tr>");
-                                    out.println("<td colspan=2 style='padding-left: 10px; padding-top: 15px;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
-                                    out.println("en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /></td>");
+                                    out.println("<td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'><input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums()' /> Filteren op datums</td><br />");
+                                    out.println("<td></td><tr>");
+                                    
+                                    out.println("<td colspan=2 style='padding-left: 10px;'><div id='datums' style='display: none;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> ");
+                                    out.println("en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /><div></td>");
+                    
                                     out.println("</tr><tr>");
                                     out.println("<td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>");
                                     out.println("<input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>");
@@ -114,7 +135,6 @@
                                     out.println("</form>");
                                     out.println("<div style='padding-top: 25px; padding-bottom: 10px;'>");
 
-                                    
                                     //Informatie festivals
                                     res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                     res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)

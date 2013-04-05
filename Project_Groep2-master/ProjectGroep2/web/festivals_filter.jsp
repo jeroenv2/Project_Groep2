@@ -83,7 +83,16 @@
                                     }
                                 }
                                 
-                                //SELECT * FROM festivals WHERE fest_naam LIKE 'R' OR fest_naam LIKE 'W' AND fest_locatie = 'Geel - Belgie' OR fest_locatie = 'Werchter - Belgie'
+                                //Checkbox geeft volgende terug:
+                                    //on <- als checked is
+                                    //null <- als niet checked is
+                                
+                                if(request.getParameter("opDatum") != null)
+                                {
+                                    
+                                    
+                                    //Hier verder werken...
+                                }
                                 
                                 connectie.voerQueryUit(query, lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();                           
