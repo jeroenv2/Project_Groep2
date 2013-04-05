@@ -10,19 +10,21 @@ import java.util.List;
 public class Connectie_Databank
 {
     //Eigenschappen databank
-    private String connectieString = "jdbc:mysql://localhost/groep2_festivals";;
+    private String connectieString = "";
     private Connection connectie = null;
     private PreparedStatement prepStatement = null;
     private Statement statement = null;
     private ResultSet inhoudQuery = null;
     
     //Inloggegevens PhpMyAdmin
-    private String gebruikersnaam = "root", wachtwoord = "";
-    
+    private String gebruikersnaam, wachtwoord;
     
     //Constructor met standaardinstellingen
     public Connectie_Databank()
     {
+        this.connectieString = "jdbc:mysql://localhost/groep2_festivals";
+        this.gebruikersnaam = "root";
+        this.wachtwoord = "";
     }
     
     //Constructor met nieuwe data
@@ -33,6 +35,9 @@ public class Connectie_Databank
         this.wachtwoord = wachtwoord;
     }
     
+    /**
+     * Deze methode zorgt ervoor dat er verbinding gemaakt wordt me de databank
+     */
     public void maakConnectie()
     {
         try
@@ -41,7 +46,7 @@ public class Connectie_Databank
         }
         catch(Exception e)
         {
-            System.err.println(e.getMessage()); //Later verwijderen en gepaste meldingen en wijze van boodschap tonen
+            System.err.println("FOUTMELDING: " + e.getMessage());
         }
     }
     
@@ -68,9 +73,7 @@ public class Connectie_Databank
             }
         }
         catch(Exception e)
-        {
-            System.err.println(e.getMessage()); //Later verwijderen en gepaste meldingen en wijze van boodschap tonen
-        }
+        {}
     }
     
     public ResultSet haalResultSetOp()

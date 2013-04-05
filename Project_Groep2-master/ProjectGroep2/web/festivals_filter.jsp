@@ -47,13 +47,14 @@
                                 //Alle aangeduidde letters behandelen
                                 if(request.getParameter("beginletter") != null)
                                 {
-                                    query += " WHERE fest_naam LIKE ?"; //Beginletters geselecteerd
+                                    query += " WHERE (fest_naam LIKE ?"; //Beginletters geselecteerd
                                     String[] letters = request.getParameterValues("beginletter");
                                     //Vormen van query
                                     for(int i=0; i<letters.length-1; i++) //ervoor zorgen dat de query juist eindigt
                                     {                                     //Begin 0: Array letters begin ook vanaf 0
                                         query += " OR fest_naam LIKE ?";
                                     }
+                                    query += ")";
                                     
                                     //Vormen van lijstParams
                                     for(int i=0; i<letters.length; i++)
@@ -66,13 +67,14 @@
                                 if(request.getParameter("locatieFestival") != null)
                                 {
                                     //**ER EVEN VANUIT GAANDE DAT ER BEGINLETTERS AANGEDUID WORDEN (EXTRA CONTROLE NODIG!)
-                                    query += " AND fest_locatie = ?"; //Beginletters geselecteerd
+                                    query += " AND (fest_locatie = ?"; //Beginletters geselecteerd
                                     String[] locaties = request.getParameterValues("locatieFestival");
                                     //Vormen van query
                                     for(int i=0; i<locaties.length-1; i++) //ervoor zorgen dat de query juist eindigt
                                     {                                      //Begin 0: Array letters begin ook vanaf 0
                                         query += " OR fest_locatie = ?";
                                     }
+                                    query += ")";
                                     
                                     //Vormen van lijstParams
                                     for(int i=0; i<locaties.length; i++)

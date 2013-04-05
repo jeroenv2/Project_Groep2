@@ -46,7 +46,7 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
+                                connectie.voerQueryUit("SELECT fest_naam, fest_locatie, fest_datum, fest_duur, fest_url FROM festivals", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();                           
 
                                 res.last();
