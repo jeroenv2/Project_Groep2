@@ -42,6 +42,7 @@ public class Connectie_Databank
     {
         try
         {
+            Class.forName("com.mysql.jdbc.Driver");
             connectie = DriverManager.getConnection(connectieString, gebruikersnaam, wachtwoord);
         }
         catch(Exception e)
