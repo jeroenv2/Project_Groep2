@@ -51,6 +51,11 @@ public class Connectie_Databank
         }
     }
     
+    /**
+     * Deze functie haalt gegevens op uit de database aan de hand van de opgegeven query.
+     * @param query
+     * @param parameters 
+     */
     public void voerQueryUit(String query, List<String> parameters)
     {
         try
@@ -82,12 +87,17 @@ public class Connectie_Databank
         return inhoudQuery;
     }
     
+    /**
+     * Deze functie sluit alle connectiegegevens af zodat deze uit het geheugen verdwijnen.
+     */
     public void sluitConnectie()
     {
         //ConnectieString leegmaken en alle objecten die te maken hebben met de connectie sluiten
         try
         {
-            connectieString = "";
+            connectieString = null;
+            gebruikersnaam = null;
+            wachtwoord = null;
             if(connectie != null)
             {
                 connectie.close();
@@ -100,6 +110,10 @@ public class Connectie_Databank
             {
                 inhoudQuery.close();
             }
+            connectie = null;
+            statement = null;
+            prepStatement = null;
+            inhoudQuery = null;
         }
         catch(Exception e)
         {}
