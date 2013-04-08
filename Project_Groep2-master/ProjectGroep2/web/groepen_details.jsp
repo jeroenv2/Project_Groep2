@@ -10,6 +10,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.util.List"%>
+<%@page import="com.mysql.jdbc.StringUtils"%>
+<%!String MuziekSoort, SiteGroep, FestivalNamen, FestivalUrls, AfbeeldingGroep;%>
+<%!ArrayList<String> lijstFestivalNamen,lijstFestivalUrls;%>
+<%! int i;%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -19,8 +23,8 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-       
-        
+
+
         <title>Details van de Netsky</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
@@ -31,19 +35,20 @@
                 border-collapse:separate;
                 border-spacing:  50px 20px ;
             }
-            
+
             #opmaak{
-              font-family: sans-serif;
-              color: #fff; 
-              font-size:20px;
-              font-weight:bold; 
+                font-family: sans-serif;
+                color: #fff; 
+                font-size:25px;
+                font-weight:bold; 
             }
-            #lijst{
+            #lijstFestival{
                 list-style-type: none;
                 border:1px solid black;
-                float:right; padding:10px;
+                float:right; padding:90px 30px 90px 10px ;
                 margin-top: 10px;  
             }
+          
 
         </style>
 
@@ -54,65 +59,77 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                   
+
                     <div id="opmaak" align="center"  >
                         Nirvana
                     </div>
-                    <% 
-                        
-                       Connectie_Databank connectie = new Connectie_Databank();
+                    <%
+
+                        Connectie_Databank connectie = new Connectie_Databank();
                         connectie.maakConnectie();
                         List<String> lijstParams = new ArrayList<String>();
-                        lijstParams.add("Nirvana");
-                       connectie.voerQueryUit("SELECT * FROM bands WHERE band_naam = ?", lijstParams);
-                        ResultSet res = connectie.haalResultSetOp();
 
-                      while(res.next()){
-                      String g= res.getString("band_soortMuziek");
-                      out.println(g);
-                       }
-                      
+                        lijstParams.add("Kiss");
+                        connectie.voerQueryUit("SELECT * FROM bands b, bandsperfestival bf, festivals f WHERE b.band_naam = ? and (b.band_id=bf.band_id and f.fest_id=bf.fest_id);", lijstParams);
+
+                        ResultSet res = connectie.haalResultSetOp();
+                        
+                        lijstFestivalNamen= new ArrayList<String>();
+                        lijstFestivalUrls=new ArrayList<String>();
+                        i=0;
+                        
+                        while (res.next()) {
+                            MuziekSoort = res.getString("band_soortMuziek");
+                            SiteGroep = res.getString("band_url");
+                            lijstFestivalNamen.add(res.getString("fest_naam"));  
+                            lijstFestivalUrls.add(res.getString("fest_url"));
+                            AfbeeldingGroep=res.getString("band_afbeelding");
+                            i++;
+                            
+                        }
                        
-                    
+                        
                     %>
                     <table  id="table">
                         <tbody>
                             <tr>
                                 <td>
-                                    <img src="img/bands/test_afbeelding_groepen.jpg" width="300px"  />
+                                    <img src="<%=AfbeeldingGroep%>" width="300px"  />
                                 </td>
+                                <td> </br>   </td>
                                 <td>
-                                    
+
                                     <div align="center"> 
                                         <table>
                                             <tbody>
                                                 <tr>
                                                     <td >Naam: </td>
-                                                    <td>&nbsp;&nbsp;&nbsp; Netsky</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Land herkomst:</td>
-                                                    <td>&nbsp;&nbsp;&nbsp; Amerika</td>
+                                                    <td>&nbsp;&nbsp;Netsky</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Genre:</td>
-                                                    <td>&nbsp;&nbsp;&nbsp; Drum and base</td>
+                                                    <td>&nbsp;&nbsp;<%= MuziekSoort%></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><a href="http://netskymusic.com/">Site groep </a></td>
+                                                    <td></br></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><a href="http://<%= SiteGroep%>/">Site Groep </a></td>
                                                 </tr>
 
                                             </tbody>
                                         </table>
                                     </div>
                                 </td>
+                                <td></br></td>
                                 <td>
-                                    <ul id="lijst">
-                                        <li>festivals:</li>
-                                        <li >&nbsp;&nbsp;&nbsp;<a href="http://www.rockwerchter.be/nl">Rock Werchter </a></li>
-                                        <li>&nbsp;&nbsp;&nbsp;<a href="http://www.pukkelpop.be/nl/">Pukkelpop</a></li>
-                                        <li>&nbsp;&nbsp;&nbsp;<a href="http://www.werchterboutique.be/fr">Werchter Boutique</a></li>
-                                        <li>&nbsp;&nbsp;&nbsp;<a href="http://www.pinkpop.nl/2013/">Pinkpop</a></li>
+                                    <ul id="lijstFestival" align="top">
+                                        <li align="top" class="">festivals:</li>
+
+                                        <% for (int j = 0; j < i; j++) {%>
+                                        <li >&nbsp;&nbsp;<a href="http://<% out.println(lijstFestivalUrls.get(j));%>/nl"> <%out.println(lijstFestivalNamen.get(j));%> </a></li>
+                                            <% }%>
+
                                     </ul>
                                 </td>
                             </tr>
