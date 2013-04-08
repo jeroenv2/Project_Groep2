@@ -4,6 +4,14 @@
     Author     : Steven
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,69 +36,115 @@
                 <section id="content">
                     <div align="center">
                         <%
-                            ArrayList<String> lijstLetters = new ArrayList<String>();
-                            
-                            //Genereren uit bestaande groepen (DB) (substring)
-                            lijstLetters.add("A");
-                            lijstLetters.add("B");
-                            lijstLetters.add("C");
-                            lijstLetters.add("D");
-                            lijstLetters.add("E");
-                            lijstLetters.add("F");
+                            try {
+                                ArrayList<String> lijstGenres = new ArrayList<String>();
 
-                            for(int i=0; i<lijstLetters.size()-1; i++) //Ervoor zorgen dat het niet eindigt met '|'
-                            {
-                                out.println(lijstLetters.get(i) + " | ");
-                            }
-                            out.println(lijstLetters.get(lijstLetters.size()-1));
-                        %>
-                        
-                    </div>
-                    <div align="center" style="padding-top: 25px; padding-bottom: 10px;">
-                        <!-- HTML5 table (doorlopen met foreach van gegevens uit DB (aantal records) -->
-                        <table width="600px" style="border: 1px solid white;">
-                            <tbody style="padding: 10px;">
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;"><b>De Floskes</b></td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Begindatum: 20-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px">Locatie: hier en daar</td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Einddatum: 21-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
-                                    <td></td>
-                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;"><input type="button" name="Detail" value=" Detail " /></td>
-                                </tr>
-                            </tbody>
-                        </table><br />
+                                Connectie_Databank connectie = new Connectie_Databank();
 
-                        <!-- ::VERWIJDEREN NA UITLEZEN DB:: -->
-                        <table width="600px" style="border: 1px solid white;">
-                            <tbody style="padding: 10px;">
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;"><b>De Floskes</b></td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Begindatum: 20-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px">Locatie: hier en daar</td>
-                                    <td style="padding-left: 10px; padding-top: 10px;">Einddatum: 21-12-2012</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left: 10px; padding-bottom: 10px;"><a href="#">Site</a></td>
-                                    <td></td>
-                                    <td align="right" style="padding-right: 10px; padding-bottom: 10px;"><input type="button" name="Detail" value=" Detail " /></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- ::EINDE VERWIJDERING:: -->
+                                connectie.maakConnectie();
+                                List<String> lijstParams = new ArrayList<String>();
 
-                    </div>
+                                connectie.voerQueryUit("SELECT * FROM bands", lijstParams);
+                                ResultSet res = connectie.haalResultSetOp();
+
+                                res.last();
+                                int lengteResultSet = res.getRow();
+
+                                res.first();
+                                res.previous();
+
+                                if (lengteResultSet > 0) {
+                        %>   
+                        <form action='groepen_filter.jsp' method='POST'>
+                            <table width='625px' style='border: 1px solid white;'>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td width=300px style='padding-left: 10px;'><u>Genre:</u><br />
+                                        <%while (res.next()) {
+                                                String genre = res.getString("band_soortMuziek");
+
+                                                if (!lijstGenres.contains(genre)) {
+                                                    lijstGenres.add(genre);
+                                                }
+                                            }
+
+                                            //De ArrayList alfabetisch ordenen
+                                            java.util.Collections.sort(lijstGenres);
+                                            for (String genre : lijstGenres) {
+                                        %>
+                                &nbsp;&nbsp;<input type='checkbox' name='genre' value='<%= genre%>' /> <%= genre%><br />
+                                <%
+                                    }
+                                %>
+                                </td>
+                                <td></td>
+                                </tr>
+                                <tr>
+                                </tr><tr>
+                                    <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
+                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <div style='padding-top: 25px; padding-bottom: 10px;'>
+
+                            <!-- Informatie groepen -->
+                            <%
+                                res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                while (res.next()) {
+                                    String naam = res.getString("band_naam");
+                            %>
+                            <table width='600px' style='border: 1px solid white;'>
+                                <tbody style='padding: 10px;'>
+                                <form action="groepen_details.jsp" method="POST">
+                                    <tr>
+                                        <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
+                                        <input type="hidden" name="naam" value="<%=naam%>">
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <%
+                                            if (res.getString("band_url") != null) {
+                                                String url = res.getString("band_url");
+                                        %>
+                                        <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
+                                    <%
+                                    } else {
+                                    %>
+                                    <td></td>
+                                    <%}%>
+                                    <td></td>
+                                    <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                        <input type="submit" name="Details" value=" Details " />
+                                    </td>
+                                    </tr>
+                                </form>
+                                </tbody>
+                            </table><br />
+                            <%
+                                }
+                            } else {
+                            %>
+                            <h3>Helaas! Er zijn geen records gevonden...</h3>
+                            <%}
+                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
+                                } catch (Exception e) {
+                                    out.println(e.getMessage());
+                                }
+                            %>
+                        </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
