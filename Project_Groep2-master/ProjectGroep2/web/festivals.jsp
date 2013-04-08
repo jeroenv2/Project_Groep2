@@ -117,7 +117,7 @@
                                         java.util.Collections.sort(lijstLocaties);
                                         for (String locatie : lijstLocaties) {
                                     %>
-                                &nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='" + locatie + "' /> <%= locatie%><br />
+                                &nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
                                 <%}%>
                                 </td>
                             </tr><tr>

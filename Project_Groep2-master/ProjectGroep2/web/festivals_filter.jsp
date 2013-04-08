@@ -62,8 +62,14 @@
 
                                 //Alle aangeduidde locaties behandelen
                                 if (request.getParameter("locatieFestival") != null) {
-                                    //**ER EVEN VANUIT GAANDE DAT ER BEGINLETTERS AANGEDUID WORDEN (EXTRA CONTROLE NODIG!)
-                                    query += " AND (fest_locatie = ?"; //Beginletters geselecteerd
+                                    if(request.getParameter("beginletter") == null)
+                                    {
+                                        query += " WHERE (fest_locatie = ?";
+                                    }
+                                    else
+                                    {
+                                        query += " AND (fest_locatie = ?"; //Beginletters geselecteerd
+                                    }
                                     String[] locaties = request.getParameterValues("locatieFestival");
                                     //Vormen van query
                                     for (int i = 0; i < locaties.length - 1; i++) //ervoor zorgen dat de query juist eindigt
@@ -83,7 +89,6 @@
                                 //null <- als niet checked is
 
                                 if (request.getParameter("opDatum") != null) {
-                                    
                                 }
 
                                 connectie.voerQueryUit(query, lijstParams);
@@ -93,12 +98,13 @@
                                 int lengteResultSet = res.getRow();
 
                                 res.first();
-                                res.previous();                             
+                                res.previous();
+
+                                out.println(query + " - " + lijstParams.get(0));
                                 
                                 if (lengteResultSet > 0) {
                         %>
                         <h1>Gefilterd Resultaat</h1>
-                        
                         Klik <a href='festivals.jsp'>hier</a> om terug te keren
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
                             <!-- Informatie Festivals -->
@@ -133,7 +139,7 @@
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                        %>
+%>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%= strEinddatum%></td>
                                         <td></td>
                                     </tr>
@@ -147,11 +153,18 @@
                                         } else {
                                         %>
                                         <td></td>
-                                        <%                                                            }
-                                        %>
+                                        <%}
+                                            cal.set(Calendar.YEAR, 0);
+                                            cal.set(Calendar.MONTH, 0);
+                                            cal.set(Calendar.DAY_OF_WEEK, 0);
+                                            if (begindatum.after(new Date())) {%>
                                         <td></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                            <input type='button' name='Detail' value=' Detail ' />
+                                            <input type="submit" name="Details" value=" Details " />
+                                            <%} else {%>
+                                        <td colspan="2" align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                            <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
+                                                <%}%>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -162,7 +175,7 @@
                             %>
                             <h3>Helaas! Er zijn geen records gevonden...</h3>
                             Klik <a href='festivals.jsp'>hier</a> om terug te keren
-                            
+
                             <%}
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {
