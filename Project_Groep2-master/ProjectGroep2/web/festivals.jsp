@@ -168,7 +168,7 @@
 
                                                     Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                                     String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                                %>
+%>
                                                 <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%= strEinddatum%></td>
                                                 <td></td>
                                             </tr>

@@ -35,136 +35,140 @@
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
-                        <%    
-                            try
-                            {
+                        <%
+                            try {
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
                                 String query = "SELECT * FROM festivals"; //Zonder enig iets aangeduid te hebben in festivals.jsp
-                                
+
                                 //Alle aangeduidde letters behandelen
-                                if(request.getParameter("beginletter") != null)
-                                {
+                                if (request.getParameter("beginletter") != null) {
                                     query += " WHERE (fest_naam LIKE ?"; //Beginletters geselecteerd
                                     String[] letters = request.getParameterValues("beginletter");
                                     //Vormen van query
-                                    for(int i=0; i<letters.length-1; i++) //ervoor zorgen dat de query juist eindigt
+                                    for (int i = 0; i < letters.length - 1; i++) //ervoor zorgen dat de query juist eindigt
                                     {                                     //Begin 0: Array letters begin ook vanaf 0
                                         query += " OR fest_naam LIKE ?";
                                     }
                                     query += ")";
-                                    
+
                                     //Vormen van lijstParams
-                                    for(int i=0; i<letters.length; i++)
-                                    {
+                                    for (int i = 0; i < letters.length; i++) {
                                         lijstParams.add(letters[i] + "%");
                                     }
                                 }
-                                
+
                                 //Alle aangeduidde locaties behandelen
-                                if(request.getParameter("locatieFestival") != null)
-                                {
+                                if (request.getParameter("locatieFestival") != null) {
                                     //**ER EVEN VANUIT GAANDE DAT ER BEGINLETTERS AANGEDUID WORDEN (EXTRA CONTROLE NODIG!)
                                     query += " AND (fest_locatie = ?"; //Beginletters geselecteerd
                                     String[] locaties = request.getParameterValues("locatieFestival");
                                     //Vormen van query
-                                    for(int i=0; i<locaties.length-1; i++) //ervoor zorgen dat de query juist eindigt
+                                    for (int i = 0; i < locaties.length - 1; i++) //ervoor zorgen dat de query juist eindigt
                                     {                                      //Begin 0: Array letters begin ook vanaf 0
                                         query += " OR fest_locatie = ?";
                                     }
                                     query += ")";
-                                    
+
                                     //Vormen van lijstParams
-                                    for(int i=0; i<locaties.length; i++)
-                                    {
+                                    for (int i = 0; i < locaties.length; i++) {
                                         lijstParams.add(locaties[i]);
                                     }
                                 }
-                                
+
                                 //Checkbox geeft volgende terug:
-                                    //on <- als checked is
-                                    //null <- als niet checked is
-                                
-                                if(request.getParameter("opDatum") != null)
-                                {
-                                    
-                                    
+                                //on <- als checked is
+                                //null <- als niet checked is
+
+                                if (request.getParameter("opDatum") != null) {
                                 }
-                                
+
                                 connectie.voerQueryUit(query, lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();                           
+                                ResultSet res = connectie.haalResultSetOp();
 
                                 res.last();
                                 int lengteResultSet = res.getRow();
-                                
+
                                 res.first();
                                 res.previous();
 
-                                if(lengteResultSet > 0)
-                                {
-                                    out.println("<h1>Gefilterd Resultaat</h1>");
-                                    out.println("Klik <a href='festivals.jsp'>hier</a> om terug te keren");
-                                    out.println("<div style='padding-top: 25px; padding-bottom: 10px;'>");
-                                    //Informatie festivals
-                                    res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                    res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                    while (res.next()) {
-                                        out.println("<table width='600px' style='border: 1px solid white;'>");
-                                        out.println("<tbody style='padding: 10px;'>");
-                                        out.println("<tr>");
-                                        out.println("<td width='300px' style='padding-left: 10px; padding-top: 10px;'><b>" + res.getString("fest_naam") + "</b></td>");
-                                        out.println("<td style='padding-left: 10px; padding-top: 10px;'>Begindatum: " + res.getString("fest_datum") + "</td>");
-                                        out.println("<td></td>");
-                                        out.println("</tr>");
-                                        out.println("<tr>");
-                                        out.println("<td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: " + res.getString("fest_locatie") + "</td>");
-
-                                        //** Duur (dagen) optellen met de begindatum **
-                                        DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
-
-                                        Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //Datum uit DB (String) omzetten naar Date
-
-                                        //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                        Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                        cal.setTime(begindatum);                //De begindatum in cal steken
-                                        cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
-
-                                        Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                        String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-
-                                        out.println("<td style='padding-left: 10px; padding-top: 10px;'>Einddatum: " + strEinddatum + "</td>");
-                                        out.println("<td></td>");
-                                        out.println("</tr>");
-                                        out.println("<tr>");
-                                        if (res.getString("fest_url") != null) {
-                                            out.println("<td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://" + res.getString("fest_url") + "' target='_blank'>Site</a></td>");
-                                        } else {
-                                            out.println("<td></td>");
-                                        }
-                                        out.println("<td></td>");
-                                        out.println("<td align='right' style='padding-right: 10px; padding-bottom: 10px;'>");
-                                        out.println("<input type='button' name='Detail' value=' Detail ' onclick='location.href = './festival_details.jsp';' />");
-                                        out.println("</td>");
-                                        out.println("</tr>");
-                                        out.println("</tbody>");
-                                        out.println("</table><br />");
-                                    }
-                                }
-                                else
-                                {
-                                    out.println("<h3>Helaas! Er zijn geen records gevonden...</h3>");
-                                    out.println("<p>Klik <a href='festivals.jsp'>hier</a> om terug te keren...</p>");
-                                }
-                                connectie.sluitConnectie(); //Connectie met de databank sluiten
-                            }
-                            catch(Exception e)
-                            {
-                                out.println(e.getMessage());
-                            }
+                                if (lengteResultSet > 0) {
                         %>
-                    </div>
+                        <h1>Gefilterd Resultaat</h1>
+                        Klik <a href='festivals.jsp'>hier</a> om terug te keren
+                        <div style='padding-top: 25px; padding-bottom: 10px;'>
+
+                            <!-- Informatie Festivals -->
+                            <%
+                                res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                while (res.next()) {
+                                    String naam = res.getString("fest_naam");
+                                    String beginDatum = res.getString("fest_datum");
+                                    String locatie = res.getString("fest_locatie");
+                            %>
+                            <table width='600px' style='border: 1px solid white;'>
+                                <tbody style='padding: 10px;'>
+                                    <tr>
+                                        <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
+                                        <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%= beginDatum%> </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%= locatie%> </td>
+
+                                        <!-- Datums berekenen -->
+                                        <%
+                                            DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+
+                                            Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //Datum uit DB (String) omzetten naar Date
+
+                                            //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
+                                            Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
+                                            cal.setTime(begindatum);                //De begindatum in cal steken
+                                            cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+
+                                            Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
+                                            String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+                                        %>
+                                        <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%= strEinddatum%></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <%
+                                            if (res.getString("fest_url") != null) {
+                                                String url = res.getString("fest_url");
+                                        %>
+                                        <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%= url%>' target='_blank'>Site</a></td>
+                                        <%
+                                        } else {
+                                        %>
+                                        <td></td>
+                                        <%                                                            }
+                                        %>
+                                        <td></td>");
+                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                            <input type='button' name='Detail' value=' Detail ' />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table><br />
+                            <%
+                                }
+                            } else {
+                            %>
+                            <h3>Helaas! Er zijn geen records gevonden...</h3>
+                            Klik <a href='festivals.jsp'>hier</a> om terug te keren
+                            
+                            <%}
+                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
+                                } catch (Exception e) {
+                                    out.println(e.getMessage());
+                                }
+                            %>
+                        </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
