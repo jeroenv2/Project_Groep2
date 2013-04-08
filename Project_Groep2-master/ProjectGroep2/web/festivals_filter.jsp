@@ -4,6 +4,7 @@
     Author     : Steven
 --%>
 
+<%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
@@ -89,8 +90,20 @@
                                 //null <- als niet checked is
 
                                 if (request.getParameter("opDatum") != null) {
+                                    if(request.getParameter("locatieFestival") == null &&
+                                            request.getParameter("beginletter") == null)
+                                    {
+                                        query += " WHERE (fest_datum >= ? AND fest_einddatum <= ?)";
+                                    }
+                                    else
+                                    {
+                                        query += " AND (fest_datum >= ? AND fest_einddatum <= ?)";
+                                    }
+                                    
+                                    lijstParams.add(request.getParameter("begindatum"));
+                                    lijstParams.add(request.getParameter("einddatum"));
                                 }
-
+                                
                                 connectie.voerQueryUit(query, lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();
 
@@ -99,8 +112,6 @@
 
                                 res.first();
                                 res.previous();
-
-                                out.println(query + " - " + lijstParams.get(0));
                                 
                                 if (lengteResultSet > 0) {
                         %>
