@@ -147,14 +147,17 @@
                                     %>
                                     <table width='600px' style='border: 1px solid white;'>
                                         <tbody style='padding: 10px;'>
+                                        <form action="festival_details.jsp" method="POST">
                                             <tr>
                                                 <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%= beginDatum%> </td>
+                                                <input type="hidden" name="naam" value="<%=naam%>">
+                                                <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
+                                                <input type="hidden" name="begindatum" value="<%=beginDatum%>">
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%= locatie%> </td>
-
+                                                <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
+                                                <input type="hidden" name="locatie" value="<%=locatie%>">
                                                 <!-- Datums berekenen -->
                                                 <%
                                                     DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
@@ -169,7 +172,8 @@
                                                     Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                                     String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
 %>
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%= strEinddatum%></td>
+                                                <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
+                                                <input type="hidden" name="einddatum" value="<%=strEinddatum%>">
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -177,7 +181,8 @@
                                                     if (res.getString("fest_url") != null) {
                                                         String url = res.getString("fest_url");
                                                 %>
-                                                <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%= url%>' target='_blank'>Site</a></td>
+                                                <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
+                                                <input type="hidden" name="url" value="<%=url%>">
                                                 <%
                                                 } else {
                                                 %>
@@ -190,15 +195,16 @@
                                                     {%>
                                                         <td></td>
                                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                        <input type='button' name='Detail' value=' Detail ' />
+                                                        <input type="submit" name="Details" value=" Details " />
                                                     <%}
                                                     else
                                                     {%>
                                                         <td colspan="2" align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                           <b><font color="mediumseagreen">Deze festival is verlopen</font></b>
+                                                           <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
                                                     <%}%>
                                                 </td>
                                             </tr>
+                                            </form>
                                         </tbody>
                                     </table><br />
                                     <%
