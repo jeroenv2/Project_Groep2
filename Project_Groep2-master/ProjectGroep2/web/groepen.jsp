@@ -99,6 +99,7 @@
                                 res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                 while (res.next()) {
                                     String naam = res.getString("band_naam");
+                                    String genre = res.getString("band_soortMuziek");
                             %>
                             <table width='600px' style='border: 1px solid white;'>
                                 <tbody style='padding: 10px;'>
@@ -110,7 +111,7 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td></td>
+                                        <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
