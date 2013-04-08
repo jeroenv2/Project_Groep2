@@ -78,7 +78,7 @@
                             <table width='625px' style='border: 1px solid white;'>
                                 <tbody>
                                     <tr>
-                                        <td colspan=2 style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
+                                        <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
                                     </tr>
                                     <tr>
                                         <td width=300px style='padding-left: 10px;'><u>Naam begint met:</u><br />
@@ -124,7 +124,7 @@
                             <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'><input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums</td><br />
                         <td></td>
                         <tr>
-                            <td colspan=2 style='padding-left: 10px;'><div id='datums' style='display: none;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />
+                            <td colspan="2" style='padding-left: 10px;'><div id='datums' style='display: none;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />
                                     en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /><div></td>
                                     </tr><tr>
                                     <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
@@ -159,7 +159,7 @@
                                                 <%
                                                     DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
 
-                                                    Date begindatum = formaatDatum.parse(res.getString("fest_datum")); //Datum uit DB (String) omzetten naar Date
+                                                    Date begindatum = formaatDatum.parse(beginDatum);
 
                                                     //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
                                                     Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
@@ -182,11 +182,21 @@
                                                 } else {
                                                 %>
                                                 <td></td>
-                                                <%                                                            }
-                                                %>
-                                                <td></td>
-                                                <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                    <input type='button' name='Detail' value=' Detail ' />
+                                                <%}
+                                                    cal.set(Calendar.YEAR, 0);
+                                                    cal.set(Calendar.MONTH, 0);
+                                                    cal.set(Calendar.DAY_OF_WEEK, 0);
+                                                    if(begindatum.after(new Date()))
+                                                    {%>
+                                                        <td></td>
+                                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                                        <input type='button' name='Detail' value=' Detail ' />
+                                                    <%}
+                                                    else
+                                                    {%>
+                                                        <td colspan="2" align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                                           <b><font color="mediumseagreen">Deze festival is verlopen</font></b>
+                                                    <%}%>
                                                 </td>
                                             </tr>
                                         </tbody>
