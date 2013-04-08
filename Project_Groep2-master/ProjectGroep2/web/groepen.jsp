@@ -104,8 +104,7 @@
                             <table width='600px' style='border: 1px solid white;'>
                                 <tbody style='padding: 10px;'>
                                 <form action="groepen_details.jsp" method="POST">
-                                    <tr>
-                                    </tr>
+                                 
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                         <input type="hidden" name="naam" value="<%=naam%>">

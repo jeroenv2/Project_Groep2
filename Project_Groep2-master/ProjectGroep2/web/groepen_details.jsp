@@ -79,7 +79,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <img src="img/test_afb_groepen_Nirvana.jpg" width="300px"  />
+                                    <img src="img/bands/test_afbeelding_groepen.jpg" width="300px"  />
                                 </td>
                                 <td>
                                     
