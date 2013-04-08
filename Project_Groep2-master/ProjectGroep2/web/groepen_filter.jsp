@@ -90,12 +90,7 @@
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                         <input type="hidden" name="naam" value="<%=naam%>">
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -122,6 +117,7 @@
                             } else {
                             %>
                             <h3>Helaas! Er zijn geen records gevonden...</h3>
+                            Klik <a href="groepen.jsp">hier</a> om terug te keren...
                             <%}
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {

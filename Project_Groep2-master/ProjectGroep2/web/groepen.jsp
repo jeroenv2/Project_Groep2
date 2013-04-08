@@ -83,7 +83,8 @@
                                 <td></td>
                                 </tr>
                                 <tr>
-                                </tr><tr>
+                                </tr>
+                                <tr>
                                     <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
                                         <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                     <td></td>
@@ -107,12 +108,7 @@
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                         <input type="hidden" name="naam" value="<%=naam%>">
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
