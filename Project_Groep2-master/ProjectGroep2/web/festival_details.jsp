@@ -36,7 +36,7 @@
                     <article id="details">
                         <header>
                             <!-- oproepen als: <% out.println(request.getParameter("url")); %> -->
-                            <h2>Header van details</h2>
+                            <h2><%= request.getParameter("naam")%></h2>
                         </header>
                             <p>Gegevens van festival</p>
                         <footer>
