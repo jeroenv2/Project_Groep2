@@ -83,6 +83,7 @@
                                 //null <- als niet checked is
 
                                 if (request.getParameter("opDatum") != null) {
+                                    
                                 }
 
                                 connectie.voerQueryUit(query, lijstParams);
@@ -92,14 +93,14 @@
                                 int lengteResultSet = res.getRow();
 
                                 res.first();
-                                res.previous();
-
+                                res.previous();                             
+                                
                                 if (lengteResultSet > 0) {
                         %>
                         <h1>Gefilterd Resultaat</h1>
+                        
                         Klik <a href='festivals.jsp'>hier</a> om terug te keren
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
-
                             <!-- Informatie Festivals -->
                             <%
                                 res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -148,7 +149,7 @@
                                         <td></td>
                                         <%                                                            }
                                         %>
-                                        <td></td>");
+                                        <td></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                             <input type='button' name='Detail' value=' Detail ' />
                                         </td>

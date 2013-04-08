@@ -95,7 +95,7 @@
                                     java.util.Collections.sort(lijstLetters);
                                     for (String letter : lijstLetters) {
                                 %>
-                                &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='" + letter + "' /> <%= letter%> <br />
+                                &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter %>' /> <%= letter %><br />
                                 <%
                                     }
                                 %>
@@ -184,7 +184,7 @@
                                                 <td></td>
                                                 <%                                                            }
                                                 %>
-                                                <td></td>");
+                                                <td></td>
                                                 <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                                     <input type='button' name='Detail' value=' Detail ' />
                                                 </td>
