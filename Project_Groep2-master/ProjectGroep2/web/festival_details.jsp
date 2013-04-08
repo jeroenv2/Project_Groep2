@@ -18,7 +18,6 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detailpages.css">
-        <jsp:useBean id="al" scope="application" class="beans.actionlisteners" />
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -30,7 +29,7 @@
                     <article id="foto">
                         <img src="img/festivals/rock_werchter_2013.png"
                              alt="Rock Werchter 2013 - afbeelding" width="140px"
-                             draggable="true" ondragstart="<% al.dragstart(); %>"
+                             draggable="true"
                              />
                         Foto:&nbsp;&nbsp;
                     </article>
