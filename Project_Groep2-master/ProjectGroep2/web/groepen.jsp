@@ -83,8 +83,6 @@
                                 <td></td>
                                 </tr>
                                 <tr>
-                                </tr>
-                                <tr>
                                     <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
                                         <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                     <td></td>
@@ -101,10 +99,13 @@
                                 while (res.next()) {
                                     String naam = res.getString("band_naam");
                                     String genre = res.getString("band_soortMuziek");
+                                   // String image = res.getString("band_img");
                             %>
                             <table width='600px' style='border: 1px solid white;'>
                                 <tbody style='padding: 10px;'>
                                 <form action="groepen_details.jsp" method="POST">
+                                    <tr>
+                                    </tr>
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                         <input type="hidden" name="naam" value="<%=naam%>">
