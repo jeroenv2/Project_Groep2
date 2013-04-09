@@ -152,12 +152,10 @@
                                                 <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                                 <input type="hidden" name="naam" value="<%=naam%>">
                                                 <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                                <input type="hidden" name="begindatum" value="<%=beginDatum%>">
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
-                                                <input type="hidden" name="locatie" value="<%=locatie%>">
                                                 <!-- Datums berekenen -->
                                                 <%
                                                     DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
@@ -173,7 +171,6 @@
                                                     String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
 %>
                                                 <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                                <input type="hidden" name="einddatum" value="<%=strEinddatum%>">
                                                 <td></td>
                                             </tr>
                                             <tr>
@@ -182,7 +179,6 @@
                                                         String url = res.getString("fest_url");
                                                 %>
                                                 <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
-                                                <input type="hidden" name="url" value="<%=url%>">
                                                 <%
                                                 } else {
                                                 %>
