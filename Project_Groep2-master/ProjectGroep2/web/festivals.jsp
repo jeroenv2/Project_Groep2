@@ -64,6 +64,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
+                    <div align="center">
                         <%
                             try {
                                 ArrayList<String> lijstLetters = new ArrayList<String>();
@@ -87,7 +88,7 @@
                         %>   
                         <form id="form_filter" action='festivals_filter.jsp' method='POST'>
                             <table width='625px' style='border: 1px solid white;'>
-                                <tbody>
+                                <tbody align="left">
                                     <tr>
                                         <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
                                     </tr>
@@ -158,7 +159,7 @@
                                             String locatie = res.getString("fest_locatie");
                                     %>
                                     <table width='600px' style='border: 1px solid white;'>
-                                        <tbody style='padding: 10px;'>
+                                        <tbody align="left" style='padding: 10px;'>
                                         <form action="festival_details.jsp" method="POST">
                                             <tr>
                                                 <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
@@ -223,6 +224,7 @@
                                             out.println(e.getMessage());
                                         }
                                     %>
+                                </div>
                                 </section>
                             </div>
                             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

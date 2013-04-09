@@ -35,6 +35,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
+                    <div align="center">
                         <%
                             try {
                                 Connectie_Databank connectie = new Connectie_Databank();
@@ -91,7 +92,7 @@
                                     String afbeelding = res.getString("band_afbeelding");
                             %>
                             <table width='500px' style='border: 1px solid white;'>
-                                <tbody style='padding: 10px;'>
+                                <tbody align="left" style='padding: 10px;'>
                                 <form action="groepen_details.jsp" method="POST">
                                     <tr>
                                         <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
@@ -135,6 +136,7 @@
                                     out.println(e.getMessage());
                                 }
                             %>
+                        </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

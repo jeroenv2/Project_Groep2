@@ -45,6 +45,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
+                    <div align="center">
                         <%
                             try {
                                 ArrayList<String> lijstGenres = new ArrayList<String>();
@@ -67,7 +68,7 @@
                         %>   
                         <form id="form_filter" action='groepen_filter.jsp' method='POST'>
                             <table width='500px' style='border: 1px solid white;'>
-                                <tbody>
+                                <tbody align="left">
                                     <tr>
                                         <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
                                     </tr>
@@ -118,7 +119,7 @@
                                         <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                     <td></td>
                                 </tr>
-                                </tbody>
+                                </tbody >
                             </table>
                         </form>
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
@@ -133,7 +134,7 @@
                                     String afbeelding = res.getString("band_afbeelding");
                             %>
                             <table width='500px' style='border: 1px solid white;'>
-                                <tbody style='padding: 10px;'>
+                                <tbody align="left" style='padding: 10px;'>
                                 <form action="groepen_details.jsp" method="POST">
                                     <tr>
                                         <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
@@ -176,6 +177,7 @@
                                     out.println(e.getMessage());
                                 }
                             %>
+                        </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
