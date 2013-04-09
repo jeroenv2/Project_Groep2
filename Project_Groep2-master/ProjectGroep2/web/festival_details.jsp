@@ -30,8 +30,11 @@
             List<String> lijstParams = new ArrayList<String>();
             lijstParams.add(request.getParameter("naam"));
 
-            connectie.voerQueryUit("SELECT * FROM festivals"
-                    + " WHERE fest_naam = ?", lijstParams);
+            connectie.voerQueryUit("SELECT f.fest_id, f.fest_naam, f.fest_locatie, f.fest_datum, f.fest_duur, f.fest_einddatum, f.fest_url, c.camp_cap"
+                    + " FROM festivals f"
+                    + " JOIN campingsperfestival cp ON f.fest_id = cp.fest_id"
+                    + " JOIN campings c ON cp.camp_id = c.camp_id"
+                    + " WHERE f.fest_naam = ?", lijstParams);
             ResultSet res = connectie.haalResultSetOp();
             res.first();
         %>
@@ -50,9 +53,10 @@
                         Foto:&nbsp;&nbsp;
                     </article>
                     <article id="details">
-                        <header id="centertext">
+                        <header>
                             <h2><%=res.getString(2)%></h2>
                         </header>
+                        <!-- Naam van browser ophalen -->
                         <% String browser = request.getHeader("User-Agent"); %>
                         <!-- gemeente scheiden van land -->
                         <%
@@ -67,14 +71,20 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td style="width:200px;">Land:</td>
-                                    <td <% if (browser.contains("Firefox")) { %> style="max-width: 350px;<% } %>">
-                                        <%= land %>
-                                    </td>
+                                    <td>Land:</td>
+                                    <td><%= land %></td>
                                 </tr>
                                 <tr>
                                     <td>Locatie:</td>
                                     <td><%= gemeente %></td>
+                                </tr>
+                                <tr>
+                                    <td>Startdatum:</td>
+                                    <td><%= res.getString(4) %></td>
+                                </tr>
+                                <tr>
+                                    <td>Einddatum:</td>
+                                    <td><%= res.getString(6) %></td>
                                 </tr>
                                 <tr>
                                     <td>Duur:</td>
@@ -89,13 +99,18 @@
                                     <td>Niet beschikbaar</td>
                                     <%}%>
                                 </tr>
+                                <tr>
+                                    <td style="padding-right: 25px;">Capaciteit kamping:</td>
+                                    <td><%= res.getString(8) %></td>
+                                </tr>
                             </tbody>
                         </table>
                         <footer>
                             <h3>footer van details</h3>
                         </footer>
                     </article>
-                    <article id="overzicht">
+                    <article id="overzicht"
+                             style="<% if (browser.contains("Chrome")) {%>margin-right: 45px;<%}%>">
                         <header>
                             <h2>Lijsten</h2>
                         </header>

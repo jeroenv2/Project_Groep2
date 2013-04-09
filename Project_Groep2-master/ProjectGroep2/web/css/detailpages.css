@@ -3,8 +3,6 @@
 }
 
 #content { /*Eigenlijke tekst/artikels*/
-    width: max-content;
-    
     /* Oude chome, Android, Opera, IOS & safari syntax */
     display: -webkit-box;
     -webkit-box-orient: horizontal;
@@ -23,7 +21,6 @@
 
     /* Nieuwste syntax 
     display: flex;*/
-    
 }
 
 article {
@@ -31,7 +28,7 @@ article {
 }
 article[id="foto"] {
     width: 150px;
-    padding: 10px;
+    padding: 10px 0px 10px 10px;
     margin-left: -20px;
 }
 article[id="details"] {
@@ -39,6 +36,7 @@ article[id="details"] {
     -moz-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
+    text-align: center;
     margin-left: 10px;
     margin-right: 10px;
     padding: 10px;
@@ -46,5 +44,17 @@ article[id="details"] {
 article[id="overzicht"] {
     width: 225px;
     padding: 10px;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    text-align: left;
+}
+td:nth-child(1) {
+    font-weight: bold;
 }
 
