@@ -86,7 +86,7 @@
                                     <td>Einddatum:</td>
                                     <td><%= res.getString(6) %></td>
                                 </tr>
-                                <tr>
+                                <tr>s
                                     <td>Duur:</td>
                                     <td><%= res.getInt(5) %></td>
                                 </tr>
@@ -110,7 +110,7 @@
                         </footer>
                     </article>
                     <article id="overzicht"
-                             style="<% if (browser.contains("Chrome")) {%>margin-right: 45px;<%}%>">
+                             style="<% if (browser.contains("Chrome") || browser.contains("msie")) {%>margin-right: 45px;<%}%>">
                         <header>
                             <h2>Lijsten</h2>
                         </header>
