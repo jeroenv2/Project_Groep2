@@ -4,6 +4,7 @@
     Author     : tar-aldaron
 --%>
 
+<%@page import="sun.font.Script"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
@@ -21,36 +22,13 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
     <!--<![endif]-->
-    <%ArrayList verwijder = new ArrayList();%>
+    <%List<String> verwijder = new ArrayList();%>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Festivals</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <!-- controleren of de checkbox van de datums aangevinkt is of niet -->
-        <script>
-            //Ervoor zorgen dat de datums niet getoond worden (of juist wel)
-            //Bron: http://stackoverflow.com/questions/9280037/javascript-toggle-function-to-hide-and-display-text-how-to-add-images
-            ;
-            
-            function onChangeCheckboxDatums()
-            {
-                var checked = document.getElementById("datumTonen").checked;
-                var ele = document.getElementById("datums");
-                
-                if (checked)
-                {
-                    ele.style.display = "inline";
-                }
-                else
-                {
-                    ele.style.display = "none";
-                }
-            }
-
-                
-        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -79,101 +57,126 @@
 
                                 if (lengteResultSet > 0) {
                         %>   
-                        
-                                <div style='padding-top: 25px; padding-bottom: 10px;'>
 
-                                    <!-- Informatie Festivals -->
-                                    <%
-                                        res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                        res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                        while (res.next()) {
-                                            String id = res.getString("fest_id");
-                                            String naam = res.getString("fest_naam");
-                                            String beginDatum = res.getString("fest_datum");
-                                            String locatie = res.getString("fest_locatie");
-                                    %>
-                                    <table id="<%=id%>" width='600px' style='border: 1px solid white;'>
-                                        <tbody style='padding: 10px;'>
-                                        <form action="festival_details.jsp" method="POST">
-                                            <tr>
-                                                <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
-                                                <input type="hidden" name="naam" value="<%=naam%>">
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
-                                                <!-- Datums berekenen -->
-                                                <%
-                                                    DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+                        <div style='padding-top: 25px; padding-bottom: 10px;'>
 
-                                                    Date begindatum = formaatDatum.parse(beginDatum);
+                            <!-- Informatie Festivals -->
+                            <%
+                                res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                while (res.next()) {
+                                    String id = res.getString("fest_id");
+                                    String naam = res.getString("fest_naam");
+                                    String beginDatum = res.getString("fest_datum");
+                                    String locatie = res.getString("fest_locatie");
+                            %>
+                            <table id="<%=id%>" width='600px' style='border: 1px solid white;'>
+                                <tbody style='padding: 10px;'>
+                                <form action="festival_details.jsp" method="POST">
+                                    <tr>
+                                        <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
+                                    <input type="hidden" name="naam" value="<%=naam%>">
+                                    <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
+                                    <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
+                                        <!-- Datums berekenen -->
+                                        <%
+                                            DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
 
-                                                    //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                                    Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                                    cal.setTime(begindatum);                //De begindatum in cal steken
-                                                    cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+                                            Date begindatum = formaatDatum.parse(beginDatum);
 
-                                                    Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                                    String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+                                            //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
+                                            Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
+                                            cal.setTime(begindatum);                //De begindatum in cal steken
+                                            cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+
+                                            Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
+                                            String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
 %>
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                                <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                        <input type="submit" name="Details" value=" Details " />
-                                                                                                                              
-                  
-                                            </tr>
-                                            <tr>
-                                                <%
-                                                    if (res.getString("fest_url") != null) {
-                                                        String url = res.getString("fest_url");
-                                                %>
-                                                <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
-                                                <%
-                                                } else {
-                                                %>
-                                                <td></td>
-                                                <%}%>
-                                                    <td></td>
-                                                           <td style='padding-right: 10px;padding-bottom: 10px;' >
-                                                                <input onclick='if (value =="Verwijderen"){
-                                                                        value = "Niet verwijderen";
-                                                                        document.getElementById(<%=id%>).style.backgroundColor="red";
-                                                                       verwijder.add(<%=id%>);
-                                                                   }
-                                                                       else if(value !="Verwijderen")
-                                                                   { 
+                                        <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
+                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                            <input type="submit" name="Details" value=" Details " />
 
-                                                                       
-                                                                       value = "Verwijderen";
-                                                                       document.getElementById(<%=id%>).style.backgroundColor="";
-                                                                       verwijder.remove(<%=id%>);
 
-                                                                 }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> 
-                                                              
-                                            </form>                              
-            
-                                                    
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table><br />
-                                    <%
-                                        }
-                                    } else {
-                                    %>
-                                    <h3>Helaas! Er zijn geen records gevonden...</h3>
-                                    <%}
-                                            connectie.sluitConnectie(); //Connectie met de databank sluiten
-                                        } catch (Exception e) {
-                                            out.println(e.getMessage());
-                                        }
-                                    %>
-                                </div>
-                                </section>
-                            </div>
-                            <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-                            <jsp:include page="footer.jsp" />
+                                    </tr>
+                                    <tr>
+                                        <%
+                                            if (res.getString("fest_url") != null) {
+                                                String url = res.getString("fest_url");
+                                        %>
+                                        <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
+                                        <%
+                                        } else {
+                                        %>
+                                        <td></td>
+                                        <%}%>
+                                        <td></td>
+                                        <td style='padding-right: 10px;padding-bottom: 10px;' >
+                                            <input onclick='if (value =="Verwijderen"){
+                                                value = "Niet verwijderen";
+                                                document.getElementById(<%=id%>).style.backgroundColor="red";
+                                                verwijder.add(<%=id%>);
+                                            }
+                                            else if(value !="Verwijderen")
+                                            {                   
+                                                value = "Verwijderen";
+                                                document.getElementById(<%=id%>).style.backgroundColor="";
+                                                verwijder.remove(<%=id%>);
+                                            }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> 
+
+                                </form>                              
+
+
+                                </td>
+                                </tr>
+                                </tbody>
+                            </table><br />
+                            <%
+                                }%>
+                            <form>
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td><input onclick='<%
+                                            try {
+                                                connectie.maakConnectie();
+                                                String verwijder_query = "DELETE FROM festivals";
+                                                if (!verwijder.isEmpty()) {
+                                                    verwijder_query += " WHERE (fest_id LIKE ?";
+                                                    for (int i = 0; i < verwijder.size(); i++) {
+                                                        verwijder_query += " OR fest_id LIKE ?";
+                                                    }
+                                                    verwijder_query += ")";
+                                                    connectie.updateQuery(verwijder_query, verwijder);
+                                                }
+
+                                            } catch (Exception e) {
+                                                out.println(e.getMessage());
+                                            } finally {
+                                                connectie.sluitConnectie();//Connectie met de databank sluiten}
+                                                        }%>' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
+                                        <td>aaa</td>
+                                        <td></td>
+
+                                    </tr>
+                                </table></form>
+
+                            <%} else {
+                            %>
+                            <h3>Helaas! Er zijn geen records gevonden...</h3>
+                            <%}
+                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
+                                } catch (Exception e) {
+                                    out.println(e.getMessage());
+                                }
+                            %>
                         </div>
-                        </body>
-                        </html>
+                </section>
+            </div>
+            <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
+            <jsp:include page="footer.jsp" />
+        </div>
+    </body>
+</html>
