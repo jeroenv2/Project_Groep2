@@ -26,9 +26,6 @@
         <title>Festivals</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <!--[if gt IE 5.5]>
-            <link rel="stylesheet" type="text/css" href="ieuitzonderingen.css" />
-        <![endif]-->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <!-- controleren of de checkbox van de datums aangevinkt is of niet -->
         <script>
