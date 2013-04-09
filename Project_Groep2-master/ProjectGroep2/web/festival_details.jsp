@@ -110,7 +110,7 @@
                         </footer>
                     </article>
                     <article id="overzicht"
-                             style="<% if (browser.contains("Chrome") || browser.contains("msie")) {%>margin-right: 45px;<%}%>">
+                             style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
                         <header>
                             <h2>Lijsten</h2>
                         </header>
