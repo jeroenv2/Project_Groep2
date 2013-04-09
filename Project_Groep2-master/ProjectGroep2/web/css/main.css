@@ -251,6 +251,7 @@ a:active
    ----------------------------*/
 #content_wrapper { /*Witte rand*/
     margin: 35px 20px 15px 20px;
+    min-width: 940px;
     border:1px solid white;
     
 }
