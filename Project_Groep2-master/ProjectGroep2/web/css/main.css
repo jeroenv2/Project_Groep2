@@ -144,7 +144,6 @@ body {
 #page_wrapper {
     /*Flexbox vult alles op, daarom geven we max-width mee*/
     max-width: 1000px;
-    min-width: 1000px;
     margin: 20px 0px;
     /*We maken van de alles in de page_wrapper een flexbox om child elements te beheren*/
     -webkit-box-flex: 1;
@@ -192,7 +191,7 @@ a:hover
 
 a:active
 {
-    color: #14742a;
+    color: #147452a;
 }
 
 /* ----------------------------
@@ -252,10 +251,12 @@ a:active
    ----------------------------*/
 #content_wrapper { /*Witte rand*/
     margin: 35px 20px 15px 20px;
-    border:1px solid white; 
+    border:1px solid white;
+    
 }
 
 #content { /*Eigenlijke tekst/artikels*/
+    min-width: 950px;
     padding: 10px;
     color: white; 
     font-size: 16px;

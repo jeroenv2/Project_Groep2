@@ -1,3 +1,7 @@
+.centertext {
+    text-align: center;
+}
+
 #content { /*Eigenlijke tekst/artikels*/
     width: max-content;
     

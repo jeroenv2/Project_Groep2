@@ -1,0 +1,9 @@
+/* Dit css bestand wordt gebruikt om uitzonderlijke css toe te passen
+ * indien microsoft nog nooit van flexbox gehoord heeft!
+ */
+
+ 
+#page_wrapper {
+    /*minimumbreedte instellen zorgt voor juiste breedte in IE*/
+    min-width: 1000px;
+}
