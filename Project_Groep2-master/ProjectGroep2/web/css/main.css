@@ -144,6 +144,7 @@ body {
 #page_wrapper {
     /*Flexbox vult alles op, daarom geven we max-width mee*/
     max-width: 1000px;
+    min-width: 1000px;
     margin: 20px 0px;
     /*We maken van de alles in de page_wrapper een flexbox om child elements te beheren*/
     -webkit-box-flex: 1;
