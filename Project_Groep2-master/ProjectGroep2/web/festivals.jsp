@@ -44,6 +44,15 @@
                     ele.style.display = "none";
                 }
             }
+            //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
+            function resetFilter() {
+                var form_elementen = form_filter.elements;    
+                for(i=0; i<form_elementen.length; i++)
+                {
+                    form_elementen[i].checked = false;
+                }
+            }
+            window.onload = resetFilter;
         </script>
     </head>
     <body>
@@ -74,7 +83,7 @@
 
                                 if (lengteResultSet > 0) {
                         %>   
-                        <form action='festivals_filter.jsp' method='POST'>
+                        <form id="form_filter" action='festivals_filter.jsp' method='POST'>
                             <table width='625px' style='border: 1px solid white;'>
                                 <tbody>
                                     <tr>
@@ -95,7 +104,7 @@
                                     java.util.Collections.sort(lijstLetters);
                                     for (String letter : lijstLetters) {
                                 %>
-                                &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter %>' /> <%= letter %><br />
+                                &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter%>' /> <%= letter%><br />
                                 <%
                                     }
                                 %>
@@ -121,11 +130,12 @@
                                 <%}%>
                                 </td>
                             </tr><tr>
-                            <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'><input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums</td><br />
+                                <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'><input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums</td><br />
                         <td></td>
                         <tr>
                             <td colspan="2" style='padding-left: 10px;'><div id='datums' style='display: none;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />
-                                    en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /><div></td>
+                                    en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /><div>
+                                        </td>
                                     </tr><tr>
                                     <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
                                         <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
@@ -150,9 +160,9 @@
                                         <form action="festival_details.jsp" method="POST">
                                             <tr>
                                                 <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
-                                                <input type="hidden" name="naam" value="<%=naam%>">
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                                <td></td>
+                                            <input type="hidden" name="naam" value="<%=naam%>">
+                                            <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
+                                            <td></td>
                                             </tr>
                                             <tr>
                                                 <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
@@ -169,7 +179,7 @@
 
                                                     Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                                     String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-%>
+                                                %>
                                                 <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                                 <td></td>
                                             </tr>
@@ -187,20 +197,17 @@
                                                     cal.set(Calendar.YEAR, 0);
                                                     cal.set(Calendar.MONTH, 0);
                                                     cal.set(Calendar.DAY_OF_WEEK, 0);
-                                                    if(begindatum.after(new Date()))
-                                                    {%>
-                                                        <td></td>
-                                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                        <input type="submit" name="Details" value=" Details " />
-                                                    <%}
-                                                    else
-                                                    {%>
-                                                        <td colspan="2" align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                           <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
-                                                    <%}%>
+                                                    if (begindatum.after(new Date())) {%>
+                                                <td></td>
+                                                <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                                    <input type="submit" name="Details" value=" Details " />
+                                                    <%} else {%>
+                                                <td colspan="2" align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                                    <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
+                                                        <%}%>
                                                 </td>
                                             </tr>
-                                            </form>
+                                        </form>
                                         </tbody>
                                     </table><br />
                                     <%
