@@ -27,6 +27,17 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script>
+            //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
+            function resetFilter() {
+                var form_elementen = form_filter.elements;    
+                for(i=0; i<form_elementen.length; i++)
+                {
+                    form_elementen[i].checked = false;
+                }
+            }
+            window.onload = resetFilter;
+        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -55,7 +66,7 @@
 
                                 if (lengteResultSet > 0) {
                         %>   
-                        <form action='groepen_filter.jsp' method='POST'>
+                        <form id="form_filter" action='groepen_filter.jsp' method='POST'>
                             <table width='500px' style='border: 1px solid white;'>
                                 <tbody>
                                     <tr>
