@@ -45,7 +45,6 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
                         <%
                             try {
                                 ArrayList<String> lijstGenres = new ArrayList<String>();
@@ -177,7 +176,6 @@
                                     out.println(e.getMessage());
                                 }
                             %>
-                        </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

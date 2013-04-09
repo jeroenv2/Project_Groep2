@@ -35,7 +35,6 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
                         <%
                             try {
                                 Connectie_Databank connectie = new Connectie_Databank();
@@ -199,7 +198,6 @@
                                     out.println(e.getMessage());
                                 }
                             %>
-                        </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
