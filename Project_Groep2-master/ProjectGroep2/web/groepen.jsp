@@ -55,7 +55,7 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM bands", lijstParams);
+                                connectie.voerQueryUit("SELECT b.*, bf.*, f.fest_naam FROM bands b, bandsperfestival bf, festivals f WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();
 
                                 res.last();
@@ -73,7 +73,7 @@
                                         <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px;'><u>Genre:</u><br />
+                                        <td style='padding-left: 10px; padding-top: 12px;'><u>Genre:</u><br />
                                         <%while (res.next()) {
                                                 String genre = res.getString("band_soortMuziek");
 
@@ -81,7 +81,9 @@
                                                     lijstGenres.add(genre);
                                                 }
                                             }
-
+                                            res.first();
+                                            res.previous();
+                                            
                                             //De ArrayList alfabetisch ordenen
                                             java.util.Collections.sort(lijstGenres);
                                             for (String genre : lijstGenres) {
@@ -91,7 +93,26 @@
                                     }
                                 %>
                                 </td>
-                                <td></td>
+                                <td>
+                                <u>Festival:</u><br />
+                                <%
+                                      List<String> lijstFestivals = new ArrayList<String>();
+                                      while (res.next()) {
+                                                String festival = res.getString("fest_naam");
+
+                                                if (!lijstFestivals.contains(festival)) {
+                                                    lijstFestivals.add(festival);
+                                                }
+                                            }
+                                      //De ArrayList alfabetisch ordenen
+                                            java.util.Collections.sort(lijstFestivals);
+                                            for (String festival : lijstFestivals) {
+                                        %>
+                                &nbsp;&nbsp;<input type='radio' name='festival' value='<%=festival%>' /> <%=festival%><br />
+                                <%
+                                    }
+                                %>
+                                </td>
                                 </tr>
                                 <tr>
                                     <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
