@@ -89,8 +89,7 @@
                                 <tbody style='padding: 10px;'>
                                 <form action="groepen_details.jsp" method="POST">
                                     <tr>
-                                        <!-- width:5 zodat de kolom van de afbeelding altijd maar tot de grootte van de afbeelding uitgerokken wordt -->
-                                        <td rowspan="4" style="width: 5px; padding: 5px;"><img src="<%=afbeelding%>" height="80px" alt="Afbeelding Band" /></td>
+                                        <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
                                     </tr>
                                     <tr>
                                         <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b></td>
