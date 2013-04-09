@@ -22,13 +22,14 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
     <!--<![endif]-->
-    <%List<String> verwijder = new ArrayList();%>
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Festivals</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+
     </head>
     <body>
         <div id="page_wrapper">
@@ -37,10 +38,10 @@
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
+                        <%!List<String> verwijder = new ArrayList();%>
                         <%
                             try {
-                                ArrayList<String> lijstLetters = new ArrayList<String>();
-                                ArrayList<String> lijstLocaties = new ArrayList<String>();
+                                
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
@@ -59,13 +60,13 @@
                         %>   
 
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
-
+                            <%! String id=""; %>
                             <!-- Informatie Festivals -->
                             <%
                                 res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                 res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                 while (res.next()) {
-                                    String id = res.getString("fest_id");
+                                     id= res.getString("fest_id");
                                     String naam = res.getString("fest_naam");
                                     String beginDatum = res.getString("fest_datum");
                                     String locatie = res.getString("fest_locatie");
@@ -117,13 +118,13 @@
                                             <input onclick='if (value =="Verwijderen"){
                                                 value = "Niet verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="red";
-                                                verwijder.add(<%=id%>);
+                                                <%verwijder.add(id);%>
                                             }
                                             else if(value !="Verwijderen")
                                             {                   
                                                 value = "Verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="";
-                                                verwijder.remove(<%=id%>);
+                                               <%verwijder.remove(id);%>
                                             }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> 
 
                                 </form>                              
@@ -143,6 +144,7 @@
                                             try {
                                                 connectie.maakConnectie();
                                                 String verwijder_query = "DELETE FROM festivals";
+                                                
                                                 if (!verwijder.isEmpty()) {
                                                     verwijder_query += " WHERE (fest_id LIKE ?";
                                                     for (int i = 0; i < verwijder.size(); i++) {
@@ -156,7 +158,8 @@
                                                 out.println(e.getMessage());
                                             } finally {
                                                 connectie.sluitConnectie();//Connectie met de databank sluiten}
-                                                        }%>' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
+                                                        }%>value=<%= verwijder.toString()%>;' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
+                                    
                                         <td>aaa</td>
                                         <td></td>
 

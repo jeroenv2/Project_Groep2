@@ -131,17 +131,14 @@ public class Connectie_Databank
                 //Lijst met parameters uitlezen om de preparedStatement op te vullen
                 for(int i=1; i<=parameters.size(); i++)
                 {
-                   prepStatement.setString(i, parameters.get(i-1));
+                   prepStatement.setInt(i, Integer.parseInt(parameters.get(i-1)));
                 }
-                prepStatement.executeUpdate();
-            }
-            else
-            {
-                statement = connectie.createStatement();
-                statement.executeUpdate(query);
+                prepStatement.execute();
+                
             }
         }
         catch(Exception e)
-        {}
+        {
+        }
     }
 }
