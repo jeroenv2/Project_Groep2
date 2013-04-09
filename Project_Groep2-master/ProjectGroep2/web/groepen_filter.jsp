@@ -42,16 +42,16 @@
 
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
-                                String query = "SELECT * FROM bands"; //Zonder enig iets aangeduid te hebben in festivals.jsp
+                                String query = "SELECT b.* FROM bands b, festivals f, bandsperfestival bf WHERE  b.band_id = bf.band_id AND bf.fest_id = f.fest_id";
+                                //WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id
 
-                                //Alle aangeduidde letters behandelen
                                 if (request.getParameter("genre") != null) {
-                                    query += " WHERE (band_soortMuziek = ?"; //Beginletters geselecteerd
+                                    query += " AND (b.band_soortMuziek = ?"; //Beginletters geselecteerd
                                     String[] genres = request.getParameterValues("genre");
                                     //Vormen van query
                                     for (int i = 0; i < genres.length - 1; i++) //ervoor zorgen dat de query juist eindigt
                                     {                                     //Begin 0: Array letters begin ook vanaf 0
-                                        query += " OR band_soortMuziek = ?";
+                                        query += " OR b.band_soortMuziek = ?";
                                     }
                                     query += ")";
 
@@ -59,6 +59,12 @@
                                     for (int i = 0; i < genres.length; i++) {
                                         lijstParams.add(genres[i]);
                                     }
+                                }
+                                
+                                if(request.getParameter("festival") != null)
+                                {
+                                    query += " AND f.fest_naam = ?";
+                                    lijstParams.add(request.getParameter("festival"));
                                 }
                                 
                                 connectie.voerQueryUit(query, lijstParams);
