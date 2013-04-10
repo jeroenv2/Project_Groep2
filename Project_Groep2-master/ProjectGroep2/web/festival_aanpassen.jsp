@@ -117,27 +117,25 @@
                                         <%}%>
                                         <td></td>
                                         <td style='padding-right: 10px;padding-bottom: 10px;' >
-                                            <input id="<%=id%>_button1" onclick='
+                                            <input onclick='if (value === "Verwijderen"){
                                                 <%
                                                 verwijder.add(id);
                                                 %>
                                                     alert(<%= verwijder.get(0) %>);
                                                 value = "Niet verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="red";
-                                                document.getElementById(<%=id%>_button2).hidden= false;
-                                                hidden=true;
                                                 
-                                            ' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
-                                            
-                                            
-                                            <input id="<%=id%>_button2" onclick='
+                                                
+                                            }
+                                            else if(value !== "Verwijderen")
+                                            {    
                                                 <%
                                                 verwijder.remove(id);
                                                 %>
+                                                value = "Verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="";
-                                                hidden=true;
-                                                
-                                        ' type="button" value="Niet verwijderen" hidden="true" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
+                                               
+                                            }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
                                 </form>                              
                                 </td>
                                 </tr>
