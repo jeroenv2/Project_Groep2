@@ -49,18 +49,6 @@
                     ele.style.display = "none";
                 }
             }
-            function veranderTekstZoeken()
-            {
-                if(document.getElementById("geavZoeken").innerHTML === "+ Geavanceerd Zoeken")
-                {
-                    $("#geavZoeken").html("- Geavanceerd Zoeken");
-                }
-                else
-                {
-                    $("#geavZoeken").html("+ Geavanceerd Zoeken");
-                }
-                
-            }
             //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
             function resetFilter() {
                 var form_elementen = form_filter.elements;    

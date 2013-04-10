@@ -27,6 +27,10 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        
+        <!-- Collapsible scripts -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script src="js/vendor/jquery.collapse.js"></script>
         <script>
             //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
             function resetFilter() {
@@ -65,13 +69,13 @@
                                 res.previous();
 
                                 if (lengteResultSet > 0) {
-                        %>   
+                        %>
+                        <div data-collapse style="width: 600px; border: 1px solid white; margin-top: 15px;">
+                            <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
+                        <div>
                         <form id="form_filter" action='groepen_filter.jsp' method='POST'>
-                            <table width='500px' style='border: 1px solid white;'>
+                            <table width='625px'>
                                 <tbody align="left">
-                                    <tr>
-                                        <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
-                                    </tr>
                                     <tr>
                                         <td style='padding-left: 10px; padding-top: 12px;'><u>Genre:</u><br />
                                         <%while (res.next()) {
@@ -122,6 +126,8 @@
                                 </tbody >
                             </table>
                         </form>
+                        </div>
+                        </div>
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
 
                             <!-- Informatie groepen -->
