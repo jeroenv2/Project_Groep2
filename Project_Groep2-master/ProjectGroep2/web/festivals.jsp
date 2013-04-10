@@ -27,6 +27,11 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        
+        <!-- Collapsible scripts -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script src="js/vendor/jquery.collapse.js"></script>
+
         <!-- controleren of de checkbox van de datums aangevinkt is of niet -->
         <script>
             //Ervoor zorgen dat de datums niet getoond worden (of juist wel)
@@ -61,7 +66,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
+                    <div align="center">                        
                         <%
                             try {
                                 ArrayList<String> lijstLetters = new ArrayList<String>();
@@ -83,12 +88,13 @@
 
                                 if (lengteResultSet > 0) {
                         %>   
-                        <form id="form_filter" action='festivals_filter.jsp' method='POST'>
-                            <table width='625px' style='border: 1px solid white;'>
+                        
+                        <div data-collapse>
+                        <h2>Geavanceerd Zoeken</h2>
+                        <div>
+                          <form id="form_filter" action='festivals_filter.jsp' method='POST'>
+                            <table width='625px'>
                                 <tbody align="left">
-                                    <tr>
-                                        <td colspan="2" style='padding-left: 5px; padding-top: 5px; font-size: 24px;'><b>Geavanceerd Zoeken</b></td>
-                                    </tr>
                                     <tr>
                                         <td width=300px style='padding-left: 10px;'><u>Naam begint met:</u><br />
 
@@ -136,7 +142,8 @@
                             <td colspan="2" style='padding-left: 10px;'><div id='datums' style='display: none;'>Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />
                                     en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' /><div>
                                         </td>
-                                    </tr><tr>
+                                    </tr>
+                                    <tr>
                                     <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
                                         <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                     <td></td>
@@ -144,8 +151,18 @@
                                 </tbody>
                                 </table>
                                 </form>
+                        </div>
+                      </div>   
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 <div style='padding-top: 25px; padding-bottom: 10px;'>
 
+                                    
                                     <!-- Informatie Festivals -->
                                     <%
                                         res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
