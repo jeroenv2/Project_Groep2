@@ -49,6 +49,14 @@
             + " JOIN campingsperfestival cf ON c.camp_id = cf.camp_id"
             + " WHERE fest_id = ?", lijstParams);
             ResultSet campings = connectie.haalResultSetOp();
+            
+            //Capaciteit van campings ophalen
+            int cap = 0;
+            while (campings.next()) {
+                cap += Integer.parseInt(campings.getString("camp_cap"));
+            }
+            campings.beforeFirst();
+                
                 
             //ResultSet aanmaken voor alle tickettypes beschikbaar op een festival
             connectie.voerQueryUit("SELECT tt.typ_omschr, tt.typ_prijs"
@@ -133,8 +141,8 @@
                                     <%}%>
                                 </tr>
                                 <tr>
-                                    <td style="padding-right: 25px;">Capaciteit kamping:</td>
-                                    <td>Be right back for this one!</td>
+                                    <td style="padding-right: 25px;">Capaciteit camping:</td>
+                                    <td><%= cap %></td>
                                 </tr>
                             </tbody>
                         </table>
