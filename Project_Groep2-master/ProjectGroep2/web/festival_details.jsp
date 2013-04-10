@@ -18,11 +18,6 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/detailpages.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <%
             Connectie_Databank connectie = new Connectie_Databank();
 
@@ -38,6 +33,11 @@
             ResultSet res = connectie.haalResultSetOp();
             res.first();
         %>
+        <title><%= res.getString(2) %> - Details</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/detailpages.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -46,28 +46,31 @@
             <div id="content_wrapper">
                 <section id="content">
                     <article id="foto">
-                        <img src="img/festivals/rock_werchter_2013.png"
-                             alt="Rock Werchter 2013 - afbeelding" width="140px"
-                             draggable="true"
-                             />
+                        <% 
+                            String foto = res.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
+                        %>
+                        <img src="img/festivals/<%= foto %>.jpg"
+                             alt="<%= foto %>" width="95%"
+                             draggable="true" />
                         Foto:&nbsp;&nbsp;
                     </article>
                     <article id="details">
-                        <header>
-                            <h2><%=res.getString(2)%></h2>
-                        </header>
                         <!-- Naam van browser ophalen -->
                         <% String browser = request.getHeader("User-Agent"); %>
                         <!-- gemeente scheiden van land -->
                         <%
                             String land = "";
                             String gemeente = "";
-                            String locatie = res.getString(3);
+                            String locatie = res.getString("fest_locatie");
                                 
                             int sep = locatie.indexOf("-");
                             land = locatie.substring(0, sep-1);
                             gemeente = locatie.substring(sep+1, locatie.length());
                         %>
+                        <header>
+                            <h2><%=res.getString("fest_naam")%></h2>
+                        </header>
+                        
                         <table>
                             <tbody>
                                 <tr>
@@ -80,19 +83,19 @@
                                 </tr>
                                 <tr>
                                     <td>Startdatum:</td>
-                                    <td><%= res.getString(4) %></td>
+                                    <td><%= res.getString("fest_datum") %></td>
                                 </tr>
                                 <tr>
                                     <td>Einddatum:</td>
-                                    <td><%= res.getString(6) %></td>
+                                    <td><%= res.getString("fest_einddatum") %></td>
                                 </tr>
                                 <tr>s
                                     <td>Duur:</td>
-                                    <td><%= res.getInt(5) %></td>
+                                    <td><%= res.getInt("fest_duur") %></td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
-                                    <%  String website = res.getString(7);
+                                    <%  String website = res.getString("fest_url");
                                     if (website != null) {%>
                                     <td><%= website %></td>
                                     <%} else {%>
@@ -101,7 +104,7 @@
                                 </tr>
                                 <tr>
                                     <td style="padding-right: 25px;">Capaciteit kamping:</td>
-                                    <td><%= res.getString(8) %></td>
+                                    <td><%= res.getString("camp_cap") %></td>
                                 </tr>
                             </tbody>
                         </table>
