@@ -69,13 +69,12 @@
                             String locatie = res.getString("fest_locatie");
                         %>
                         <table width='600px' style='border: 1px solid white;'>
-                            <tbody style='padding: 10px;'>
+                            <tbody align="left" style='padding: 10px;'>
                             <form action="festival_details.jsp" method="POST">
                                 <tr>
                                     <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                 <input type="hidden" name="naam" value="<%=naam%>">
                                 <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                <td></td>
                                 </tr>
                                 <tr>
                                     <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
@@ -95,7 +94,6 @@
                                         String url = res.getString("fest_url");
                                     %>
                                     <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
