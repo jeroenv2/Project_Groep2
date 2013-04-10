@@ -4,6 +4,7 @@
     Author     : tar-aldaron
 --%>
 
+<%@page import="javax.swing.JOptionPane"%>
 <%@page import="sun.font.Script"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
@@ -32,13 +33,14 @@
 
     </head>
     <body>
+        <%!List<String> verwijder = new ArrayList();%>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
-                        <%!List<String> verwijder = new ArrayList();%>
+                        
                         <%
                             try {
 
@@ -115,33 +117,26 @@
                                         <%}%>
                                         <td></td>
                                         <td style='padding-right: 10px;padding-bottom: 10px;' >
-                                            <input onclick='if (value =="Verwijderen"){
-                                                "lijst_verw(<%=id%>,value)";
+                                            <input onclick='if (value === "Verwijderen"){
+                                                <%
+                                                verwijder.add(id);
+                                                %>
+                                                    alert(<%= verwijder.get(0) %>);
                                                 value = "Niet verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="red";
                                                 
+                                                
                                             }
-                                            else if(value !="Verwijderen")
+                                            else if(value !== "Verwijderen")
                                             {    
-                                                "lijst_verw(<%=id%>,value)";
+                                                <%
+                                                verwijder.remove(id);
+                                                %>
                                                 value = "Verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="";
                                                
                                             }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
-                                            <%!
-                                                public void lijst_verw(String id, String value) {
-                                                    if (value == "Verwijderen") {
-                                                        verwijder.add(id);
-
-                                                    } else if (value != "Verwijderen") {
-                                                        verwijder.remove(id);
-                                                    }
-                                                }
-                                            %>
-
                                 </form>                              
-
-
                                 </td>
                                 </tr>
                                 </tbody>
@@ -157,13 +152,18 @@
                                                 connectie.maakConnectie();
                                                 String verwijder_query = "DELETE FROM festivals";
 
+                                                for(String b : verwijder)
+                                                {
+                                                     JOptionPane.showMessageDialog(null, b);
+                                                }
+                                                
                                                 if (!verwijder.isEmpty()) {
-                                                    verwijder_query += " WHERE (fest_id LIKE ?";
+                                                    verwijder_query += " WHERE (fest_id = ?";
                                                     for (int i = 0; i < verwijder.size(); i++) {
-                                                        verwijder_query += " OR fest_id LIKE ?";
+                                                        verwijder_query += " OR fest_id = ?";
                                                     }
                                                     verwijder_query += ")";
-
+                                                    
                                                     connectie.updateQuery(verwijder_query, verwijder);
                                                 }
 
@@ -173,7 +173,7 @@
                                                 connectie.sluitConnectie();//Connectie met de databank sluiten}
                                             }%>' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
 
-                                        <td><input onclick="document.location.reload(true)" type="button" value="Annuleren" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/></td>
+                                        <td><input onclick="document.location.reload(true);" type="button" value="Annuleren" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/></td>
                                         <td></td>
 
                                     </tr>
