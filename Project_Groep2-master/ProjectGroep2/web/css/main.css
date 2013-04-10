@@ -176,7 +176,8 @@ body {
 
 a:link
 {
-    color: palegreen;
+    color: white;
+    text-decoration: none;
 }
 
 a:visited
@@ -186,14 +187,13 @@ a:visited
 
 a:hover
 {
-    color: limegreen;
+    color: #cbcbcb;
 }
 
 a:active
 {
     color: #147452;
 }
-
 
 h2 a:link, h2 a:visited
 {

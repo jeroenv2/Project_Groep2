@@ -83,7 +83,6 @@
                         <img src="img/festivals/<%= foto %>.jpg"
                              alt="<%= foto %>" width="95%"
                              draggable="true" />
-                        Foto:&nbsp;&nbsp;
                     </article>
                     <article id="details">
                         <!-- Naam van browser ophalen -->
@@ -95,8 +94,8 @@
                             String locatie = fest.getString("fest_locatie");
                                 
                             int sep = locatie.indexOf("-");
-                            land = locatie.substring(0, sep-1);
-                            gemeente = locatie.substring(sep+1, locatie.length());
+                            gemeente = locatie.substring(0, sep-1);
+                            land = locatie.substring(sep+1, locatie.length());
                         %>
                         <header>
                             <h2><%=fest.getString("fest_naam")%></h2>
@@ -139,51 +138,74 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <footer>
-                            <h3>footer van details</h3>
-                        </footer>
+                        <div id="map_canvas" style="width: 400px; height: 300px"></div> 
+
+                        <script type="text/javascript"> 
+
+                        var userLocation = '<%= gemeente %>';
+
+                        if (GBrowserIsCompatible()) {
+                           var geocoder = new GClientGeocoder();
+                           geocoder.getLocations(userLocation, function (locations) {         
+                              if (locations.Placemark) {
+                                 var north = locations.Placemark[0].ExtendedData.LatLonBox.north;
+                                 var south = locations.Placemark[0].ExtendedData.LatLonBox.south;
+                                 var east  = locations.Placemark[0].ExtendedData.LatLonBox.east;
+                                 var west  = locations.Placemark[0].ExtendedData.LatLonBox.west;
+
+                                 var bounds = new GLatLngBounds(new GLatLng(south, west), 
+                                                                new GLatLng(north, east));
+
+                                 var map = new GMap2(document.getElementById("map_canvas"));
+
+                                 map.setCenter(bounds.getCenter(), map.getBoundsZoomLevel(bounds));
+                                 map.addOverlay(new GMarker(bounds.getCenter()));
+                              }
+                           });
+                        }
+                        </script> 
                     </article>
-                    <article id="overzicht"
-                             style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
-                        <header>
-                            <h2>Overzicht</h2>
-                        </header>
-                        <div id="lijsten" data-collapse="persist">
-                            <p class="open">Groepen</p>
-                            <ul>
-                                <% if (bands != null) {
-                                    while (bands.next()) { %>
-                                <li><%= bands.getString("band_naam") %></li>
-                                <li><%= bands.getString("pod_omschr") %></li>
-                                <%  }
-                                   } else { %>
-                                <li>Nog geen groepen</li>
-                                <% }%>
-                            </ul>
-                            <p>Campings</p>
-                            <ul>
-                                <% if (campings != null) {
-                                    while (campings.next()) { %>
-                                <li><%= campings.getString("camp_adres") %></li>
-                                <li><%= campings.getString("camp_cap") %></li>
-                                <%  }
-                                   } else { %>
-                                <li>Nog geen campings</li>
-                                <% }%>
-                            </ul>
-                            <p>Tickets</p>
-                            <ul>
-                                <% if (tickets != null) {
-                                    while (tickets.next()) { %>
-                                <li><%= tickets.getString("typ_omschr") %></li>
-                                <li><%= tickets.getString("typ_prijs") %></li>
-                                <%  }
-                                   } else { %>
-                                <li>Nog geen tickets</li>
-                                <% }%>
-                            </ul>
-                        </div>
-                    </article>
+                        <article id="overzicht"
+                                 style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
+                            <header>
+                                <h2>Overzicht</h2>
+                            </header>
+                            <div id="lijsten" data-collapse="persist">
+                                <p class="open">Groepen</p>
+                                <ul>
+                                    <% try {
+                                        while (bands.next()) { %>
+                                    <li><%= bands.getString("band_naam") %></li>
+                                    <li><%= bands.getString("pod_omschr") %></li>
+                                    <%  }
+                                       } catch (Exception e) { %>
+                                    <li>Nog geen groepen</li>
+                                    <% }%>
+                                </ul>
+                                <p>Campings</p>
+                                <ul>
+                                    <% try {
+                                        while (campings.next()) { %>
+                                    <li><%= campings.getString("camp_adres") %></li>
+                                    <li><%= campings.getString("camp_cap") %></li>
+                                    <%  }
+                                       } catch (Exception e) { %>
+                                    <li>Nog geen campings</li>
+                                    <% }%>
+                                </ul>
+                                <p>Tickets</p>
+                                <ul>
+                                    <% try {
+                                        while (tickets.next()) { %>
+                                    <li><%= tickets.getString("typ_omschr") %></li>
+                                    <li><%= tickets.getString("typ_prijs") %></li>
+                                    <%  }
+                                       } catch (Exception e) { %>
+                                    <li>Nog geen tickets</li>
+                                    <% }%>
+                                </ul>
+                            </div>
+                        </article>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

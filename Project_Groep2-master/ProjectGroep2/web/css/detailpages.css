@@ -51,7 +51,7 @@ article[id="details"] {
     padding: 10px;
 }
 article[id="overzicht"] {
-    width: 225px;
+    width: 230px;
     padding: 10px;
 }
 
@@ -78,19 +78,22 @@ td:nth-child(1) {
 p {
     font-size: 1.2em;
     text-align: center;
-    border: 1px solid white;
-    margin-top: 15px;
+    border: 2px solid #cbcbcb;
+    border-bottom: none;
+    margin-bottom: 0 !important;
+    color: white;
     background-color: green;
 }
 
 ul {
     background-color: rgba(255, 255, 200, 0.2);
     height: 150px;
+    margin-top: 0 !important;
     overflow-y: scroll;
     list-style: none;
-    padding: 0px;
-    margin: 0px;
     text-align: left;
+    border: 2px solid #cbcbcb;
+    border-top: none;
 }
 li {
     margin-bottom: 5px;
