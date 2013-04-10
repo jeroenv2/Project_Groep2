@@ -49,6 +49,18 @@
                     ele.style.display = "none";
                 }
             }
+            function veranderTekstZoeken()
+            {
+                if(document.getElementById("geavZoeken").innerHTML === "+ Geavanceerd Zoeken")
+                {
+                    $("#geavZoeken").html("- Geavanceerd Zoeken");
+                }
+                else
+                {
+                    $("#geavZoeken").html("+ Geavanceerd Zoeken");
+                }
+                
+            }
             //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
             function resetFilter() {
                 var form_elementen = form_filter.elements;    
@@ -89,8 +101,8 @@
                                 if (lengteResultSet > 0) {
                         %>   
                         
-                        <div data-collapse>
-                        <h2>Geavanceerd Zoeken</h2>
+                        <div data-collapse style="width: 600px;">
+                            <h2 id="geavZoeken" style="margin-bottom: 0px; padding-bottom: 0px;">+ Geavanceerd Zoeken </h2>
                         <div>
                           <form id="form_filter" action='festivals_filter.jsp' method='POST'>
                             <table width='625px'>

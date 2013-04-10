@@ -191,7 +191,20 @@ a:hover
 
 a:active
 {
-    color: #147452a;
+    color: #147452;
+}
+
+
+h2 a:link, h2 a:visited
+{
+    color: limegreen;
+    text-decoration: none;
+}
+
+h2 a:hover
+{
+    color: green;
+    text-decoration: none;
 }
 
 /* ----------------------------
