@@ -101,8 +101,8 @@
                                 if (lengteResultSet > 0) {
                         %>   
                         
-                        <div data-collapse style="width: 600px;">
-                            <h2 id="geavZoeken" style="margin-bottom: 0px; padding-bottom: 0px;">+ Geavanceerd Zoeken </h2>
+                        <div data-collapse style="width: 600px; border: 1px solid white; margin-top: 15px;">
+                            <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
                         <div>
                           <form id="form_filter" action='festivals_filter.jsp' method='POST'>
                             <table width='625px'>

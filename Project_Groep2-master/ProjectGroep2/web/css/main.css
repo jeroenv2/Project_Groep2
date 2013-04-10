@@ -197,13 +197,13 @@ a:active
 
 h2 a:link, h2 a:visited
 {
-    color: limegreen;
+    color: white;
     text-decoration: none;
 }
 
 h2 a:hover
 {
-    color: green;
+    color: beige;
     text-decoration: none;
 }
 
