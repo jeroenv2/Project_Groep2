@@ -23,21 +23,52 @@
 
             connectie.maakConnectie();
             List<String> lijstParams = new ArrayList<String>();
+            List<String> legeLijst = new ArrayList<String>();
             lijstParams.add(request.getParameter("naam"));
 
-            connectie.voerQueryUit("SELECT f.fest_id, f.fest_naam, f.fest_locatie, f.fest_datum, f.fest_duur, f.fest_einddatum, f.fest_url, c.camp_cap"
+            //ResultSet aanmaken voor het gekozen festival
+            connectie.voerQueryUit("SELECT f.fest_id, f.fest_naam, f.fest_locatie, f.fest_datum, f.fest_duur, f.fest_einddatum, f.fest_url"
                     + " FROM festivals f"
-                    + " JOIN campingsperfestival cp ON f.fest_id = cp.fest_id"
-                    + " JOIN campings c ON cp.camp_id = c.camp_id"
                     + " WHERE f.fest_naam = ?", lijstParams);
-            ResultSet res = connectie.haalResultSetOp();
-            res.first();
+            ResultSet fest = connectie.haalResultSetOp();
+            fest.first();
+            
+            lijstParams.remove(0);
+            lijstParams.add(fest.getString("fest_id"));
+            //ResultSet aanmaken voor alle groepen van op het festival
+            connectie.voerQueryUit("SELECT b.band_naam, p.pod_omschr"
+            + " FROM bands b"
+            + " JOIN bandsperfestival bf ON b.band_id = bf.band_id"
+            + " JOIN podia p ON p.pod_id = bf.pod_id"
+            + " WHERE fest_id = ?", lijstParams);
+            ResultSet bands = connectie.haalResultSetOp();
+            
+            //ResultSet aanmaken voor alle campings van een festival
+            connectie.voerQueryUit("SELECT c.camp_adres, c.camp_cap"
+            + " FROM campings c"
+            + " JOIN campingsperfestival cf ON c.camp_id = cf.camp_id"
+            + " WHERE fest_id = ?", lijstParams);
+            ResultSet campings = connectie.haalResultSetOp();
+                
+            //ResultSet aanmaken voor alle tickettypes beschikbaar op een festival
+            connectie.voerQueryUit("SELECT tt.typ_omschr, tt.typ_prijs"
+            + " FROM tickettypes tt"
+            + " JOIN tickettypesperfestival ttf ON tt.typ_id = ttf.typ_id"
+            + " WHERE fest_id = ?", lijstParams);
+            ResultSet tickets = connectie.haalResultSetOp();
+
+            //ResultSet aanmaken voor alle campings van het festival
+
         %>
-        <title><%= res.getString(2) %> - Details</title>
+        <title><%= fest.getString(2) %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detailpages.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="js/vendor/jquery.collapse.js"></script>
+        <script src="js/vendor/jquery.collapse_storage.js"></script>
+        <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -47,7 +78,7 @@
                 <section id="content">
                     <article id="foto">
                         <% 
-                            String foto = res.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
+                            String foto = fest.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
                         %>
                         <img src="img/festivals/<%= foto %>.jpg"
                              alt="<%= foto %>" width="95%"
@@ -61,14 +92,14 @@
                         <%
                             String land = "";
                             String gemeente = "";
-                            String locatie = res.getString("fest_locatie");
+                            String locatie = fest.getString("fest_locatie");
                                 
                             int sep = locatie.indexOf("-");
                             land = locatie.substring(0, sep-1);
                             gemeente = locatie.substring(sep+1, locatie.length());
                         %>
                         <header>
-                            <h2><%=res.getString("fest_naam")%></h2>
+                            <h2><%=fest.getString("fest_naam")%></h2>
                         </header>
                         
                         <table>
@@ -83,19 +114,19 @@
                                 </tr>
                                 <tr>
                                     <td>Startdatum:</td>
-                                    <td><%= res.getString("fest_datum") %></td>
+                                    <td><%= fest.getString("fest_datum") %></td>
                                 </tr>
                                 <tr>
                                     <td>Einddatum:</td>
-                                    <td><%= res.getString("fest_einddatum") %></td>
+                                    <td><%= fest.getString("fest_einddatum") %></td>
                                 </tr>
                                 <tr>s
                                     <td>Duur:</td>
-                                    <td><%= res.getInt("fest_duur") %></td>
+                                    <td><%= fest.getInt("fest_duur") %></td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
-                                    <%  String website = res.getString("fest_url");
+                                    <%  String website = fest.getString("fest_url");
                                     if (website != null) {%>
                                     <td><%= website %></td>
                                     <%} else {%>
@@ -104,7 +135,7 @@
                                 </tr>
                                 <tr>
                                     <td style="padding-right: 25px;">Capaciteit kamping:</td>
-                                    <td><%= res.getString("camp_cap") %></td>
+                                    <td>Be right back for this one!</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -115,12 +146,43 @@
                     <article id="overzicht"
                              style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
                         <header>
-                            <h2>Lijsten</h2>
+                            <h2>Overzicht</h2>
                         </header>
-                        <p>Festivallijst & toevoegen</p>
-                        <footer>
-                            <h3>borderfactory dinges</h3>
-                        </footer>
+                        <div id="lijsten" data-collapse="persist">
+                            <p class="open">Groepen</p>
+                            <ul>
+                                <% if (bands != null) {
+                                    while (bands.next()) { %>
+                                <li><%= bands.getString("band_naam") %></li>
+                                <li><%= bands.getString("pod_omschr") %></li>
+                                <%  }
+                                   } else { %>
+                                <li>Nog geen groepen</li>
+                                <% }%>
+                            </ul>
+                            <p>Campings</p>
+                            <ul>
+                                <% if (campings != null) {
+                                    while (campings.next()) { %>
+                                <li><%= campings.getString("camp_adres") %></li>
+                                <li><%= campings.getString("camp_cap") %></li>
+                                <%  }
+                                   } else { %>
+                                <li>Nog geen campings</li>
+                                <% }%>
+                            </ul>
+                            <p>Tickets</p>
+                            <ul>
+                                <% if (tickets != null) {
+                                    while (tickets.next()) { %>
+                                <li><%= tickets.getString("typ_omschr") %></li>
+                                <li><%= tickets.getString("typ_prijs") %></li>
+                                <%  }
+                                   } else { %>
+                                <li>Nog geen tickets</li>
+                                <% }%>
+                            </ul>
+                        </div>
                     </article>
                 </section>
             </div>

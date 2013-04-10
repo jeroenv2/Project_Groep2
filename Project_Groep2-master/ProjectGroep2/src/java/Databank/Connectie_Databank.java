@@ -79,7 +79,9 @@ public class Connectie_Databank
             }
         }
         catch(Exception e)
-        {}
+        {
+            System.err.println("FOUT BIJ UITVOEREN QUERY: " + e.getMessage());
+        }
     }
     
     public ResultSet haalResultSetOp()
@@ -95,9 +97,6 @@ public class Connectie_Databank
         //ConnectieString leegmaken en alle objecten die te maken hebben met de connectie sluiten
         try
         {
-            connectieString = null;
-            gebruikersnaam = null;
-            wachtwoord = null;
             if(connectie != null)
             {
                 connectie.close();
