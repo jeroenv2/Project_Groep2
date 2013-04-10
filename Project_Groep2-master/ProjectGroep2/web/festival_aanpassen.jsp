@@ -22,7 +22,7 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
     <!--<![endif]-->
-    
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Festivals</title>
@@ -41,7 +41,7 @@
                         <%!List<String> verwijder = new ArrayList();%>
                         <%
                             try {
-                                
+
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
@@ -60,13 +60,13 @@
                         %>   
 
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
-                            <%! String id=""; %>
+                            <%! String id = "";%>
                             <!-- Informatie Festivals -->
                             <%
                                 res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                 res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                 while (res.next()) {
-                                     id= res.getString("fest_id");
+                                    id = res.getString("fest_id");
                                     String naam = res.getString("fest_naam");
                                     String beginDatum = res.getString("fest_datum");
                                     String locatie = res.getString("fest_locatie");
@@ -95,7 +95,7 @@
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-%>
+                                        %>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                             <input type="submit" name="Details" value=" Details " />
@@ -116,16 +116,28 @@
                                         <td></td>
                                         <td style='padding-right: 10px;padding-bottom: 10px;' >
                                             <input onclick='if (value =="Verwijderen"){
+                                                "lijst_verw(<%=id%>,value)";
                                                 value = "Niet verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="red";
-                                                <%verwijder.add(id);%>
+                                                
                                             }
                                             else if(value !="Verwijderen")
-                                            {                   
+                                            {    
+                                                "lijst_verw(<%=id%>,value)";
                                                 value = "Verwijderen";
                                                 document.getElementById(<%=id%>).style.backgroundColor="";
-                                               <%verwijder.remove(id);%>
-                                            }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> 
+                                               
+                                            }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
+                                            <%!
+                                                public void lijst_verw(String id, String value) {
+                                                    if (value == "Verwijderen") {
+                                                        verwijder.add(id);
+
+                                                    } else if (value != "Verwijderen") {
+                                                        verwijder.remove(id);
+                                                    }
+                                                }
+                                            %>
 
                                 </form>                              
 
@@ -144,13 +156,14 @@
                                             try {
                                                 connectie.maakConnectie();
                                                 String verwijder_query = "DELETE FROM festivals";
-                                                
+
                                                 if (!verwijder.isEmpty()) {
                                                     verwijder_query += " WHERE (fest_id LIKE ?";
                                                     for (int i = 0; i < verwijder.size(); i++) {
                                                         verwijder_query += " OR fest_id LIKE ?";
                                                     }
                                                     verwijder_query += ")";
+
                                                     connectie.updateQuery(verwijder_query, verwijder);
                                                 }
 
@@ -158,9 +171,9 @@
                                                 out.println(e.getMessage());
                                             } finally {
                                                 connectie.sluitConnectie();//Connectie met de databank sluiten}
-                                                        }%>value=<%= verwijder.toString()%>;' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
-                                    
-                                        <td>aaa</td>
+                                            }%>' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
+
+                                        <td><input onclick="document.location.reload(true)" type="button" value="Annuleren" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/></td>
                                         <td></td>
 
                                     </tr>
