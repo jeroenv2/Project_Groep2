@@ -96,8 +96,18 @@
                                     <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                 </tr>
                                 <tr>
+                                    <%
+                                    if (url == null) {
+                                    %>
+                                    <td style='padding-left: 10px; padding-bottom: 10px;'>Geen site beschikbaar</td>
+                                    <%
+                                    } else {
+                                    %>
                                     <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
-                                   
+                                    <%
+                                    }
+                                    %>
+                                    
                                     <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                         <input type="submit" name="Details" value=" Details " />
                                     </td>
@@ -109,7 +119,7 @@
                             connectie.sluitConnectie(); //Connectie met de databank sluiten
                         %>
                     </article>
-                    </div>      
+                    </div> 
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
