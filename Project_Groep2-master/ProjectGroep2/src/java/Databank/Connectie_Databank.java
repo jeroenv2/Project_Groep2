@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
+import javax.swing.JOptionPane;
+
 
 public class Connectie_Databank
 {
@@ -118,26 +120,31 @@ public class Connectie_Databank
         {}
     }
     
-    public void updateQuery(String query, List<String> parameters)
+    public int updateQuery(String query, List<String> parameters)
     {
+        int j=0;
         try
         {
             if(parameters.size() > 0)
             {
+                
                 //Reden preparedStatement: geen SQL-Injectie!
                 prepStatement = connectie.prepareStatement(query);
 
                 //Lijst met parameters uitlezen om de preparedStatement op te vullen
                 for(int i=1; i<=parameters.size(); i++)
                 {
-                   prepStatement.setInt(i, Integer.parseInt(parameters.get(i-1)));
+                   prepStatement.setString(i, parameters.get(i-1));
                 }
-                prepStatement.execute();
+                j= prepStatement.executeUpdate();
                 
             }
         }
         catch(Exception e)
         {
+            
+            System.out.println(e.getMessage()+"");
         }
+        return j;
     }
 }

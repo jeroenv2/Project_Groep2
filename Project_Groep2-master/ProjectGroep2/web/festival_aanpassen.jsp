@@ -13,6 +13,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.sql.ResultSet"%>
+
 <%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -30,7 +31,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-
+        <script>
+            <%!List<String> fest = new ArrayList();%>          
+        </script>
     </head>
     <body>
         <%!List<String> verwijder = new ArrayList();%>
@@ -40,9 +43,19 @@
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
-                        
+
                         <%
+                       fest.clear();
+                            if ((request.getParameter("elements") != null)&& request.getParameter("annuleren") == null) {
+                                
+                                for (String e : request.getParameterValues("elements")) {
+                                    if(!fest.contains(e)){
+                                    fest.add(e);}
+                                }
+                                
+                            }
                             try {
+
 
                                 Connectie_Databank connectie = new Connectie_Databank();
 
@@ -59,6 +72,7 @@
                                 res.previous();
 
                                 if (lengteResultSet > 0) {
+
                         %>   
 
                         <div style='padding-top: 25px; padding-bottom: 10px;'>
@@ -72,10 +86,17 @@
                                     String naam = res.getString("fest_naam");
                                     String beginDatum = res.getString("fest_datum");
                                     String locatie = res.getString("fest_locatie");
+                                    String styleTable;
+                                    if (fest.contains(id)) {
+                                        styleTable = " background-color: red;";
+                                    } else {
+                                        styleTable = "";
+                                    }
                             %>
-                            <table id="<%=id%>" width='600px' style='border: 1px solid white;'>
+
+                            <table width='600px' style='border: 1px solid white;<%= styleTable%> '>
                                 <tbody style='padding: 10px;'>
-                                <form action="festival_details.jsp" method="POST">
+                                <form action="festival_aanpassen.jsp" method="POST" >
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                     <input type="hidden" name="naam" value="<%=naam%>">
@@ -97,7 +118,7 @@
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                        %>
+%>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                             <input type="submit" name="Details" value=" Details " />
@@ -115,27 +136,22 @@
                                         %>
                                         <td></td>
                                         <%}%>
-                                        <td></td>
-                                        <td style='padding-right: 10px;padding-bottom: 10px;' >
-                                            <input onclick='if (value === "Verwijderen"){
-                                                <%
-                                                verwijder.add(id);
-                                                %>
-                                                    alert(<%= verwijder.get(0) %>);
-                                                value = "Niet verwijderen";
-                                                document.getElementById(<%=id%>).style.backgroundColor="red";
-                                                
-                                                
-                                            }
-                                            else if(value !== "Verwijderen")
-                                            {    
-                                                <%
-                                                verwijder.remove(id);
-                                                %>
-                                                value = "Verwijderen";
-                                                document.getElementById(<%=id%>).style.backgroundColor="";
-                                               
-                                            }' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
+                                        <td><input name="elements" type="hidden" value="<%=id%>"/></td>
+                                            <%
+                                           
+                                            
+                                            for (String element : fest) {%>
+                                    <input name="elements" type="hidden" value="<%=element%>"/>
+                                    
+                                    <%}
+                                        String extra = "";
+                                        if (fest.contains(id)) {
+                                            extra = "visibility:hidden;";
+                                        }
+                                    %>
+                                    
+                                    <td style='padding-right: 10px;padding-bottom: 10px;' >
+                                        <input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= extra%>"/>
                                 </form>                              
                                 </td>
                                 </tr>
@@ -143,41 +159,32 @@
                             </table><br />
                             <%
                                 }%>
-                            <form>
+                                <form action="festival_aanpassen_resultaat.jsp">
                                 <table>
                                     <tr>
-                                        <td></td>
-                                        <td><input onclick='<%
-                                            try {
-                                                connectie.maakConnectie();
-                                                String verwijder_query = "DELETE FROM festivals";
+                                        <td>
+                                            <%
+                                                                                        
+                                                                                        for (String element : fest) {%>
+                                            <input name="elementsVerwijderen" type="hidden" value="<%=element%>"/>
 
-                                                for(String b : verwijder)
-                                                {
-                                                     JOptionPane.showMessageDialog(null, b);
-                                                }
-                                                
-                                                if (!verwijder.isEmpty()) {
-                                                    verwijder_query += " WHERE (fest_id = ?";
-                                                    for (int i = 0; i < verwijder.size(); i++) {
-                                                        verwijder_query += " OR fest_id = ?";
-                                                    }
-                                                    verwijder_query += ")";
-                                                    
-                                                    connectie.updateQuery(verwijder_query, verwijder);
-                                                }
+                                            <%}
 
-                                            } catch (Exception e) {
-                                                out.println(e.getMessage());
-                                            } finally {
-                                                connectie.sluitConnectie();//Connectie met de databank sluiten}
-                                            }%>' type="button" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
-
-                                        <td><input onclick="document.location.reload(true);" type="button" value="Annuleren" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/></td>
+                                            %>
+                                        </td>
+                                        <td><input onclick='' type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/> </td>
+                                         </form>
+                                        
+                                        <form action="festival_aanpassen.jsp" method="GET">
+                                            <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
+                                             
+                                             <td>
+                                                 <input name="annuleren" type="submit" value="Annuleren" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/></td>
+                                         </form>
                                         <td></td>
 
                                     </tr>
-                                </table></form>
+                                </table>
 
                             <%} else {
                             %>
