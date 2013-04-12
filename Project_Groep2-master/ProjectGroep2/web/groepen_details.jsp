@@ -23,36 +23,42 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <%
+
+            Connectie_Databank connectie = new Connectie_Databank();
+            connectie.maakConnectie();
+            List<String> lijstParams = new ArrayList<String>();
+
+            lijstParams.add(request.getParameter("naam"));
+            connectie.voerQueryUit("SELECT * FROM bands b, bandsperfestival bf, festivals f WHERE b.band_naam = ? and (b.band_id=bf.band_id and f.fest_id=bf.fest_id);", lijstParams);
+
+            ResultSet res = connectie.haalResultSetOp();
 
 
-        <title>Details <% out.println(request.getParameter("naam"));%></title>
+            lijstFestivalNamen = new ArrayList<String>();
+            lijstFestivalUrls = new ArrayList<String>();
+            i = 0;
+
+
+            while (res.next()) {
+                MuziekSoort = res.getString("band_soortMuziek");
+                SiteGroep = res.getString("band_url");
+                lijstFestivalNamen.add(res.getString("fest_naam"));
+                lijstFestivalUrls.add(res.getString("fest_url"));
+                AfbeeldingGroep = res.getString("band_afbeelding");
+                i++;
+
+            }
+
+        %>
+       
+         <!-- Naam van browser ophalen -->
+         <% String browser = request.getHeader("User-Agent"); %>
+        <title><% out.println(request.getParameter("naam"));%> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/detailpages.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <style>
-            #table
-            {
-                border-collapse:separate;
-                border-spacing:  50px 20px ;
-                width :955px;
-            }
-
-            #opmaakTitel{
-                font-family: sans-serif;
-                color: #fff; 
-                font-size:30px;
-                font-weight:bold; 
-            }
-            #lijstFestival{
-                list-style-type: none;
-                border:1px solid white;
-                padding:20px 10px 170px 10px ;
-                
-            }
-
-
-        </style>
-
     </head>
     <body>
         <div id="page_wrapper">
@@ -60,81 +66,49 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
+                    <article id="foto">
+                        <img src="<%=AfbeeldingGroep%>" alt="foto <%out.println(request.getParameter("naam"));%> " width="95%" draggable="true"  />
+                    </article>
+                    <article id="details">
+                        <header>
+                            <h2> <% out.println(request.getParameter("naam"));%></h2>
+                        </header>
+                        <table >
+                            <tbody>
+                                <tr>
+                                    <td >Naam: </td>
+                                    <td> <% out.println(request.getParameter("naam"));%> </td>
+                                </tr>
+                                <tr>
+                                    <td>Genre:</td>
+                                    <td>   <%= MuziekSoort%></td>
+                                </tr>
+                                <tr>
+                                    <td><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="http://<%= SiteGroep%>/">Site Groep </a></td>
+                                </tr>
 
-                    <div id="opmaakTitel" align="center"  >
-                        <% out.println(request.getParameter("naam"));%>
-                    </div>
-                    <%
-
-                        Connectie_Databank connectie = new Connectie_Databank();
-                        connectie.maakConnectie();
-                        List<String> lijstParams = new ArrayList<String>();
-
-                        lijstParams.add(request.getParameter("naam"));
-                        connectie.voerQueryUit("SELECT * FROM bands b, bandsperfestival bf, festivals f WHERE b.band_naam = ? and (b.band_id=bf.band_id and f.fest_id=bf.fest_id);", lijstParams);
-
-                        ResultSet res = connectie.haalResultSetOp();
-
-
-                        lijstFestivalNamen = new ArrayList<String>();
-                        lijstFestivalUrls = new ArrayList<String>();
-                        i = 0;
-
-
-                        while (res.next()) {
-                            MuziekSoort = res.getString("band_soortMuziek");
-                            SiteGroep = res.getString("band_url");
-                            lijstFestivalNamen.add(res.getString("fest_naam"));
-                            lijstFestivalUrls.add(res.getString("fest_url"));
-                            AfbeeldingGroep = res.getString("band_afbeelding");
-                            i++;
-
-                        }
+                            </tbody>
+                        </table>
+                    </article>
+                    <article id="overzicht" style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
+                         <!-- Naam van browser ophalen -->
                         
-                    %>
-                    <table  id="table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <img src="<%=AfbeeldingGroep%>" width="300px" height="260px"  />
-                                </td>
-                                <!-- <td> <br/>   </td>-->
-                                <td>
-                                    <table >
-                                        <tbody>
-                                            <tr>
-                                                <td >Naam: </td>
-                                                <td> <% out.println(request.getParameter("naam"));%> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Genre:</td>
-                                                <td>   <%= MuziekSoort%></td>
-                                            </tr>
-                                            <tr>
-                                                <td><br/></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="http://<%= SiteGroep%>/">Site Groep </a></td>
-                                            </tr>
+                        <header>
+                            <h2>Overzicht</h2>
+                        </header>
+                        <div id="lijsten" data-collapse="persist">
+                            <p class="open">Festivals</p>
+                            <ul  >
+                            <% for (int j = 0; j < i; j++) {%>
+                            <li >&nbsp;&nbsp;<a href="http://<% out.println(lijstFestivalUrls.get(j));%>"> <%out.println(lijstFestivalNamen.get(j));%> </a></li>
+                                <% }%>
 
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </td>
-                                <td><br/></td>
-                                <td>
-                                    <ul id="lijstFestival" >
-                                        <li  style="width: auto; margin-left: 0px; margin-right: 20px; " >festivals:</li>
-
-                                        <% for (int j = 0; j < i; j++) {%>
-                                        <li style="width: auto; margin-left: 10px; margin-right: 20px; ">&nbsp;&nbsp;<a href="http://<% out.println(lijstFestivalUrls.get(j));%>"> <%out.println(lijstFestivalNamen.get(j));%> </a></li>
-                                            <% }%>
-
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        </ul>
+                        </div>
+                    </article>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
