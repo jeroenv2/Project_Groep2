@@ -61,12 +61,13 @@
         </script>
     </head>
     <body>
+        <a name="top"></a>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">                        
+                    <div align="center">
                         <%
                             try {
                                 ArrayList<String> lijstLetters = new ArrayList<String>();
@@ -154,15 +155,8 @@
                         </div>
                       </div>   
                                 
-                                
-                                
-                                
-                                
-                                
-                                
                                 <div style='padding-top: 25px; padding-bottom: 10px;'>
 
-                                    
                                     <!-- Informatie Festivals -->
                                     <%
                                         res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -241,8 +235,10 @@
                                 </div>
                                 </section>
                             </div>
+
                             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
                             <jsp:include page="footer.jsp" />
                         </div>
+                        <a href="#top"><input type="button" value=" Begin Pagina " style="position: fixed; bottom:25px; height: 50px;" /></a>
                         </body>
                         </html>
