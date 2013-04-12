@@ -140,15 +140,15 @@
                                     String genre = res.getString("band_soortMuziek");
                                     String afbeelding = res.getString("band_afbeelding");
                             %>
+                            <form action="groepen_details.jsp" method="POST">
                             <table width='500px' style='border: 1px solid white;'>
                                 <tbody align="left" style='padding: 10px;'>
-                                <form action="groepen_details.jsp" method="POST">
                                     <tr>
                                         <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b></td>
-                                        <input type="hidden" name="naam" value="<%=naam%>">
+                                        <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b>
+                                        <input type="hidden" name="naam" value="<%=naam%>"></td>
                                         <td  style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
