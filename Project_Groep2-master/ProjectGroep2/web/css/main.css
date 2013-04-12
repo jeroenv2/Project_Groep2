@@ -134,7 +134,7 @@ body {
     display: flexbox;
     -flexbox-pack: center;
     -flexbox-align: start;
-    
+
     background-image: url("../img/achtergrond.png");
 }
 
@@ -182,6 +182,57 @@ body {
     bottom: 25px;
 }
 
+#CollapseOpmaak
+{
+    width: 600px;
+    border: 1px solid white;
+    margin-top: 15px;
+}
+
+/* ---- Opmaak Festivals ---- */
+#TableFestivals
+{
+    width: 625px;
+}
+
+#tbodyAlignLeft
+{
+    text-align: left;
+}
+
+.TableDataWidth300
+{
+    width: 300px;
+    padding-left: 10px;
+}
+
+.TableDataPaddingLeftTop
+{
+    padding-left: 5px;
+    padding-top: 15px;
+}
+
+.TableDataPaddingLeftTopBottom
+{
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+.TableDataPaddingRightBottom
+{
+    padding-right: 7px;
+    padding-bottom: 7px;
+    text-align: right;
+}
+
+#FestivalsGegevensPaddin
+{
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+/* ---- Opmaak hyperlinks ---- */
 a:link
 {
     color: white;
@@ -408,9 +459,9 @@ h2 a:hover
 }
 
 @media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
+(-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
     /* Style adjustments for high resolution devices */
 }
 

@@ -86,14 +86,15 @@
                                 if (lengteResultSet > 0)
                                 {
                         %>   
-                                    <div data-collapse style="width: 600px; border: 1px solid white; margin-top: 15px;">
+                                    <div data-collapse id="CollapseOpmaak">
                                         <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
                                     <div>
                                       <form id="form_filter" action='festivals_filter.jsp' method='POST'>
-                                        <table width='625px'>
-                                            <tbody align="left">
+                                        <table id="TableFestivals">
+                                            <tbody id="tbodyAlignLeft" >
                                                 <tr>
-                                                    <td width=300px style='padding-left: 10px;'><u>Naam begint met:</u><br />
+                                                    <td id="TableDataWidth300">
+                                                        <u>Naam begint met:</u><br />
                                                         <%while (res.next()) {
                                                                 String letter = res.getString("fest_naam").substring(0, 1);
 
@@ -111,7 +112,8 @@
                                                             }
                                                         %>
                                                     </td>
-                                                    <td style='padding-left: 5px; padding-top: 15px;'><u>Locatie:</u><br />
+                                                    <td id="TableDataPaddingLeftTop">
+                                                        <u>Locatie:</u><br />
                                                         <%
                                                             //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
                                                             res.first();
@@ -133,7 +135,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
+                                                    <td class="TableDataPaddingLeftTopBottom">
                                                         <input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums
                                                     </td>
                                                     <td></td>
@@ -145,7 +147,7 @@
                                                     </td>
                                                </tr>
                                                <tr>
-                                                   <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
+                                                   <td class="TableDataPaddingLeftTopBottom">
                                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                                    <td></td>
                                                </tr>
@@ -154,7 +156,7 @@
                                  </form>
                               </div>
                             </div>   
-                            <div style='padding-top: 25px; padding-bottom: 10px;'>
+                            <div id="FestivalsGegevensPadding">
                                 <!-- Informatie Festivals -->
                                 <%
                                    res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -173,10 +175,10 @@
                                                         <b> <%= naam%> </b>
                                                         <input type="hidden" name="naam" value="<%=naam%>">
                                                      </td>
-                                                     <td width='300px' style='padding-left: 10px; padding-top: 10px; border-right: 1px solid white;'>Begindatum: <%=beginDatum%> </td>
+                                                     <td class="TableDataWidth300" style="border-right: 1px solid white;">Begindatum: <%=beginDatum%> </td>
                                                    </tr>
                                                    <tr>
-                                                      <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>
+                                                      <td class="TableDataPaddingLeftTopBottom">
                                                           Locatie: <%=locatie%>
                                                       </td>
                                                         <!-- Datums berekenen -->
@@ -192,7 +194,7 @@
                                                          Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                                          String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
                                                        %>
-                                                       <td style='padding-left: 10px; padding-top: 10px;  border-right: 1px solid white;'>Einddatum: <%=strEinddatum%></td>
+                                                       <td class="TableDataPaddingLeftTop"  style="border-right: 1px solid white;">Einddatum: <%=strEinddatum%></td>
                                                     </tr>
                                                     <tr>
                                                        <%
@@ -212,11 +214,11 @@
                                                        cal.set(Calendar.DAY_OF_WEEK, 0);
                                                        if (begindatum.after(new Date()))
                                                        {%>
-                                                           <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
+                                                           <td class="TableDataPaddingRightBottom">
                                                                <input type="submit" name="Details" value=" Details " />
                                                            </td>
                                                        <%} else {%>
-                                                             <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
+                                                             <td class="TableDataPaddingRightBottom">
                                                                  <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
                                                              </td>
                                                        <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
