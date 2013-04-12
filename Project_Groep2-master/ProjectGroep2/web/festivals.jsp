@@ -20,21 +20,16 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html>
-    <!--<![endif]-->
+<!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Festivals</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        
-        <!-- Collapsible scripts -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <script src="js/vendor/jquery.collapse.js"></script>
-
-        <!-- controleren of de checkbox van de datums aangevinkt is of niet -->
         <script>
-            //Ervoor zorgen dat de datums niet getoond worden (of juist wel)
             //Bron: http://stackoverflow.com/questions/9280037/javascript-toggle-function-to-hide-and-display-text-how-to-add-images
             function onChangeCheckboxDatums()
             {
@@ -69,7 +64,8 @@
                 <section id="content">
                     <div align="center">
                         <%
-                            try {
+                            try
+                            {
                                 ArrayList<String> lijstLetters = new ArrayList<String>();
                                 ArrayList<String> lijstLocaties = new ArrayList<String>();
 
@@ -87,162 +83,156 @@
                                 res.first();
                                 res.previous();
 
-                                if (lengteResultSet > 0) {
+                                if (lengteResultSet > 0)
+                                {
                         %>   
-                        
-                        <div data-collapse style="width: 600px; border: 1px solid white; margin-top: 15px;">
-                            <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
-                        <div>
-                          <form id="form_filter" action='festivals_filter.jsp' method='POST'>
-                            <table width='625px'>
-                                <tbody align="left">
-                                    <tr>
-                                        <td width=300px style='padding-left: 10px;'><u>Naam begint met:</u><br />
-                                            <%while (res.next()) {
-                                                    String letter = res.getString("fest_naam").substring(0, 1);
+                                    <div data-collapse style="width: 600px; border: 1px solid white; margin-top: 15px;">
+                                        <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
+                                    <div>
+                                      <form id="form_filter" action='festivals_filter.jsp' method='POST'>
+                                        <table width='625px'>
+                                            <tbody align="left">
+                                                <tr>
+                                                    <td width=300px style='padding-left: 10px;'><u>Naam begint met:</u><br />
+                                                        <%while (res.next()) {
+                                                                String letter = res.getString("fest_naam").substring(0, 1);
 
-                                                    if (!lijstLetters.contains(letter)) {
-                                                        lijstLetters.add(letter);
-                                                    }
-                                                }
+                                                                if (!lijstLetters.contains(letter)) {
+                                                                    lijstLetters.add(letter);
+                                                                }
+                                                            }
 
-                                                //De ArrayList alfabetisch ordenen
-                                                java.util.Collections.sort(lijstLetters);
-                                                for (String letter : lijstLetters) {
-                                            %>
-                                            &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter%>' /> <%= letter%><br />
-                                            <%
-                                                }
-                                            %>
-                                    </td>
-                                    <td style='padding-left: 5px; padding-top: 15px;'><u>Locatie:</u><br />
-                                        <%
-                                            //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
-                                            res.first();
-                                            res.previous();
-                                            while (res.next()) {
-                                                String locatie = res.getString("fest_locatie");
-
-                                                if (!lijstLocaties.contains(locatie)) {
-                                                    lijstLocaties.add(locatie);
-                                                }
-                                            }
-
-                                            //De ArrayList alfabetisch ordenen
-                                            java.util.Collections.sort(lijstLocaties);
-                                            for (String locatie : lijstLocaties) {
-                                        %>
-                                        &nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
-                                        <%}%>
-                                    </td>
-                                </tr><tr>
-                                    <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
-                                        <input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums
-                                    </td>
-                                    <td></td>
-                            <tr>
-                                <td colspan="2" style='padding-left: 10px;'>
-                                    <div id='datums' style='display: none;'>
-                                    Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' />
-                                    </div>
-                                </td>
-                           </tr>
-                           <tr>
-                                    <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
-                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
-                                    <td></td>
-                                </tr>
-                                </tbody>
-                                </table>
-                                </form>
-                        </div>
-                      </div>   
-                                
-                                <div style='padding-top: 25px; padding-bottom: 10px;'>
-
-                                    <!-- Informatie Festivals -->
-                                    <%
-                                        res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                        res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                        while (res.next()) {
-                                            String naam = res.getString("fest_naam");
-                                            String beginDatum = res.getString("fest_datum");
-                                            String locatie = res.getString("fest_locatie");
-                                    %>
-                                    <form action="festival_details.jsp" method="POST">
-                                    <table width='600px' style='border: 1px solid white;'>
-                                        <tbody align="left" style='padding: 10px;'>
-                                            <tr>
-                                                <td width='300px' style='padding-left: 10px; padding-top: 10px;'>
-                                                    <b> <%= naam%> </b>
-                                                    <input type="hidden" name="naam" value="<%=naam%>">
-                                                </td>
-                                                <td width='300px' style='padding-left: 10px; padding-top: 10px; border-right: 1px solid white;'>Begindatum: <%=beginDatum%> </td>
-                                            </tr>
-                                            <tr>
-                                                <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
-                                                <!-- Datums berekenen -->
-                                                <%
-                                                    DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
-
-                                                    Date begindatum = formaatDatum.parse(beginDatum);
-
-                                                    //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                                    Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                                    cal.setTime(begindatum);                //De begindatum in cal steken
-                                                    cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
-
-                                                    Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                                    String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                                %>
-                                                <td style='padding-left: 10px; padding-top: 10px;  border-right: 1px solid white;'>Einddatum: <%=strEinddatum%></td>
-                                            </tr>
-                                            <tr>
-                                                <%
-                                                    if (res.getString("fest_url") != null) {
-                                                        String url = res.getString("fest_url");
-                                                        url = url.replace(" ", "%20");  //Bij een spatie in de url moet deze vervangen worden door %20 (spatie in hexadeci)
-                                                %>
-                                                    <td style='padding-left: 10px; padding-bottom: 7px;'>
-                                                        <a href="http://<%=url%>" target="_blank">Site</a>
+                                                            //De ArrayList alfabetisch ordenen
+                                                            java.util.Collections.sort(lijstLetters);
+                                                            for (String letter : lijstLetters) {
+                                                        %>
+                                                        &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter%>' /> <%= letter%><br />
+                                                        <%
+                                                            }
+                                                        %>
                                                     </td>
-                                                <%
-                                                } else {
-                                                %>
-                                                        <td></td>
-                                                <%}
-                                                    
-                                                cal.set(Calendar.YEAR, 0);
-                                                cal.set(Calendar.MONTH, 0);
-                                                cal.set(Calendar.DAY_OF_WEEK, 0);
-                                                if (begindatum.after(new Date()))
-                                                {%>
-                                                    <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
-                                                        <input type="submit" name="Details" value=" Details " />
+                                                    <td style='padding-left: 5px; padding-top: 15px;'><u>Locatie:</u><br />
+                                                        <%
+                                                            //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
+                                                            res.first();
+                                                            res.previous();
+                                                            while (res.next()) {
+                                                                String locatie = res.getString("fest_locatie");
+
+                                                                if (!lijstLocaties.contains(locatie)) {
+                                                                    lijstLocaties.add(locatie);
+                                                                }
+                                                            }
+
+                                                            //De ArrayList alfabetisch ordenen
+                                                            java.util.Collections.sort(lijstLocaties);
+                                                            for (String locatie : lijstLocaties) {
+                                                        %>
+                                                        &nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
+                                                        <%}%>
                                                     </td>
-                                                <%
-                                                } else {
-                                                %>
-                                                    <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
-                                                       <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
-                                                   </td>
-                                                <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
-                                            </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                </tr>
+                                                <tr>
+                                                    <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
+                                                        <input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums
+                                                    </td>
+                                                    <td></td>
+                                                <tr>
+                                                    <td colspan="2" style='padding-left: 10px;'>
+                                                        <div id='datums' style='display: none;'>
+                                                        Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' />
+                                                        </div>
+                                                    </td>
+                                               </tr>
+                                               <tr>
+                                                   <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
+                                                       <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
+                                                   <td></td>
+                                               </tr>
                                         </tbody>
                                     </table>
-                                    </form><br />
-                                    <%
-                                        }
-                                    } else {
-                                    %>
-                    <h3>Helaas! Er zijn geen festivals gevonden...</h3>
-                <%}
-                    connectie.sluitConnectie(); //Connectie met de databank sluiten
-                } catch (Exception e) {
-                    out.println(e.getMessage());
-                }
-                %>
-            </div>
+                                 </form>
+                              </div>
+                            </div>   
+                            <div style='padding-top: 25px; padding-bottom: 10px;'>
+                                <!-- Informatie Festivals -->
+                                <%
+                                   res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                   res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                   while (res.next())
+                                   {
+                                       String naam = res.getString("fest_naam");
+                                       String beginDatum = res.getString("fest_datum");
+                                       String locatie = res.getString("fest_locatie");
+                                %>
+                                       <form action="festival_details.jsp" method="POST">
+                                          <table width='600px' style='border: 1px solid white;'>
+                                              <tbody align="left" style='padding: 10px;'>
+                                                  <tr>
+                                                     <td width='300px' style='padding-left: 10px; padding-top: 10px;'>
+                                                        <b> <%= naam%> </b>
+                                                        <input type="hidden" name="naam" value="<%=naam%>">
+                                                     </td>
+                                                     <td width='300px' style='padding-left: 10px; padding-top: 10px; border-right: 1px solid white;'>Begindatum: <%=beginDatum%> </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>
+                                                          Locatie: <%=locatie%>
+                                                      </td>
+                                                        <!-- Datums berekenen -->
+                                                        <%
+                                                         DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+                                                         Date begindatum = formaatDatum.parse(beginDatum);
+
+                                                         //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
+                                                         Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
+                                                         cal.setTime(begindatum);                //De begindatum in cal steken
+                                                         cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+
+                                                         Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
+                                                         String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+                                                       %>
+                                                       <td style='padding-left: 10px; padding-top: 10px;  border-right: 1px solid white;'>Einddatum: <%=strEinddatum%></td>
+                                                    </tr>
+                                                    <tr>
+                                                       <%
+                                                            if (res.getString("fest_url") != null) {
+                                                            String url = res.getString("fest_url");
+                                                            url = url.replace(" ", "%20");  //Bij een spatie in de url moet deze vervangen worden door %20 (spatie in hexadeci)
+                                                       %>
+                                                       <td style='padding-left: 10px; padding-bottom: 7px;'>
+                                                            <a href="http://<%=url%>" target="_blank">Site</a>
+                                                       </td>
+                                                       <%} else {%>
+                                                            <td></td>
+                                                       <%}
+
+                                                       cal.set(Calendar.YEAR, 0);
+                                                       cal.set(Calendar.MONTH, 0);
+                                                       cal.set(Calendar.DAY_OF_WEEK, 0);
+                                                       if (begindatum.after(new Date()))
+                                                       {%>
+                                                           <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
+                                                               <input type="submit" name="Details" value=" Details " />
+                                                           </td>
+                                                       <%} else {%>
+                                                             <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
+                                                                 <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
+                                                             </td>
+                                                       <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                    </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                </tbody>
+                                            </table>
+                                        </form><br />
+                                   <%}
+                                  } else {%>
+                                        <h3>Helaas! Er zijn geen festivals gevonden...</h3>
+                                  <%}
+                            connectie.sluitConnectie(); //Connectie met de databank sluiten
+                        } catch (Exception e) {
+                            out.println(e.getMessage());
+                        }%>
+                    </div>
             </div>
         </section>
         </div>
