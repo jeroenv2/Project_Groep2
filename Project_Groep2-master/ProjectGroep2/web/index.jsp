@@ -29,14 +29,32 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/ieuitzonderingen.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <style>
+            #webpagina {
+            display: table;
+            }
+
+            #laatstefestivals {
+            display: table-cell;
+            padding-right: 25px;
+            
+            }
+
+            #overons {
+            display: table-cell;
+            width: 260px;
+            padding: 5px;
+            }
+        </style>
     </head>
     <body>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
+                <div id="webpagina">
                 <section id="content">
-                    <div style='padding-top: 25px; padding-bottom: 10px;' align="center">
+                    <div id="laatstefestivals" style='padding-top: 25px; padding-bottom: 10px;'>
                     <article>
                         <header>
                             <h2>Eerstvolgende festivals</h2>
@@ -53,7 +71,6 @@
 
                         List<String> lijstParams = new ArrayList<String>();
                         String query = "SELECT * FROM festivals where fest_datum >= (select curdate()) order by fest_datum limit 5";
-                        //order by fest_datum limit 10
                         connectie.voerQueryUit(query, lijstParams);
                         res = connectie.haalResultSetOp();           
                         }
@@ -97,6 +114,7 @@
                                 </tr>
                                 <tr>
                                     <%
+                                    //Als de URL-waarde leeg (null) is, geen URL maar boodschap weergeven
                                     if (url == null) {
                                     %>
                                     <td style='padding-left: 10px; padding-bottom: 10px;'>Geen site beschikbaar</td>
@@ -119,9 +137,17 @@
                             connectie.sluitConnectie(); //Connectie met de databank sluiten
                         %>
                     </article>
-                    </div> 
+                    </div>
+                    <div id="overons" style='border: 1px solid white;'>
+                        <p>
+                            Deze webapplicatie geeft een overzicht van alle festivals wereldwijd.
+                            U kan zoeken tussen de festivals maar ook tussen de groepen. Ook kan u detailinformatie over elk festival opvragen , alsook over elke groep.
+                        </p>
+                    </div>
                 </section>
+                </div>
             </div>
+            
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>
