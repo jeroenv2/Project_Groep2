@@ -235,7 +235,7 @@
                                         }
                                     } else {
                                     %>
-                    <h3>Helaas! Er zijn geen records gevonden...</h3>
+                    <h3>Helaas! Er zijn geen festivals gevonden...</h3>
                 <%}
                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                 } catch (Exception e) {

@@ -195,7 +195,7 @@
                                         }
                                     } else {
                                     %>
-                    <h3>Helaas! Er zijn geen records gevonden...</h3>
+                    <h3>Helaas! Er zijn geen festivals gevonden...</h3>
                     Klik <a href="festivals.jsp">hier</a> om terug te keren
                 <%}
                     connectie.sluitConnectie(); //Connectie met de databank sluiten

@@ -3,7 +3,7 @@
     Created on : 28-mrt-2013, 9:04:18
     Author     : Steven
 --%>
-
+<!-- Door rowspan te gebruiken, krijgt men hier een warning. Dit is een bug in Netbeans -->
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
@@ -19,7 +19,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -71,7 +71,7 @@
 
                                 if (lengteResultSet > 0) {
                         %>
-                        <div data-collapse style="width: 600px; border: 1px solid white; margin-top: 15px;">
+                        <div data-collapse style="width: 500px; border: 1px solid white; margin-top: 15px;">
                             <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
                         <div>
                         <form id="form_filter" action='groepen_filter.jsp' method='POST'>
@@ -149,7 +149,7 @@
                                     <tr>
                                         <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b>
                                         <input type="hidden" name="naam" value="<%=naam%>"></td>
-                                        <td  style="border-top: 1px solid white;"></td>
+                                        <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
@@ -159,25 +159,26 @@
                                         <%
                                             if (res.getString("band_url") != null) {
                                                 String url = res.getString("band_url");
+                                                url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
-                                        <td style='padding-left: 10px; padding-bottom: 6px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
-                                    <%
-                                    } else {
-                                    %>
-                                    <td></td>
-                                    <%}%>
-                                    <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
-                                        <input type="submit" name="Details" value=" Details " />
-                                    </td>
-                                    </tr>
-                                </form>
+                                                <td style='padding-left: 10px; padding-bottom: 7px;'>
+                                                    <a href="http://<%=url%>" target="_blank">Site</a>
+                                                </td>
+                                        <% } else { %>
+                                                <td></td>
+                                        <%}%>
+                                        <td align='right' style='padding-right: 7px; padding-bottom: 7px;'>
+                                            <input type="submit" name="Details" value=" Details " />
+                                        </td>
+                                    </tr> <!-- Warning negeren. De controle wordt genegeerd. Daarom ziet HTML 3 kolommen ipv 2 -->
                                 </tbody>
-                            </table><br />
+                            </table>
+                            </form><br />
                             <%
                                 }
                             } else {
                             %>
-                            <h3>Helaas! Er zijn geen records gevonden...</h3>
+                            <h3>Helaas! Er zijn geen groepen gevonden...</h3>
                             <%}
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {
@@ -185,6 +186,7 @@
                                 }
                             %>
                         </div>
+                    </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
