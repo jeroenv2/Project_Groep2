@@ -36,7 +36,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
+                    <div id="ElementenCenter">
                         <%
                             try {
                                 Connectie_Databank connectie = new Connectie_Databank();
@@ -116,9 +116,12 @@
                                 
                                 if (lengteResultSet > 0) {
                         %>
-                        <h1>Gefilterd Resultaat</h1>
-                        Klik <a href='festivals.jsp'>hier</a> om terug te keren
-                        <div id="FestivalsGegevensPadding">
+                        <div id="TekstCenter">
+                            <h1>Gefilterd Resultaat</h1>
+                            Klik <a href='festivals.jsp'>hier</a> om terug te keren
+                        </div>
+                        
+                        <div id="WitruimteTabelFilter">
                                 <!-- Informatie Festivals -->
                                 <%
                                    res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat

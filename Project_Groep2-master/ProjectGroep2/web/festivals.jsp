@@ -62,7 +62,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
+                    <div id="ElementenCenter">
                         <%
                             try
                             {
@@ -90,7 +90,7 @@
                                         <h2 id="geavZoeken">+ Geavanceerd Zoeken </h2>
                                     <div>
                                       <form id="form_filter" action='festivals_filter.jsp' method='POST'>
-                                        <table id="TableFestivalsFilter">
+                                        <table id="TableFilter">
                                             <tbody id="tbodyAlignLeft" >
                                                 <tr>
                                                     <td class="TableDataWidth300">
@@ -156,7 +156,7 @@
                                  </form>
                               </div>
                             </div>   
-                            <div id="FestivalsGegevensPadding">
+                            <div id="WitruimteTabelFilter">
                                 <!-- Informatie Festivals -->
                                 <%
                                    res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -172,7 +172,7 @@
                                               <tbody class="tbodyAlignLeft" style='padding: 10px;'>
                                                   <tr>
                                                      <td class="TableDataWidth300" style='padding-left: 10px; padding-top: 10px;'>
-                                                        <b> <%= naam%> </b>
+                                                         <div class="TekstVet"> <%= naam%> </div>
                                                         <input type="hidden" name="naam" value="<%=naam%>">
                                                      </td>
                                                      <td class="TableDataWidth300" style="border-right: 1px solid white;">Begindatum: <%=beginDatum%> </td>

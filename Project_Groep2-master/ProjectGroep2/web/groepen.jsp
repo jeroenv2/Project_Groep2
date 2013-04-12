@@ -50,7 +50,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
+                    <div id="ElementenCenter">
                         <%
                             try {
                                 ArrayList<String> lijstGenres = new ArrayList<String>();
@@ -71,14 +71,14 @@
 
                                 if (lengteResultSet > 0) {
                         %>
-                        <div data-collapse style="width: 500px; border: 1px solid white; margin-top: 15px;">
-                            <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
+                        <div data-collapse id="CollapseOpmaak">
+                            <h2 id="geavZoeken">+ Geavanceerd Zoeken </h2>
                         <div>
                         <form id="form_filter" action='groepen_filter.jsp' method='POST'>
-                            <table width='625px'>
-                                <tbody align="left">
+                            <table id="TableFilter">
+                                <tbody class="tbodyAlignLeft">
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 12px;'><u>Genre:</u><br />
+                                        <td><div class="TekstOnderlijning">Genre:</div>
                                         <%while (res.next()) {
                                                 String genre = res.getString("band_soortMuziek");
 
@@ -93,13 +93,13 @@
                                             java.util.Collections.sort(lijstGenres);
                                             for (String genre : lijstGenres) {
                                         %>
-                                &nbsp;&nbsp;<input type='checkbox' name='genre' value='<%= genre%>' /> <%= genre%><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='genre' value='<%= genre%>' /> <%= genre%><br />
                                 <%
                                     }
                                 %>
                                 </td>
                                 <td>
-                                <u>Festival:</u><br />
+                                <div class="TekstOnderlijning">Festival:</div>
                                 <%
                                       List<String> lijstFestivals = new ArrayList<String>();
                                       while (res.next()) {
@@ -113,15 +113,16 @@
                                             java.util.Collections.sort(lijstFestivals);
                                             for (String festival : lijstFestivals) {
                                         %>
-                                &nbsp;&nbsp;<input type='radio' name='festival' value='<%=festival%>' /> <%=festival%><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='festival' value='<%=festival%>' /> <%=festival%><br />
                                 <%
                                     }
                                 %>
                                 </td>
                                 </tr>
                                 <tr>
-                                    <td style='padding-left: 10px; padding-bottom: 5px; padding-top: 10px;'>
-                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
+                                    <td class="TableDataPaddingLeftTopBottom">
+                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> 
+                                        <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                     <td></td>
                                 </tr>
                                 </tbody >
@@ -129,8 +130,8 @@
                         </form>
                         </div>
                         </div>
-                        <div style='padding-top: 25px; padding-bottom: 10px;'>
-
+                                
+                        <div id="WitruimteTabelFilter">
                             <!-- Informatie groepen -->
                             <%
                                 res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -141,18 +142,22 @@
                                     String afbeelding = res.getString("band_afbeelding");
                             %>
                             <form action="groepen_details.jsp" method="POST">
-                            <table width='500px' style='border: 1px solid white;'>
-                                <tbody align="left" style='padding: 10px;'>
+                            <table id="TableWidth600Border">
+                                <tbody class="tbodyAlignLeft" style='padding: 10px;'>
                                     <tr>
-                                        <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
+                                        <td rowspan="4" style="width: 120px;">
+                                            <img id="afbeeldingOpmaak" src="<%=afbeelding%>" alt="Afbeelding Band" />
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b>
-                                        <input type="hidden" name="naam" value="<%=naam%>"></td>
+                                        <td class="TableDataPaddingLeftTop" style="border-top: 1px solid white;"><b>
+                                                <div class="TekstVet"> <%= naam%> </div>
+                                                <input type="hidden" name="naam" value="<%=naam%>">
+                                        </td>
                                         <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
+                                        <td class="TableDataPaddingLeftTop">Genre: <%=genre%></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -161,19 +166,19 @@
                                                 String url = res.getString("band_url");
                                                 url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
-                                                <td style='padding-left: 10px; padding-bottom: 7px;'>
+                                                <td class="TableDataPaddingLeftBottom">
                                                     <a href="http://<%=url%>" target="_blank">Site</a>
                                                 </td>
                                         <% } else { %>
                                                 <td></td>
                                         <%}%>
-                                        <td align='right' style='padding-right: 7px; padding-bottom: 7px;'>
+                                        <td class="TableDataPaddingRightBottom">
                                             <input type="submit" name="Details" value=" Details " />
                                         </td>
                                     </tr> <!-- Warning negeren. De controle wordt genegeerd. Daarom ziet HTML 3 kolommen ipv 2 -->
                                 </tbody>
                             </table>
-                            </form><br />
+                            </form>
                             <%
                                 }
                             } else {

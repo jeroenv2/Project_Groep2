@@ -190,11 +190,23 @@ body {
     margin-bottom: 20px;
 }
 
+#TekstCenter
+{
+    text-align: center;
+}
+
+#WitruimteTabelFilter
+{
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
 #geavZoeken
 {
     margin: 0px;
     padding: 0px;
     background-color: green;
+    text-align: center;
 }
 
 .TekstOnderlijning
@@ -205,13 +217,24 @@ body {
     text-decoration: underline;
 }
 
-/* ---- Opmaak Festivals ---- */
-#TableFestivalsFilter
+.TekstVet
+{
+    font-weight: bold;
+}
+
+#TableFilter
 {
     width: 625px;
     padding-left: 20px;
 }
 
+#ElementenCenter
+{
+    margin: 0px auto;
+    width: 600px;
+}
+
+/* ---- Opmaak Festivals.jsp ---- */
 .tbodyAlignLeft
 {
     text-align: left;
@@ -231,7 +254,7 @@ body {
 
 .TableDataPaddingLeftTop
 {
-    padding-left: 5px;
+    padding-left: 10px;
     padding-top: 15px;
 }
 
@@ -249,16 +272,24 @@ body {
     text-align: right;
 }
 
-#FestivalsGegevensPaddin
-{
-    padding-top: 25px;
-    padding-bottom: 10px;
-}
-
 #FontVerlopenFestival
 {
     color: mediumseagreen;
     font-weight: bold; 
+}
+
+/* ---- Opmaak groepen.jsp ---- */
+#afbeeldingOpmaak
+{
+    padding: 7px;
+    width: 120px;
+    height: 80px;
+}
+
+.TableDataPaddingLeftBottom
+{
+    padding-left: 10px;
+    padding-bottom: 7px;
 }
 
 /* ---- Opmaak hyperlinks ---- */

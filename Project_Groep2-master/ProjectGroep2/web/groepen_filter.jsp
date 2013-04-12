@@ -36,7 +36,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div align="center">
+                    <div id="ElementenCenter">
                         <%
                             try {
                                 Connectie_Databank connectie = new Connectie_Databank();
@@ -78,11 +78,13 @@
 
                                 if (lengteResultSet > 0) {
                         %>
-                        <h1>Gefilterd Resultaat</h1>
-                        Klik <a href='groepen.jsp'>hier</a> om terug te keren
-                        <div style='padding-top: 25px; padding-bottom: 10px;'>
-
-                           <!-- Informatie groepen -->
+                        <div id="TekstCenter">
+                            <h1>Gefilterd Resultaat</h1>
+                            Klik <a href='groepen.jsp'>hier</a> om terug te keren
+                        </div>
+                        
+                        <div id="WitruimteTabelFilter">
+                            <!-- Informatie groepen -->
                             <%
                                 res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                 res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
@@ -92,18 +94,22 @@
                                     String afbeelding = res.getString("band_afbeelding");
                             %>
                             <form action="groepen_details.jsp" method="POST">
-                            <table width='500px' style='border: 1px solid white;'>
-                                <tbody align="left" style='padding: 10px;'>
+                            <table id="TableWidth600Border">
+                                <tbody class="tbodyAlignLeft" style='padding: 10px;'>
                                     <tr>
-                                        <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
+                                        <td rowspan="4" style="width: 120px;">
+                                            <img id="afbeeldingOpmaak" src="<%=afbeelding%>" alt="Afbeelding Band" />
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b>
-                                        <input type="hidden" name="naam" value="<%=naam%>"></td>
+                                        <td class="TableDataPaddingLeftTop" style="border-top: 1px solid white;"><b>
+                                                <div class="TekstVet"> <%= naam%> </div>
+                                                <input type="hidden" name="naam" value="<%=naam%>">
+                                        </td>
                                         <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
+                                        <td class="TableDataPaddingLeftTop">Genre: <%=genre%></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -112,19 +118,19 @@
                                                 String url = res.getString("band_url");
                                                 url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
-                                                <td style='padding-left: 10px; padding-bottom: 7px;'>
+                                                <td class="TableDataPaddingLeftBottom">
                                                     <a href="http://<%=url%>" target="_blank">Site</a>
                                                 </td>
                                         <% } else { %>
                                                 <td></td>
                                         <%}%>
-                                        <td align='right' style='padding-right: 7px; padding-bottom: 7px;'>
+                                        <td class="TableDataPaddingRightBottom">
                                             <input type="submit" name="Details" value=" Details " />
                                         </td>
                                     </tr> <!-- Warning negeren. De controle wordt genegeerd. Daarom ziet HTML 3 kolommen ipv 2 -->
                                 </tbody>
                             </table>
-                            </form><br />
+                            </form>
                             <%
                                 }
                             } else {
