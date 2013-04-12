@@ -1,11 +1,5 @@
-<%-- 
-    Document   : festival_aanpassen
-    Created on : Apr 9, 2013, 9:20:39 AM
-    Author     : tar-aldaron
---%>
 
-<%@page import="javax.swing.JOptionPane"%>
-<%@page import="sun.font.Script"%>
+
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
@@ -13,7 +7,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.sql.ResultSet"%>
-
 <%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,45 +17,45 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
     <!--<![endif]-->
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Festivals</title>
+        <title>Groepen</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <script>
-            <%!List<String> fest = new ArrayList();%>          
+            <%!List<String> groepen = new ArrayList();%>          
         </script>
+        
     </head>
     <body>
-        <%!List<String> verwijder = new ArrayList();%>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
                     <div align="center">
-
-                        <%
-                       fest.clear();
+                        
+                         <%
+                       groepen.clear();
                             if ((request.getParameter("elements") != null)&& request.getParameter("annuleren") == null) {
                                 
                                 for (String e : request.getParameterValues("elements")) {
-                                    if(!fest.contains(e)){
-                                    fest.add(e);}
+                                    if(!groepen.contains(e)){
+                                    groepen.add(e);}
                                 }
                                 
                             }
                             try {
-
+                                ArrayList<String> lijstGenres = new ArrayList<String>();
 
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
+                                connectie.voerQueryUit("SELECT b.*, bf.*, f.fest_naam FROM bands b, bandsperfestival bf, festivals f WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();
 
                                 res.last();
@@ -72,113 +65,97 @@
                                 res.previous();
 
                                 if (lengteResultSet > 0) {
-
-                        %>   
-
-                        <div style='padding-top: 25px; padding-bottom: 10px;'>
+                        %>
+                        
                             <%! String id = "";%>
-                            <!-- Informatie Festivals -->
+                            <!-- Informatie groepen -->
                             <%
                                 res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                 res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                 while (res.next()) {
-                                    id = res.getString("fest_id");
-                                    String naam = res.getString("fest_naam");
-                                    String beginDatum = res.getString("fest_datum");
-                                    String locatie = res.getString("fest_locatie");
+                                    id = res.getString("band_id");
+                                    String naam = res.getString("band_naam");
+                                    String genre = res.getString("band_soortMuziek");
+                                    String afbeelding = res.getString("band_afbeelding");
                                     String styleTable;
-                                    if (fest.contains(id)) {
+                                    if (groepen.contains(id)) {
                                         styleTable = " background-color: red;";
                                     } else {
                                         styleTable = "";
                                     }
-                            %>
-
-                            <table width='600px' style='border: 1px solid white;<%= styleTable%> '>
-                                <tbody style='padding: 10px;'>
-                                <form action="festival_aanpassen.jsp" method="POST" >
+        %>
+                            <table width='500px' style='border: 1px solid white;<%= styleTable%>'>
+                                <tbody align="left" style='padding: 10px;'>
+                                <form action="groepen_aanpassen.jsp" method="POST">
                                     <tr>
-                                        <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
-                                    <input type="hidden" name="naam" value="<%=naam%>">
-                                    <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                    <td></td>
+                                        <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
                                     </tr>
                                     <tr>
-                                        <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
-                                        <!-- Datums berekenen -->
-                                        <%
-                                            DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
-
-                                            Date begindatum = formaatDatum.parse(beginDatum);
-
-                                            //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                            Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                            cal.setTime(begindatum);                //De begindatum in cal steken
-                                            cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
-
-                                            Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                            String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-%>
-                                        <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                            <input type="submit" name="Details" value=" Details " />
-
-
+                                        <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b></td>
+                                        <input type="hidden" name="naam" value="<%=naam%>">
+                                        <td  style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <%
-                                            if (res.getString("fest_url") != null) {
-                                                String url = res.getString("fest_url");
-                                        %>
-                                        <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
-                                        <%
-                                        } else {
-                                        %>
+                                        <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
                                         <td></td>
-                                        <%}%>
-                                        <td><input name="elements" type="hidden" value="<%=id%>"/></td>
-                                            <%
+                                    </tr>
+                                    <tr>
+                                        <%
+                                            if (res.getString("band_url") != null) {
+                                                String url = res.getString("band_url");
+                                        %>
+                                        <td style='padding-left: 10px; padding-bottom: 6px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
+                                    <%
+                                    } else {
+                                    %>
+                                    <td></td>
+                                    <%}%>
+                                    
+                                    <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
+                                        <input type="submit" name="Details" value=" Details " />
+                                    </td>
+                                    </tr>
+                                    <tr><td><input name="elements" type="hidden" value="<%=id%>"/></td>
+                                        <td> <%
                                            
                                             
-                                            for (String element : fest) {%>
+                                            for (String element : groepen) {%>
                                     <input name="elements" type="hidden" value="<%=element%>"/>
                                     
                                     <%}
                                         String extra = "";
-                                        if (fest.contains(id)) {
+                                        if (groepen.contains(id)) {
                                             extra = "visibility:hidden;";
                                         }
-                                    %>
-                                    
-                                    <td style='padding-right: 10px;padding-bottom: 10px;' >
-                                        <input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= extra%>"/>
-                                                              
-                                </td>
-                                </tr>
+                                    %></td>
+                                        <td align='right' style='padding-right: 10px;padding-bottom: 10px;' >
+                                         <input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= extra%>"/>
+                                  </td>
+                                        </tr>
                                 </form>
                                 </tbody>
                             </table><br />
                             <%
                                 }%>
-                                <form action="festival_aanpassen_resultaat.jsp">
+                                <form action="groepen_aanpassen_resultaat.jsp">
                                 <table>
                                     <tr>
                                         <td>
                                             <%
                                                                                         
-                                                                                        for (String element : fest) {%>
+                                                                                        for (String element : groepen) {%>
                                             <input name="elementsVerwijderen" type="hidden" value="<%=element%>"/>
 
                                             <%}
                                               String status = "visibility: visible;";
-                                              if(fest.isEmpty()){status="visibility: hidden;";}
+                                              if(groepen.isEmpty()){status="visibility: hidden;";}
 
                                             %>
                                         </td>
                                         <td><input onclick='' type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status %>"/> </td>
                                          </form>
                                         
-                                        <form action="festival_aanpassen.jsp" method="GET">
+                                         <form action="groepen_aanpassen.jsp" method="GET">
                                             <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
                                              
                                              <td>
@@ -189,7 +166,8 @@
                                     </tr>
                                 </table>
 
-                            <%} else {
+                            <%
+                            } else {
                             %>
                             <h3>Helaas! Er zijn geen records gevonden...</h3>
                             <%}
