@@ -68,7 +68,7 @@
             //ResultSet aanmaken voor alle campings van het festival
 
         %>
-        <title><%= fest.getString(2) %> - Details</title>
+        <title><%= fest.getString("fest_naam") %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detailpages.css">
@@ -109,52 +109,49 @@
                             <h2><%=fest.getString("fest_naam")%></h2>
                         </header>
                         
+                        <form action="festival_details_aanpassen_resultaat.jsp" method="POST">
                         <table>
                             <tbody>
                                 <tr>
                                     <td>Land:</td>
-                                    <td><%= land %></td>
+                                    <td><input type="text" name="land" value="<%= land %>" /></td>
                                 </tr>
                                 <tr>
                                     <td>Locatie:</td>
-                                    <td><%= gemeente %></td>
+                                    <td><input type="text" name="gemeente" value="<%= gemeente %>" /></td>
                                 </tr>
                                 <tr>
                                     <td>Startdatum:</td>
-                                    <td><%= fest.getString("fest_datum") %></td>
+                                    <td><input type="text" name="fest_datum" value="<%= fest.getString("fest_datum") %>" /></td>
                                 </tr>
                                 <tr>
                                     <td>Einddatum:</td>
-                                    <td><%= fest.getString("fest_einddatum") %></td>
+                                    <td><input type="text" name="fest_einddatum" value="<%= fest.getString("fest_einddatum") %>" /></td>
                                 </tr>
                                 <tr>s
                                     <td>Duur:</td>
-                                    <td><%= fest.getInt("fest_duur") %></td>
+                                    <td><input type="text" name="fest_duur" value="<%= fest.getString("fest_duur") %>" /></td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
                                     <%  String website = fest.getString("fest_url");
                                     if (website != null) {%>
-                                    <td><%= website %></td>
+                                    <td><input type="text" name="website" value="<%= website %>" /></td>
                                     <%} else {%>
-                                    <td>Niet beschikbaar</td>
+                                    <td><input type="text" name="website" value="" /></td>
                                     <%}%>
                                 </tr>
                                 <tr>
-                                    <td style="padding-right: 25px;">Capaciteit camping:</td>
-                                    <td><%= cap %></td>
-                                </tr>
-                                <tr>
                                     <td colspan="2">
-                                        <form action="festival_details_aanpassen.jsp" method="POST">
-                                            <input type="hidden" name="naam" value="<%=request.getParameter("naam")%>">
-                                            <input type="submit" name="festedit" value="Festival aanpassen"
-                                                   style="width: 435px; margin-top: 10px;"/>
-                                        </form>
+                                        <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                        <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
+                                        <input type="submit" name="festsave" value="Gegevens opslaan"
+                                               style="width: 435px; margin-top: 10px;"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        </form>
                     </article>
                         <article id="overzicht"
                                  style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
