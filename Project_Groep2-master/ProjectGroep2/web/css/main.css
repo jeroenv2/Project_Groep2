@@ -174,14 +174,12 @@ body {
     border-color: #14742a;
 }
 
-#ButtonTopPage{
+#TopPage{
     background: #14742a;
-    border-color: #14742a;
-    padding: 2px 1px;
+    padding: 5px;
     color: #fff;
     position: fixed;
-    bottom:25px;
-    height: 40px;
+    bottom: 25px;
 }
 
 a:link
