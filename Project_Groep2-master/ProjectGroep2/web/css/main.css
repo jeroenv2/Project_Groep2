@@ -187,15 +187,32 @@ body {
     width: 600px;
     border: 1px solid white;
     margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+#geavZoeken
+{
+    margin: 0px;
+    padding: 0px;
+    background-color: green;
+}
+
+.TekstOnderlijning
+{
+    padding-top: 10px;
+    padding-left: 10px;
+    margin: 0px;
+    text-decoration: underline;
 }
 
 /* ---- Opmaak Festivals ---- */
-#TableFestivals
+#TableFestivalsFilter
 {
     width: 625px;
+    padding-left: 20px;
 }
 
-#tbodyAlignLeft
+.tbodyAlignLeft
 {
     text-align: left;
 }
@@ -203,7 +220,12 @@ body {
 .TableDataWidth300
 {
     width: 300px;
-    padding-left: 10px;
+}
+
+#TableWidth600Border
+{
+    width: 600px;
+    border: 1px solid white;
 }
 
 .TableDataPaddingLeftTop
@@ -230,6 +252,12 @@ body {
 {
     padding-top: 25px;
     padding-bottom: 10px;
+}
+
+#FontVerlopenFestival
+{
+    color: mediumseagreen;
+    font-weight: bold; 
 }
 
 /* ---- Opmaak hyperlinks ---- */

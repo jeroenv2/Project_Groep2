@@ -87,14 +87,14 @@
                                 {
                         %>   
                                     <div data-collapse id="CollapseOpmaak">
-                                        <h2 id="geavZoeken" style="margin: 0px; padding: 0px; background-color: green;">+ Geavanceerd Zoeken </h2>
+                                        <h2 id="geavZoeken">+ Geavanceerd Zoeken </h2>
                                     <div>
                                       <form id="form_filter" action='festivals_filter.jsp' method='POST'>
-                                        <table id="TableFestivals">
+                                        <table id="TableFestivalsFilter">
                                             <tbody id="tbodyAlignLeft" >
                                                 <tr>
-                                                    <td id="TableDataWidth300">
-                                                        <u>Naam begint met:</u><br />
+                                                    <td class="TableDataWidth300">
+                                                        <div class="TekstOnderlijning">Naam begint met:</div>
                                                         <%while (res.next()) {
                                                                 String letter = res.getString("fest_naam").substring(0, 1);
 
@@ -107,13 +107,13 @@
                                                             java.util.Collections.sort(lijstLetters);
                                                             for (String letter : lijstLetters) {
                                                         %>
-                                                        &nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter%>' /> <%= letter%><br />
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter%>' /> <%= letter%><br />
                                                         <%
                                                             }
                                                         %>
                                                     </td>
-                                                    <td id="TableDataPaddingLeftTop">
-                                                        <u>Locatie:</u><br />
+                                                    <td class="TableDataPaddingLeftTop">
+                                                        <div class="TekstOnderlijning">Locatie:</div>
                                                         <%
                                                             //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
                                                             res.first();
@@ -130,7 +130,7 @@
                                                             java.util.Collections.sort(lijstLocaties);
                                                             for (String locatie : lijstLocaties) {
                                                         %>
-                                                        &nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
                                                         <%}%>
                                                     </td>
                                                 </tr>
@@ -142,7 +142,7 @@
                                                 <tr>
                                                     <td colspan="2" style='padding-left: 10px;'>
                                                         <div id='datums' style='display: none;'>
-                                                        Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' />en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' />
+                                                        Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' />
                                                         </div>
                                                     </td>
                                                </tr>
@@ -168,10 +168,10 @@
                                        String locatie = res.getString("fest_locatie");
                                 %>
                                        <form action="festival_details.jsp" method="POST">
-                                          <table width='600px' style='border: 1px solid white;'>
-                                              <tbody align="left" style='padding: 10px;'>
+                                          <table id="TableWidth600Border">
+                                              <tbody class="tbodyAlignLeft" style='padding: 10px;'>
                                                   <tr>
-                                                     <td width='300px' style='padding-left: 10px; padding-top: 10px;'>
+                                                     <td class="TableDataWidth300" style='padding-left: 10px; padding-top: 10px;'>
                                                         <b> <%= naam%> </b>
                                                         <input type="hidden" name="naam" value="<%=naam%>">
                                                      </td>
@@ -219,7 +219,7 @@
                                                            </td>
                                                        <%} else {%>
                                                              <td class="TableDataPaddingRightBottom">
-                                                                 <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
+                                                                 <div id="FontVerlopenFestival">Dit festival is verlopen</div>
                                                              </td>
                                                        <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
                                                     </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
