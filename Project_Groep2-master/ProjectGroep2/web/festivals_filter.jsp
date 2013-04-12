@@ -30,7 +30,7 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <a name="top"></a>
+        <a id="top"></a>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />

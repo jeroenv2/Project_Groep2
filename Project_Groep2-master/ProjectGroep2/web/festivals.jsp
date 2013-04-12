@@ -61,7 +61,7 @@
         </script>
     </head>
     <body>
-        <a name="top"></a>
+        <a id="top"></a>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
