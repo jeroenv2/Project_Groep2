@@ -225,7 +225,7 @@
                                                     </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
                                                 </tbody>
                                             </table>
-                                        </form><br />
+                                        </form>
                                    <%}
                                   } else {%>
                                         <h3>Helaas! Er zijn geen festivals gevonden...</h3>

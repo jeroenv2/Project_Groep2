@@ -224,6 +224,7 @@ body {
 
 #TableWidth600Border
 {
+    margin-top: 15px;
     width: 600px;
     border: 1px solid white;
 }

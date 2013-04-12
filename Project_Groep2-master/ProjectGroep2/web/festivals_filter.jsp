@@ -118,92 +118,85 @@
                         %>
                         <h1>Gefilterd Resultaat</h1>
                         Klik <a href='festivals.jsp'>hier</a> om terug te keren
-                        <div style='padding-top: 25px; padding-bottom: 10px;'>
-                            
-                            <!-- Informatie Festivals -->
-                                    <%
-                                        res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                        res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                        while (res.next()) {
-                                            String naam = res.getString("fest_naam");
-                                            String beginDatum = res.getString("fest_datum");
-                                            String locatie = res.getString("fest_locatie");
-                                    %>
-                                    <form action="festival_details.jsp" method="POST">
-                                    <table width='600px' style='border: 1px solid white;'>
-                                        <tbody align="left" style='padding: 10px;'>
-                                            <tr>
-                                                <td width='300px' style='padding-left: 10px; padding-top: 10px;'>
-                                                    <b> <%= naam%> </b>
-                                                    <input type="hidden" name="naam" value="<%=naam%>">
-                                                </td>
-                                                <td width='300px' style='padding-left: 10px; padding-top: 10px; border-right: 1px solid white;'>Begindatum: <%=beginDatum%> </td>
-                                            </tr>
-                                            <tr>
-                                                <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
-                                                <!-- Datums berekenen -->
-                                                <%
-                                                    DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+                        <div id="FestivalsGegevensPadding">
+                                <!-- Informatie Festivals -->
+                                <%
+                                   res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                   res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                   while (res.next())
+                                   {
+                                       String naam = res.getString("fest_naam");
+                                       String beginDatum = res.getString("fest_datum");
+                                       String locatie = res.getString("fest_locatie");
+                                %>
+                                       <form action="festival_details.jsp" method="POST">
+                                          <table id="TableWidth600Border">
+                                              <tbody class="tbodyAlignLeft" style='padding: 10px;'>
+                                                  <tr>
+                                                     <td class="TableDataWidth300" style='padding-left: 10px; padding-top: 10px;'>
+                                                        <b> <%= naam%> </b>
+                                                        <input type="hidden" name="naam" value="<%=naam%>">
+                                                     </td>
+                                                     <td class="TableDataWidth300" style="border-right: 1px solid white;">Begindatum: <%=beginDatum%> </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td class="TableDataPaddingLeftTopBottom">
+                                                          Locatie: <%=locatie%>
+                                                      </td>
+                                                        <!-- Datums berekenen -->
+                                                        <%
+                                                         DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+                                                         Date begindatum = formaatDatum.parse(beginDatum);
 
-                                                    Date begindatum = formaatDatum.parse(beginDatum);
+                                                         //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
+                                                         Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
+                                                         cal.setTime(begindatum);                //De begindatum in cal steken
+                                                         cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
 
-                                                    //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                                    Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                                    cal.setTime(begindatum);                //De begindatum in cal steken
-                                                    cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+                                                         Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
+                                                         String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+                                                       %>
+                                                       <td class="TableDataPaddingLeftTop"  style="border-right: 1px solid white;">Einddatum: <%=strEinddatum%></td>
+                                                    </tr>
+                                                    <tr>
+                                                       <%
+                                                            if (res.getString("fest_url") != null) {
+                                                            String url = res.getString("fest_url");
+                                                            url = url.replace(" ", "%20");  //Bij een spatie in de url moet deze vervangen worden door %20 (spatie in hexadeci)
+                                                       %>
+                                                       <td style='padding-left: 10px; padding-bottom: 7px;'>
+                                                            <a href="http://<%=url%>" target="_blank">Site</a>
+                                                       </td>
+                                                       <%} else {%>
+                                                            <td></td>
+                                                       <%}
 
-                                                    Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                                    String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                                %>
-                                                <td style='padding-left: 10px; padding-top: 10px;  border-right: 1px solid white;'>Einddatum: <%=strEinddatum%></td>
-                                            </tr>
-                                            <tr>
-                                                <%
-                                                    if (res.getString("fest_url") != null) {
-                                                        String url = res.getString("fest_url");
-                                                        url = url.replace(" ", "%20");  //Bij een spatie in de url moet deze vervangen worden door %20 (spatie in hexadeci)
-                                                %>
-                                                    <td style='padding-left: 10px; padding-bottom: 7px;'>
-                                                        <a href="http://<%=url%>" target="_blank">Site</a>
-                                                    </td>
-                                                <%
-                                                } else {
-                                                %>
-                                                        <td></td>
-                                                <%}
-                                                    
-                                                cal.set(Calendar.YEAR, 0);
-                                                cal.set(Calendar.MONTH, 0);
-                                                cal.set(Calendar.DAY_OF_WEEK, 0);
-                                                if (begindatum.after(new Date()))
-                                                {%>
-                                                    <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
-                                                        <input type="submit" name="Details" value=" Details " />
-                                                    </td>
-                                                <%
-                                                } else {
-                                                %>
-                                                    <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
-                                                       <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
-                                                   </td>
-                                                <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
-                                            </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
-                                        </tbody>
-                                    </table>
-                                    </form><br />
-                                    <%
-                                        }
-                                    } else {
-                                    %>
-                    <h3>Helaas! Er zijn geen festivals gevonden...</h3>
-                    Klik <a href="festivals.jsp">hier</a> om terug te keren
-                <%}
-                    connectie.sluitConnectie(); //Connectie met de databank sluiten
-                } catch (Exception e) {
-                    out.println(e.getMessage());
-                }
-                %>
-            </div>
+                                                       cal.set(Calendar.YEAR, 0);
+                                                       cal.set(Calendar.MONTH, 0);
+                                                       cal.set(Calendar.DAY_OF_WEEK, 0);
+                                                       if (begindatum.after(new Date()))
+                                                       {%>
+                                                           <td class="TableDataPaddingRightBottom">
+                                                               <input type="submit" name="Details" value=" Details " />
+                                                           </td>
+                                                       <%} else {%>
+                                                             <td class="TableDataPaddingRightBottom">
+                                                                 <div id="FontVerlopenFestival">Dit festival is verlopen</div>
+                                                             </td>
+                                                       <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                    </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                   <%}
+                                  } else {%>
+                                        <h3>Helaas! Er zijn geen festivals gevonden...</h3>
+                                  <%}
+                            connectie.sluitConnectie(); //Connectie met de databank sluiten
+                        } catch (Exception e) {
+                            out.println(e.getMessage());
+                        }%>
+                    </div>
             </div>
         </section>
         </div>
