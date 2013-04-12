@@ -20,7 +20,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -131,13 +131,13 @@
                                     %>
                                     <form action="festival_details.jsp" method="POST">
                                     <table width='600px' style='border: 1px solid white;'>
-                                        
                                         <tbody align="left" style='padding: 10px;'>
                                             <tr>
-                                                <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b>
-                                                <input type="hidden" name="naam" value="<%=naam%>"></td>
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                                <td></td>
+                                                <td width='300px' style='padding-left: 10px; padding-top: 10px;'>
+                                                    <b> <%= naam%> </b>
+                                                    <input type="hidden" name="naam" value="<%=naam%>">
+                                                </td>
+                                                <td width='300px' style='padding-left: 10px; padding-top: 10px; border-right: 1px solid white;'>Begindatum: <%=beginDatum%> </td>
                                             </tr>
                                             <tr>
                                                 <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
@@ -154,59 +154,62 @@
 
                                                     Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                                     String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-%>
-                                                <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                                <td></td>
+                                                %>
+                                                <td style='padding-left: 10px; padding-top: 10px;  border-right: 1px solid white;'>Einddatum: <%=strEinddatum%></td>
                                             </tr>
                                             <tr>
                                                 <%
                                                     if (res.getString("fest_url") != null) {
                                                         String url = res.getString("fest_url");
+                                                        url = url.replace(" ", "%20");  //Bij een spatie in de url moet deze vervangen worden door %20 (spatie in hexadeci)
                                                 %>
-                                                <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
+                                                    <td style='padding-left: 10px; padding-bottom: 7px;'>
+                                                        <a href="http://<%=url%>" target="_blank">Site</a>
+                                                    </td>
                                                 <%
                                                 } else {
                                                 %>
-                                                <td></td>
-                                                <%}
-                                                    cal.set(Calendar.YEAR, 0);
-                                                    cal.set(Calendar.MONTH, 0);
-                                                    cal.set(Calendar.DAY_OF_WEEK, 0);
-                                                    if(begindatum.after(new Date()))
-                                                    {%>
                                                         <td></td>
-                                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                                <%}
+                                                    
+                                                cal.set(Calendar.YEAR, 0);
+                                                cal.set(Calendar.MONTH, 0);
+                                                cal.set(Calendar.DAY_OF_WEEK, 0);
+                                                if (begindatum.after(new Date()))
+                                                {%>
+                                                    <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
                                                         <input type="submit" name="Details" value=" Details " />
-                                                    <%}
-                                                    else
-                                                    {%>
-                                                        <td colspan="2" align='right' style='padding-right: 10px; padding-bottom: 10px;'>
-                                                           <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
-                                                    <%}%>
-                                                </td>
-                                            </tr>
-                                            </form>
+                                                    </td>
+                                                <%
+                                                } else {
+                                                %>
+                                                    <td align="right" style="padding-right: 7px; padding-bottom: 7px;">
+                                                       <b><font color="mediumseagreen">Dit festival is verlopen</font></b>
+                                                   </td>
+                                                <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                            </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
                                         </tbody>
-                                    </table><br />
+                                    </table>
+                                    </form><br />
                                     <%
                                         }
                                     } else {
                                     %>
-                            <h3>Helaas! Er zijn geen records gevonden...</h3>
-                            Klik <a href='festivals.jsp'>hier</a> om terug te keren
-
-                            <%}
-                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
-                                } catch (Exception e) {
-                                    out.println(e.getMessage());
-                                }
-                            %>
-                        </div>
-                </section>
+                    <h3>Helaas! Er zijn geen records gevonden...</h3>
+                    Klik <a href="festivals.jsp">hier</a> om terug te keren
+                <%}
+                    connectie.sluitConnectie(); //Connectie met de databank sluiten
+                } catch (Exception e) {
+                    out.println(e.getMessage());
+                }
+                %>
             </div>
+            </div>
+        </section>
+        </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>
-        <a href="#top"><input type="button" id="ButtonTopPage" value=" Begin Pagina " /></a>
+        <a href="#top"><div id="TopPage">Begin Pagina</div></a>
     </body>
 </html>

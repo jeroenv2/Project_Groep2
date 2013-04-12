@@ -19,7 +19,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -170,7 +170,7 @@
                                             String locatie = res.getString("fest_locatie");
                                     %>
                                     <form action="festival_details.jsp" method="POST">
-                                    <table border="1px solid white" width='600px' style='border: 1px solid white;'>
+                                    <table width='600px' style='border: 1px solid white;'>
                                         <tbody align="left" style='padding: 10px;'>
                                             <tr>
                                                 <td width='300px' style='padding-left: 10px; padding-top: 10px;'>

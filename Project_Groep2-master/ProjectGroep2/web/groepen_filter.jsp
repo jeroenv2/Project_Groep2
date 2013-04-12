@@ -143,6 +143,6 @@
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>
-        <a href="#top"><input type="button" id="ButtonTopPage" value=" Begin Pagina " /></a>
+        <a href="#top"><div id="TopPage">Begin Pagina</div></a>
     </body>
 </html>
