@@ -86,6 +86,34 @@ public class Connectie_Databank
         }
     }
     
+    public void voerUpdateUit(String query, List<String> parameters)
+    {
+        try
+        {
+            if(parameters.size() > 0)
+            {
+                //Reden preparedStatement: geen SQL-Injectie!
+                prepStatement = connectie.prepareStatement(query);
+
+                //Lijst met parameters uitlezen om de preparedStatement op te vullen
+                for(int i=1; i<=parameters.size(); i++)
+                {
+                   prepStatement.setString(i, parameters.get(i-1));
+                }
+                prepStatement.executeUpdate();
+            }
+            else
+            {
+                statement = connectie.createStatement();
+                statement.executeUpdate(query);
+            }
+        }
+        catch(Exception e)
+        {
+            System.err.println("FOUT BIJ UPDATEN: " + e.getMessage());
+        }
+    }
+    
     public ResultSet haalResultSetOp()
     {
         return inhoudQuery;
