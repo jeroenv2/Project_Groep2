@@ -30,6 +30,7 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
+        <a name="top"></a>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
@@ -205,5 +206,6 @@
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>
+        <a href="#top"><input type="button" id="ButtonTopPage" value=" Begin Pagina " /></a>
     </body>
 </html>
