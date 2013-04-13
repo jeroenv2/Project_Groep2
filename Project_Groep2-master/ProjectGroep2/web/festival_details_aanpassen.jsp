@@ -118,6 +118,9 @@
                             <h2><%=fest.getString("fest_naam")%></h2>
                         </header>
                         
+                        <!--
+                            In principe het zelfde formulier als bij festivaldetails, maar met invoervelden met de actuele gegevens in.
+                        -->
                         <form action="festival_details_aanpassen_resultaat.jsp" method="POST">
                         <table>
                             <tbody>
@@ -168,85 +171,94 @@
                         </table>
                         </form>
                     </article>
-                        <article id="overzicht"
-                                 style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
-                            <header>
-                                <h2>Overzicht</h2>
-                            </header>
-                            <div id="lijsten" data-collapse="persist">
-                                <p class="open">Verwijder groep</p>
-                                <ul>
-                                    <% try {
-                                        while (bands.next()) { %>
-                                    <li>
-                                        <%= bands.getString("band_naam") %>
-                                    </li>
-                                    <li>
-                                        <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
-                                        <%= bands.getString("pod_omschr") %>
-                                    </li>
-                                    <%  }
-                                       } catch (Exception e) { %>
-                                    <li>Nog geen groepen</li>
-                                    <% }%>
-                                </ul>
-                                <p>Verwijder camping</p>
-                                <ul>
-                                    <% try {
-                                        while (campings.next()) { %>
-                                    <li>
-                                        <%= campings.getString("camp_adres") %>
-                                        <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
-                                    </li>
-                                    <li><%= campings.getString("camp_cap") %></li>
-                                    <%  }
-                                       } catch (Exception e) { %>
-                                    <li>Nog geen campings</li>
-                                    <% }%>
-                                </ul>
-                                <p>Verwijder ticket</p>
-                                <ul>
-                                    <% try {
-                                        while (tickets.next()) { %>
-                                    <li>
-                                        <form action="./details/delete_ticket.jsp">
-                                            <%= tickets.getString("typ_omschr") %>
-                                            <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
-                                            <input type="hidden" name="typ_id" value="<%= tickets.getString("typ_id") %>" />
-                                            <button type="submit">
-                                                <img src="img/minus.png" alt="X" width="15px"/>
-                                            </button>
-                                        </form>
-                                    </li>
-                                    <li><%= tickets.getString("typ_prijs") %></li>
-                                    <%  }
-                                       } catch (Exception e) { %>
-                                    <li>Nog geen tickets</li>
-                                    <% }%>
-                                </ul>
-                                <p>Ticket toevoegen</p>
-                                <div class="nolist">
-                                    <form id="form_add_ticket" name="add_ticket" action="details/add_ticket.jsp">
-                                    Type:&nbsp;
-                                    <select id="ticket_add" onchange="setDropDownValue(this)">
-                                    <% while (rsTicketTypes.next()) {
-                                        if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { %>
-                                        <option value="<%= rsTicketTypes.getString("typ_id") %>">
-                                            <%= rsTicketTypes.getString("typ_omschr") %>
-                                        </option>
-                                        <% }
-                                    } %>
-                                    </select><br />
-                                    Aantal:&nbsp;
-                                    <input type="number" name="typ_aantal" min="1" required title="Niet negatief" />
-                                    <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
-                                    <input type="hidden" id="typ_id" name="typ_id" value="" />
-                                    <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
-                                           style="margin-top: 5px; width: 100px;"/>
+                    <article id="overzicht"
+                             style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
+                        <header>
+                            <h2>Verwijderen / toevoegen</h2>
+                        </header>
+                        <div id="lijsten" data-collapse="persist">
+                            <p class="open">Verwijder groep</p>
+                            <ul>
+                                <% try {
+                                    while (bands.next()) { %>
+                                <li>
+                                    <%= bands.getString("band_naam") %>
+                                </li>
+                                <li>
+                                    <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
+                                    <%= bands.getString("pod_omschr") %>
+                                </li>
+                                <%  }
+                                   } catch (Exception e) { %>
+                                <li>Nog geen groepen</li>
+                                <% }%>
+                            </ul>
+                            <p>Verwijder camping</p>
+                            <ul>
+                                <% try {
+                                    while (campings.next()) { %>
+                                <li>
+                                    <%= campings.getString("camp_adres") %>
+                                    <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
+                                </li>
+                                <li><%= campings.getString("camp_cap") %></li>
+                                <%  }
+                                   } catch (Exception e) { %>
+                                <li>Nog geen campings</li>
+                                <% }%>
+                            </ul>
+                            <p>Verwijder ticket</p>
+                            <ul>
+                                <!-- 
+                                    Voor elk record in de tickets voor dit festival dynamisch een formulier aanmaken.
+                                    Dit formulier dient om een ticket te verwijderen voor dit festival
+                                -->
+                                <% try {
+                                    while (tickets.next()) { %>
+                                <li>
+                                    <form action="./details/delete_ticket.jsp">
+                                        <%= tickets.getString("typ_omschr") %>
+                                        <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                        <input type="hidden" name="typ_id" value="<%= tickets.getString("typ_id") %>" />
+                                        <button type="submit">
+                                            <img src="img/minus.png" alt="X" width="15px"/>
+                                        </button>
                                     </form>
-                                </div>
+                                </li>
+                                <li><%= tickets.getString("typ_prijs") %></li>
+                                <%  }
+                                   } catch (Exception e) { %>
+                                <li>Nog geen tickets</li>
+                                <% }%>
+                            </ul>
+                            <p>Ticket toevoegen</p>
+                            <div class="nolist">
+                                <form id="form_add_ticket" name="add_ticket" action="details/add_ticket.jsp">
+                                Type:&nbsp;
+                                <!-- 
+                                Controleren welke tickets nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
+                                -->
+                                <select id="ticket_add" onchange="setDropDownValue(this)" required oninvalid="setCustomValidity('Geen tickets meer')"
+                                        style="width: 150px;">
+                                <% while (rsTicketTypes.next()) {
+                                    if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { %>
+                                    <option value="<%= rsTicketTypes.getString("typ_id") %>">
+                                        <%= rsTicketTypes.getString("typ_omschr") %>
+                                    </option>
+                                    <% }
+                                } %>
+                                </select><br />
+                                Aantal:&nbsp;
+                                <!-- Hidden veld typ_id wordt opgevuld door javascript (select onchange) -->
+                                <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6" />
+                                <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                <input type="hidden" id="typ_id" name="typ_id" value="" />
+                                <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
+                                       style="margin-top: 5px; width: 100px;"/>
+                                </form>
                             </div>
-                        </article>
+                        </div>
+                    </article>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
