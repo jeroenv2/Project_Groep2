@@ -4,6 +4,7 @@
     Author     : robbie
 --%>
 
+<%@page import="beans.gegevensGebruiker"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,12 +20,23 @@
             <input type="text" placeholder="Zoeken" name="Zoeken" size="30" />
             &nbsp;<img src="img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
-        <form id="login" method="post" action="inlog">
-            <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
-            <br/>
-            <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />
-            <br/>
-            <input type="submit" value="Log In" id="loginButton"/>
-        </form>
+        
+        <%
+            String gebruikersnaam = %>${gegGebruiker.getGebruikersnaam}<%;%>
+            if(gebruikersnaam != null)
+            {%>
+                Hallo <%=gebruikersnaam%><br />
+                <a href="profiel.jsp">Profiel</a>
+            <%}
+            else
+            {%>
+                <form id="login" method="post" action="inlog">
+                    <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
+                    <br/>
+                    <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />
+                    <br/>
+                    <input type="submit" value="Log In" id="loginButton"/>
+                </form>
+            <%}%>
     </header>
 </html>
