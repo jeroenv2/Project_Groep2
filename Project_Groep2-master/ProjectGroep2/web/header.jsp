@@ -29,7 +29,7 @@
         %>
         <div id="OpmaakIngelogd">
                 <div class="TekstVet">Hallo <%=gebruikersnaam%></div>
-                <a href="profiel.jsp">Profiel Aanpassen</a> | <a href="profiel.jsp">Uitloggen</a>
+                <a href="profiel.jsp">Profiel Aanpassen</a> | <a href="index.jsp" onclick="<% request.getSession().removeAttribute("gegevensGebruiker"); %>">Uitloggen</a>
         </div>
         <%  }
             else
