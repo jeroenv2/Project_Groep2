@@ -75,20 +75,20 @@
                     <article>
                         <header>
                             <h1>
-                                <% if (strFouten.equals("")) { %>
+                            <% if (strFouten.equals("")) { %>
                                 Gegevens opgeslagen
                             <% } else { %>
                                 Er heeft zich een fout voorgedaan.
                             <% } %>
                             </h1>
                         </header>
-                            <% if (strFouten.equals("")) { %>
+                        <% if (strFouten.equals("")) { %>
                         <p>De gegevens zijn succesvol weggeschreven.</p>
-                        <p>U wordt automatisch doorverwezen</p>
                         <% } else { %>
                         <p>De gegevens konden niet worden weggeschreven</p>
                         <p><%= strFouten %></p>
                         <% } %>
+                        <p>Klik <a href="./festivals.jsp">hier</a> om terug te keren naar het overzicht.</p>
                     </article>
                 </section>
             </div>

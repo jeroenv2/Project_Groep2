@@ -58,7 +58,7 @@ public class Connectie_Databank
      * @param query
      * @param parameters 
      */
-    public void voerQueryUit(String query, List<String> parameters)
+    public void voerQueryUit(String query, List<String> parameters) throws Exception
     {
         try
         {
@@ -83,10 +83,11 @@ public class Connectie_Databank
         catch(Exception e)
         {
             System.err.println("FOUT BIJ UITVOEREN QUERY: " + e.getMessage());
+            throw e;
         }
     }
     
-    public void voerUpdateUit(String query, List<String> parameters)
+    public void voerUpdateUit(String query, List<String> parameters) throws Exception
     {
         try
         {
@@ -111,6 +112,7 @@ public class Connectie_Databank
         catch(Exception e)
         {
             System.err.println("FOUT BIJ UPDATEN: " + e.getMessage());
+            throw e;
         }
     }
     

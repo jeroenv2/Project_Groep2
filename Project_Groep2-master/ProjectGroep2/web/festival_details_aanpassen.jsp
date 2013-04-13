@@ -36,7 +36,7 @@
             lijstParams.remove(0);
             lijstParams.add(fest.getString("fest_id"));
             //ResultSet aanmaken voor alle groepen van op het festival
-            connectie.voerQueryUit("SELECT b.band_naam, p.pod_omschr"
+            connectie.voerQueryUit("SELECT b.band_id, b.band_naam, p.pod_id, p.pod_omschr"
             + " FROM bands b"
             + " JOIN bandsperfestival bf ON b.band_id = bf.band_id"
             + " JOIN podia p ON p.pod_id = bf.pod_id"
@@ -44,26 +44,28 @@
             ResultSet bands = connectie.haalResultSetOp();
             
             //ResultSet aanmaken voor alle campings van een festival
-            connectie.voerQueryUit("SELECT c.camp_adres, c.camp_cap"
+            connectie.voerQueryUit("SELECT c.camp_id, c.camp_adres, c.camp_cap"
             + " FROM campings c"
             + " JOIN campingsperfestival cf ON c.camp_id = cf.camp_id"
             + " WHERE fest_id = ?", lijstParams);
             ResultSet campings = connectie.haalResultSetOp();
             
-            //Capaciteit van campings ophalen
-            int cap = 0;
-            while (campings.next()) {
-                cap += Integer.parseInt(campings.getString("camp_cap"));
-            }
-            campings.beforeFirst();
-                
-                
             //ResultSet aanmaken voor alle tickettypes beschikbaar op een festival
-            connectie.voerQueryUit("SELECT tt.typ_omschr, tt.typ_prijs"
+            connectie.voerQueryUit("SELECT tt.typ_id, tt.typ_omschr, tt.typ_prijs"
             + " FROM tickettypes tt"
             + " JOIN tickettypesperfestival ttf ON tt.typ_id = ttf.typ_id"
             + " WHERE fest_id = ?", lijstParams);
             ResultSet tickets = connectie.haalResultSetOp();
+            
+            List<String> alTickets = new ArrayList<String>();
+            while(tickets.next()) {
+                alTickets.add(tickets.getString("typ_id"));
+            }
+            tickets.beforeFirst();
+            
+            lijstParams.remove(0);
+            connectie.voerQueryUit("SELECT * FROM tickettypes", lijstParams);
+            ResultSet rsTicketTypes = connectie.haalResultSetOp();
 
             //ResultSet aanmaken voor alle campings van het festival
 
@@ -77,6 +79,13 @@
         <script src="js/vendor/jquery.collapse.js"></script>
         <script src="js/vendor/jquery.collapse_storage.js"></script>
         <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
+        <script type="text/javascript">
+            function setDropDownValue() {
+                var ddl=document.add_ticket.ticket_add;
+                var value = ddl.options[a.selectedIndex].value;
+                document.add_ticket.add_typ_id.value = value;
+            }
+        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -114,38 +123,44 @@
                             <tbody>
                                 <tr>
                                     <td>Land:</td>
-                                    <td><input type="text" name="land" value="<%= land %>" /></td>
+                                    <td><input type="text" id="land" name="land" value="<%= land %>" 
+                                               required title="Vul een land in." /></td>
                                 </tr>
                                 <tr>
                                     <td>Locatie:</td>
-                                    <td><input type="text" name="gemeente" value="<%= gemeente %>" /></td>
+                                    <td><input type="text" id="gemeente" name="gemeente" value="<%= gemeente %>"
+                                               required title="Vul en gemeente in." /></td>
                                 </tr>
                                 <tr>
                                     <td>Startdatum:</td>
-                                    <td><input type="text" name="fest_datum" value="<%= fest.getString("fest_datum") %>" /></td>
+                                    <td><input type="date" id="bdatum" name="fest_datum" value="<%= fest.getString("fest_datum") %>"
+                                               required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
                                 <tr>
                                     <td>Einddatum:</td>
-                                    <td><input type="text" name="fest_einddatum" value="<%= fest.getString("fest_einddatum") %>" /></td>
+                                    <td><input type="date" id="edatum" name="fest_einddatum" value="<%= fest.getString("fest_einddatum") %>"
+                                               required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
                                 <tr>s
                                     <td>Duur:</td>
-                                    <td><input type="text" name="fest_duur" value="<%= fest.getString("fest_duur") %>" /></td>
+                                    <td><input type="text" id="duur" name="fest_duur" value="<%= fest.getString("fest_duur") %>" required/></td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
                                     <%  String website = fest.getString("fest_url");
                                     if (website != null) {%>
-                                    <td><input type="text" name="website" value="<%= website %>" /></td>
+                                    <td><input type="text" id="murl" name="website" value="<%= website %>"
+                                               pattern="(http:\/\/|https:\/\/)?www\.?([a-zA-Z0-9_%]*)\.[a-zA-Z]{1}[a-zA-Z]+"
+                                               title="http:// of https:// + A-Z + .A-Z"/></td>
                                     <%} else {%>
-                                    <td><input type="text" name="website" value="" /></td>
+                                    <td><input type="url" id="zurl" name="website" value="" /></td>
                                     <%}%>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
                                         <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
                                         <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
-                                        <input type="submit" name="festsave" value="Gegevens opslaan"
+                                        <input type="submit" id="festsave" name="festsave" value="Gegevens opslaan"
                                                style="width: 435px; margin-top: 10px;"/>
                                     </td>
                                 </tr>
@@ -159,39 +174,77 @@
                                 <h2>Overzicht</h2>
                             </header>
                             <div id="lijsten" data-collapse="persist">
-                                <p class="open">Groepen</p>
+                                <p class="open">Verwijder groep</p>
                                 <ul>
                                     <% try {
                                         while (bands.next()) { %>
-                                    <li><%= bands.getString("band_naam") %></li>
-                                    <li><%= bands.getString("pod_omschr") %></li>
+                                    <li>
+                                        <%= bands.getString("band_naam") %>
+                                    </li>
+                                    <li>
+                                        <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
+                                        <%= bands.getString("pod_omschr") %>
+                                    </li>
                                     <%  }
                                        } catch (Exception e) { %>
                                     <li>Nog geen groepen</li>
                                     <% }%>
                                 </ul>
-                                <p>Campings</p>
+                                <p>Verwijder camping</p>
                                 <ul>
                                     <% try {
                                         while (campings.next()) { %>
-                                    <li><%= campings.getString("camp_adres") %></li>
+                                    <li>
+                                        <%= campings.getString("camp_adres") %>
+                                        <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
+                                    </li>
                                     <li><%= campings.getString("camp_cap") %></li>
                                     <%  }
                                        } catch (Exception e) { %>
                                     <li>Nog geen campings</li>
                                     <% }%>
                                 </ul>
-                                <p>Tickets</p>
+                                <p>Verwijder ticket</p>
                                 <ul>
                                     <% try {
                                         while (tickets.next()) { %>
-                                    <li><%= tickets.getString("typ_omschr") %></li>
+                                    <li>
+                                        <form action="./details/delete_ticket.jsp">
+                                            <%= tickets.getString("typ_omschr") %>
+                                            <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                            <input type="hidden" name="typ_id" value="<%= tickets.getString("typ_id") %>" />
+                                            <button type="submit">
+                                                <img src="img/minus.png" alt="X" width="15px"/>
+                                            </buton>
+                                        </form>
+                                    </li>
                                     <li><%= tickets.getString("typ_prijs") %></li>
                                     <%  }
                                        } catch (Exception e) { %>
                                     <li>Nog geen tickets</li>
                                     <% }%>
                                 </ul>
+                                <p>Ticket toevoegen</p>
+                                <div class="nolist">
+                                    <form id="form_add_ticket" name="add_ticket" action="details/add_ticket.jsp">
+                                    Type:&nbsp;
+                                    <select id="ticket_add" onchange="setDropDownValue()">
+                                    <% while (rsTicketTypes.next()) {
+                                        if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { %>
+                                        <option value="<%= rsTicketTypes.getString("typ_id") %>">
+                                            <%= rsTicketTypes.getString("typ_omschr") %>
+                                        </option>
+                                        <% }
+                                    } %>
+                                    </select><br />
+                                    Aantal:&nbsp;
+                                    <input type="number" name="typ_aantal" min="1" required title="Niet negatief" />
+                                    <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                    <input type="hidden" name="typ_id" value="" />
+                                    <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
+                                           style="margin-top: 5px; width: 100px;"/>
+                                    </form>
+                                </div>
                             </div>
                         </article>
                 </section>
