@@ -160,6 +160,13 @@ body {
     padding-left: 2px;
 }
 
+#page_wrapper button {
+    background: #14742a;
+    padding: 2px 1px;
+    color: #fff;
+    border-color: #14742a;
+}
+
 #page_wrapper input[type="submit"] {
     background: #14742a;
     padding: 2px 1px;
