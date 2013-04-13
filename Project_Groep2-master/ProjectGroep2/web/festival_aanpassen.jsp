@@ -32,11 +32,14 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script>
-            <%!List<String> fest = new ArrayList();%>          
+            <%!List<String> fest = new ArrayList();
+            
+            %>          
         </script>
     </head>
     <body>
-        <%!List<String> verwijder = new ArrayList();%>
+        <a id="top"></a>
+        
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
@@ -45,18 +48,18 @@
                     <div align="center">
 
                         <%
-                       fest.clear();
-                            if ((request.getParameter("elements") != null)&& request.getParameter("annuleren") == null) {
-                                
+                            fest.clear();
+                            
+                            boolean Verwijder_knop=false;
+                            if ((request.getParameter("elements") != null) && request.getParameter("annuleren") == null) {
+
                                 for (String e : request.getParameterValues("elements")) {
-                                    if(!fest.contains(e)){
-                                    fest.add(e);}
+                                    if (!fest.contains(e)) {
+                                        fest.add(e);
+                                    }
                                 }
-                                
                             }
                             try {
-
-
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
@@ -118,12 +121,10 @@
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-%>
+                                        %>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                             <input type="submit" name="Details" value=" Details " />
-
-
                                     </tr>
                                     <tr>
                                         <%
@@ -135,74 +136,82 @@
                                         } else {
                                         %>
                                         <td></td>
-                                        <%}%>
-                                        <td><input name="elements" type="hidden" value="<%=id%>"/></td>
-                                            <%
-                                           
-                                            
-                                            for (String element : fest) {%>
+                                        <%}
+                                            String knop;
+                                            if(!fest.contains(id)){
+                                            knop ="Verwijderen";
+                                           %>
+                                        <input name="elements" type="hidden" value="<%=id%>"/>
+                                            <%}else{
+                                                knop="Annuleren";
+                                                Verwijder_knop=true;
+                                                
+                                            }
+                                                for (String element : fest) {
+                                                     if(!element.equals(id)){
+        
+        
+        %>
                                     <input name="elements" type="hidden" value="<%=element%>"/>
-                                    
-                                    <%}
-                                        String extra = "";
-                                        if (fest.contains(id)) {
-                                            extra = "visibility:hidden;";
-                                        }
+                                    <%}}
                                     %>
-                                    
-                                    <td style='padding-right: 10px;padding-bottom: 10px;' >
-                                        <input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= extra%>"/>
-                                                              
-                                </td>
-                                </tr>
+                                    <td></td>
+                                    <td align="right" style='padding-right: 10px;padding-bottom: 10px;' >
+                                        <input type="submit" value="<%=knop%>" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
+
+                                    </td>
+                                    </tr>
                                 </form>
                                 </tbody>
                             </table><br />
                             <%
                                 }%>
-                                <form action="festival_aanpassen_resultaat.jsp">
+                            <form action="festival_aanpassen_resultaat.jsp">
                                 <table>
                                     <tr>
                                         <td>
                                             <%
-                                                                                        
-                                                                                        for (String element : fest) {%>
+
+                                                for (String element : fest) {%>
                                             <input name="elementsVerwijderen" type="hidden" value="<%=element%>"/>
 
                                             <%}
-                                              String status = "visibility: visible;";
-                                              if(fest.isEmpty()){status="visibility: hidden;";}
+                                                String status = "visibility: visible;";
+                                                if (!Verwijder_knop) {
+                                                    status = "visibility: hidden;";
+                                                }
 
                                             %>
                                         </td>
-                                        <td><input onclick='' type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status %>"/> </td>
-                                         </form>
-                                        
-                                        <form action="festival_aanpassen.jsp" method="GET">
-                                            <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
-                                             
-                                             <td>
-                                                 <input name="annuleren" type="submit" value="Annuleren" style=" background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status %>"/></td>
-                                         </form>
-                                        <td></td>
+                                        <td><input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/> </td>
+                                        </form>
+
+                                    <form action="festival_aanpassen.jsp" method="GET">
+                                        <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
+
+                                        <td>
+                                            <input name="annuleren" type="submit" value="Annuleren" style=" background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/></td>
+                                    </form>
+                                    <td></td>
 
                                     </tr>
                                 </table>
 
-                            <%} else {
-                            %>
-                            <h3>Helaas! Er zijn geen records gevonden...</h3>
-                            <%}
-                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
-                                } catch (Exception e) {
-                                    out.println(e.getMessage());
-                                }
-                            %>
+                                <%} else {
+                                %>
+                                <h3>Helaas! Er zijn geen records gevonden...</h3>
+                                <%}
+                                        connectie.sluitConnectie(); //Connectie met de databank sluiten
+                                    } catch (Exception e) {
+                                        out.println(e.getMessage());
+                                    }
+                                %>
                         </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>
+        <a href="#top"><div id="TopPage"> Begin Pagina </div></a>
     </body>
 </html>
