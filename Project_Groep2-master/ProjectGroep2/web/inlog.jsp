@@ -4,6 +4,7 @@
     Author     : Steven Verheyen
 --%>
 
+<%@page import="beans.gegevensGebruiker"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
@@ -59,14 +60,26 @@
                                         String paswoord = res.getString("gebr_wachtwoord");
                                         String adres = res.getString("gebr_adres");        
                                         Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("gebr_gebDat")); //Geboortedatum omzetten naar Date (controles nodig later in de webapp)
-                                   %>                       
+                                        
+                                        //In beans steken
+                                        gegevensGebruiker gebruiker = new gegevensGebruiker();
+                                        gebruiker.setGebruikersnaam(gebruikersnaam);
+                                        gebruiker.setPaswoord(paswoord);
+                                        gebruiker.setAdres(adres);
+                                        gebruiker.setGeboorteDatum(geboortedatum);
+                                        
+                                        session.setAttribute("gegevensGebruiker", gebruiker);
+                                        
+                            %>                       
                                    
+                                   <!--
                                         <jsp:useBean id="gegevens" class="beans.gegevensGebruiker" scope="session">
                                             <jsp:setProperty name="gegevens" property="gebruikersnaam" value="<%=gebruikersnaam%>" />
                                             <jsp:setProperty name="gegevens" property="paswoord" value="<%=paswoord%>" />
                                             <jsp:setProperty name="gegevens" property="adres" value="<%=adres%>" />
                                             <jsp:setProperty name="gegevens" property="geboorteDatum" value="<%=geboortedatum%>" />
                                         </jsp:useBean>
+                                   -->
                                         <h1>U bent met succes ingelogd!</h1>
                                         Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
                                     <%}
