@@ -1,7 +1,7 @@
 <%-- 
     Document   : navigation
     Created on : 28-mrt-2013, 9:20:35
-    Author     : robbie
+    Author     : robbie, Steven
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -50,10 +50,14 @@
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                     <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
+                <%} else if (pageName.equals("uitgelogd")) { %>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <%}
                 if(gebruiker != null && !pageName.equals("profiel"))
                 {%>
-                    <a href="#"><img src="img/header/admin.png" alt="admin" height="33" /></a>
+                    <a href="#"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
                 <%}%>
         </nav>
         <%!
