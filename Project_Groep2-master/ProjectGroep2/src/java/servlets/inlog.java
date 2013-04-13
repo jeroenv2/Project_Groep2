@@ -63,6 +63,8 @@ public class inlog extends HttpServlet {
                                         {
                                             out.println("<h1>U bent met succes ingelogd!</h1>");
                                             out.println("Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan");
+                                            
+                                            //Verder uitwerken naar JavaBean...
                                         }
                                         else
                                         {

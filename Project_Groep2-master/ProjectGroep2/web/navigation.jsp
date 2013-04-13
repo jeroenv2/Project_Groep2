@@ -16,29 +16,34 @@
             <%
                 String pageName = extractPageNameFromURLString(request.getRequestURI()).toString();
                 if (pageName.equals("index") || pageName.equals("")) { %>
-                    <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33px" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33px" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33px" /></a>
+                    <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <% } else if (pageName.equals("festivals")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33px" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33px" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33px" /></a>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <%} else if (pageName.equals("groepen")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33px" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33px" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33px" /></a>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
                 <%} else if (pageName.equals("groepen_details")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33px" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33px" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33px" /></a>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
                 <%} else if (pageName.equals("festivals_filter")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33px" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33px" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33px" /></a>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <%} else if (pageName.equals("groepen_filter")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33px" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33px" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33px" /></a>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
+                <%}
+                else if (pageName.equals("inlog")) { %>
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
                 <%}
             %>
         </nav>
