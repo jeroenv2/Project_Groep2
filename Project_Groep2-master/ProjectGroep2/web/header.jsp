@@ -21,15 +21,7 @@
             &nbsp;<img src="img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
         
-        <%
-            String gebruikersnaam = %>${gegGebruiker.getGebruikersnaam}<%;%>
-            if(gebruikersnaam != null)
-            {%>
-                Hallo <%=gebruikersnaam%><br />
-                <a href="profiel.jsp">Profiel</a>
-            <%}
-            else
-            {%>
+        
                 <form id="login" method="post" action="inlog">
                     <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
                     <br/>
@@ -37,6 +29,6 @@
                     <br/>
                     <input type="submit" value="Log In" id="loginButton"/>
                 </form>
-            <%}%>
+   
     </header>
 </html>
