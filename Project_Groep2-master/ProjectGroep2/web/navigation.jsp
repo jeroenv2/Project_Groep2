@@ -15,6 +15,8 @@
         <nav id="nav_wrapper">
             <%
                 String pageName = extractPageNameFromURLString(request.getRequestURI()).toString();
+                beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+                
                 if (pageName.equals("index") || pageName.equals("")) { %>
                     <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
@@ -44,11 +46,14 @@
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <%} else if (pageName.equals("profiel")) { %>
-                    <a href="index.jsp"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
+                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <%}
-            %>
+                if(gebruiker != null)
+                {%>
+                    <a href="#"><img src="img/header/admin.png" alt="admin" height="33" /></a>
+                <%}%>
         </nav>
         <%!
             public static String extractPageNameFromURLString(String urlString) {

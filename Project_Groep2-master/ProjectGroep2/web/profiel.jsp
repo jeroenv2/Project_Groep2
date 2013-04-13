@@ -4,6 +4,11 @@
     Author     : Steven Verheyen
 --%>
 
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -27,16 +32,47 @@
                 <section id="content">
                     <div id="ElementenCenter">
                         <%
-                            //Adres opsplitsen d.m.v. regex
-                            String adres = "46 Grotlaan, Maaseik - Belgie";
-                            String[] adresOpgesplitst = adres.split("\\s+|,+"); //'+' voor meerdere spaties of komma's achter elkaar te verwijderen
+                            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                             
-                            String huisnmr = adresOpgesplitst[0];
-                            String straatnaam = adresOpgesplitst[1];
-                            //adresOpgesplitst[2] -> ','
-                            String gemeente = adresOpgesplitst[3];
-                            //adresOpgesplitst[4] -> '-'
-                            String land = adresOpgesplitst[5];
+                            //Conversies adres
+                            //Adres opsplitsen d.m.v. regex
+                            String adres = gebruiker.getAdres();
+                            String[] adresOpgesplitst = adres.split("\\s+|,+|/"); //'+' voor meerdere spaties of komma's achter elkaar te verwijderen
+                            
+                            String huisnmr = "";
+                            String straatnaam = "";
+                            String bus = "";
+                            String postcode = "";
+                            String gemeente = "";
+                            String land = "";
+                            
+                            if(adresOpgesplitst.length == 7)
+                            {
+                                huisnmr = adresOpgesplitst[0];
+                                straatnaam = adresOpgesplitst[1];
+                                //adresOpgesplitst[2] -> ','
+                                postcode = adresOpgesplitst[3];
+                                gemeente = adresOpgesplitst[4];
+                                //adresOpgesplitst[5] -> '-'
+                                land = adresOpgesplitst[6];
+                            } else if(adresOpgesplitst.length == 8) //Wanneer er een bus bij een huisnummer is
+                            {
+                                huisnmr = adresOpgesplitst[0];
+                                bus = adresOpgesplitst[1];
+                                straatnaam = adresOpgesplitst[2];
+                                //adresOpgesplitst[3] -> ','
+                                postcode = adresOpgesplitst[4];
+                                gemeente = adresOpgesplitst[5];
+                                //adresOpgesplitst[6] -> '-'
+                                land = adresOpgesplitst[7];
+                            }
+                            //!!!Extra controle nodig voor landen en straten met spaties!!!
+                            
+                            //Conversies geboortedatum
+                            Date gebDatum = gebruiker.getGeboorteDatum();                            
+                            int jaar = gebDatum.getYear();
+                            int maand = gebDatum.getMonth();
+                            int dag = gebDatum.getDay();
                         %>
                         <form method="POST" action="#">
                             <table id="TableWidth600Border">
@@ -78,9 +114,12 @@
                                             Adres:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="text" name="adres" value="<%=straatnaam%>" required /> <input type="text" name="adres" value="<%=huisnmr%>" size="1" required /><br />
-                                            <input type="text" name="adres" value="<%=gemeente%>" required /><br />
-                                            <input type="text" name="adres" value="<%=land%>" required /><br />
+                                            <input type="text" name="straatnaam" value="<%=straatnaam%>" required /> 
+                                            <input type="text" name="huisnummer" value="<%=huisnmr%>" size="1" required /> 
+                                            bus <input type="text" name="bus" value="<%=bus%>" size="1"  /> <br />
+                                            <input type="text" name="postcode" value="<%=postcode%>" size="6" required /> 
+                                            <input type="text" name="gemeente" value="<%=gemeente%>" required /><br />
+                                            <input type="text" name="land" value="<%=land%>" required /><br />
                                         </td>
                                     </tr>
                                     <tr>
@@ -88,7 +127,9 @@
                                             Geboortedatum:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="text" name="geboorteDatum" value="${gegevens.geboorteDatum}" size="50" required />
+                                            <input type="text" name="jaar" value="<%=jaar%>" size="1" required /> /
+                                            <input type="text" name="maand" value="<%=maand%>" size="1" required /> /
+                                            <input type="text" name="dag" value="<%=dag%>" size="1" required />
                                         </td>
                                     </tr>
                                     <tr>
