@@ -20,15 +20,25 @@
             <input type="text" placeholder="Zoeken" name="Zoeken" size="30" />
             &nbsp;<img src="img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
-        
-        
-                <form id="login" method="post" action="inlog">
+        <%
+            gegevensGebruiker gegevens = new gegevensGebruiker();
+            if(gegevens.getGebruikersnaam() != null)
+            {
+                String gebruikersnaam = gegevens.getGebruikersnaam();
+        %>
+                <div class="TekstVet">Hallo <%=gebruikersnaam%></div><br />
+                <a href="profiel.jsp">Profiel</a>
+        <%  }
+            else
+            {
+        %>
+                <form id="login" method="post" action="inlog.jsp">
                     <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
                     <br/>
                     <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />
                     <br/>
                     <input type="submit" value="Log In" id="loginButton"/>
                 </form>
-   
+        <%  }%>
     </header>
 </html>

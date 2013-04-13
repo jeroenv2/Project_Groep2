@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <jsp:useBean id="gegevens" class="beans.gegevensGebruiker" scope="request"/>
     </head>
     <body>
         <div id="page_wrapper">
@@ -26,9 +27,12 @@
             <div id="content_wrapper">
                 <section id="content">
                     <div id="ElementenCenter">
-                        Inhoud hier...
+                            Gebruikersnaam: <jsp:getProperty name="gegevens" property="gebruikersnaam" /> <br />
+                            Paswoord: <jsp:getProperty name="gegevens" property="paswoord" /> <br />
+                            Adres: <jsp:getProperty name="gegevens" property="adres" /> <br />
+                            Geboortedatum: <jsp:getProperty name="gegevens" property="geboorteDatum" />
                     </div>
-        </section>
+            </section>
         </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />

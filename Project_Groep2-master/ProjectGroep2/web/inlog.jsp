@@ -22,7 +22,14 @@
 <html>
 <!--<![endif]-->
     <head>
-        <title>Inlog</title>      
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Inlog</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <jsp:useBean id="gegevens" class="beans.gegevensGebruiker" scope="request">
+            <jsp:setProperty name="gegevens" property="*" />
+        </jsp:useBean>
     </head>
     <body>
         <div id='page_wrapper'>
@@ -49,19 +56,7 @@
                                     int lengteResultSet = res.getRow(); //Lengte van de ResultSet opvragen
                                     if(lengteResultSet > 0)
                                     {
-                                        gegevensGebruiker persoon = new gegevensGebruiker();
-                                            
-                                        //Geboortedatum omzetten naar Date (controles nodig later in de webapp)
-                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("gebr_gebDat"));
-                                            
-                                        persoon.setGebruikersnaam(res.getString("gebr_naam"));
-                                        persoon.setAdres(res.getString("gebr_adres"));
-                                        persoon.setPaswoord(res.getString("gebr_wachtwoord"));
-                                        persoon.setGeboorteDatum(geboortedatum);
-                                        request.setAttribute("gegGebruiker", persoon); //alles in obj. persoon in gegGebruiker steken
-                                        //Deze kan later opgeroepen worden om gegevens aan te passen of uit te lezen
-                                        %>
-                                        
+                                   %>
                                         <h1>U bent met succes ingelogd!</h1>
                                         Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
                                     <%}
