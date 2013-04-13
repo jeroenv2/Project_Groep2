@@ -21,13 +21,16 @@
             &nbsp;<img src="<%= request.getContextPath() %>/img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
         <%
-            gegevensGebruiker gegevens = new gegevensGebruiker();
-            if(gegevens.getGebruikersnaam() != null)
+            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+
+            if(gebruiker != null)
             {
-                String gebruikersnaam = gegevens.getGebruikersnaam();
+                String gebruikersnaam = gebruiker.getGebruikersnaam();
         %>
-                <div class="TekstVet">Hallo <%=gebruikersnaam%></div><br />
-                <a href="profiel.jsp">Profiel</a>
+        <div id="OpmaakIngelogd">
+                <div class="TekstVet">Hallo <%=gebruikersnaam%></div>
+                <a href="profiel.jsp">Profiel Aanpassen</a> | <a href="profiel.jsp">Uitloggen</a>
+        </div>
         <%  }
             else
             {

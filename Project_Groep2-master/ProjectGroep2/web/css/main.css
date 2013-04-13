@@ -181,6 +181,12 @@ body {
     border-color: #14742a;
 }
 
+#OpmaakIngelogd
+{
+    color: white;
+    text-align: right;
+}
+
 #TopPage{
     background: #14742a;
     padding: 5px;
