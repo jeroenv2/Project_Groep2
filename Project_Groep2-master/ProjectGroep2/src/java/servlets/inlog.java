@@ -1,5 +1,6 @@
 package servlets;
 
+import beans.gegevensGebruiker;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -61,6 +62,9 @@ public class inlog extends HttpServlet {
                                         int lengteResultSet = res.getRow(); //Lengte van de ResultSet opvragen
                                         if(lengteResultSet > 0)
                                         {
+                                            gegevensGebruiker persoon = new gegevensGebruiker();
+                                            
+                                            persoon.setGebruikersnaam(res);
                                             out.println("<h1>U bent met succes ingelogd!</h1>");
                                             out.println("Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan");
                                             
