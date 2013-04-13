@@ -27,9 +27,6 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <jsp:useBean id="gegevens" class="beans.gegevensGebruiker" scope="request">
-            <jsp:setProperty name="gegevens" property="*" />
-        </jsp:useBean>
     </head>
     <body>
         <div id='page_wrapper'>
@@ -56,7 +53,20 @@
                                     int lengteResultSet = res.getRow(); //Lengte van de ResultSet opvragen
                                     if(lengteResultSet > 0)
                                     {
-                                   %>
+                                        beans.gegevensGebruiker persoon = new beans.gegevensGebruiker();
+
+                                        String gebruikersnaam = res.getString("gebr_naam");
+                                        String paswoord = res.getString("gebr_wachtwoord");
+                                        String adres = res.getString("gebr_adres");        
+                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("gebr_gebDat")); //Geboortedatum omzetten naar Date (controles nodig later in de webapp)
+                                   %>                       
+                                   
+                                        <jsp:useBean id="gegevens" class="beans.gegevensGebruiker" scope="session">
+                                            <jsp:setProperty name="gegevens" property="gebruikersnaam" value="<%=gebruikersnaam%>" />
+                                            <jsp:setProperty name="gegevens" property="paswoord" value="<%=paswoord%>" />
+                                            <jsp:setProperty name="gegevens" property="adres" value="<%=adres%>" />
+                                            <jsp:setProperty name="gegevens" property="geboorteDatum" value="<%=geboortedatum%>" />
+                                        </jsp:useBean>
                                         <h1>U bent met succes ingelogd!</h1>
                                         Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
                                     <%}
