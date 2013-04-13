@@ -1,11 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,18 +30,62 @@ public class inlog extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
+        try
+        {
+            Databank.Connectie_Databank connectie = new Databank.Connectie_Databank();
+            connectie.maakConnectie();
+
+            String query = "SELECT * FROM geregistreerdegebruikers WHERE gebr_naam = ? AND gebr_wachtwoord = ?";
+            List<String> lijstParams = new ArrayList<String>();
+            lijstParams.add(request.getParameter("gebruikersnaam"));
+            lijstParams.add(request.getParameter("paswoord"));
+            
+            connectie.voerQueryUit(query, lijstParams);
+            ResultSet res = connectie.haalResultSetOp();
+            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet inlog</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet inlog at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
+                out.println("<head>");
+                out.println("<title>Inlog</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                    out.println("<div id='page_wrapper'>");
+                        request.getRequestDispatcher("/header.jsp").include(request, response); 
+                        request.getRequestDispatcher("/navigation.jsp").include(request, response); 
+                        out.println("<div id='content_wrapper'>");
+                            out.println("<section id='content'>");
+                                out.println("<div id='ElementenCenter'>");
+                                    out.println("<div id='TekstCenter'>");
+
+                                        res.last();
+                                        int lengteResultSet = res.getRow(); //Lengte van de ResultSet opvragen
+                                        if(lengteResultSet > 0)
+                                        {
+                                            out.println("<h1>U bent met succes ingelogd!</h1>");
+                                            out.println("Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan");
+                                        }
+                                        else
+                                        {
+                                            out.println("<h2>U hebt verkeerde inloggegevens ingegeven</h2>");
+                                            out.println("Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan");
+                                        }
+
+                                        out.println("</div>");
+                                    out.println("</div>");
+                            out.println("</section>");
+                        out.println("</div>");
+                        out.println("<hr style='width: auto; margin-left: 20px; margin-right: 20px;' />");
+                        request.getRequestDispatcher("/footer.jsp").include(request, response);
+                     out.println("</div>");
+                out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } 
+        catch(Exception e)
+        {
+            out.println("Fout: " + e.getMessage());
+        }
+        finally
+        {            
             out.close();
         }
     }

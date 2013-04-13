@@ -20,9 +20,9 @@
             &nbsp;<img src="img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
         <form id="login" method="post" action="inlog">
-            <input type="text" id="username" name="username" placeholder="Gebruikersnaam"/>
+            <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
             <br/>
-            <input type="password" id="password" name="password" placeholder="Paswoord" />
+            <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />
             <br/>
             <input type="submit" value="Log In" id="loginButton"/>
         </form>
