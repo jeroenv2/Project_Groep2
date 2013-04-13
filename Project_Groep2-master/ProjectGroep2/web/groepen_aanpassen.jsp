@@ -30,6 +30,7 @@
         
     </head>
     <body>
+        <a id="top"></a>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
@@ -39,6 +40,8 @@
                         
                          <%
                        groepen.clear();
+                       
+                       boolean Verwijder_knop=false;
                             if ((request.getParameter("elements") != null)&& request.getParameter("annuleren") == null) {
                                 
                                 for (String e : request.getParameterValues("elements")) {
@@ -55,7 +58,7 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT b.*, bf.*, f.fest_naam FROM bands b, bandsperfestival bf, festivals f WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id", lijstParams);
+                                connectie.voerQueryUit("SELECT * FROM bands ", lijstParams);
                                 ResultSet res = connectie.haalResultSetOp();
 
                                 res.last();
@@ -115,22 +118,40 @@
                                         <input type="submit" name="Details" value=" Details " />
                                     </td>
                                     </tr>
-                                    <tr><td><input name="elements" type="hidden" value="<%=id%>"/></td>
+                                    <tr><td>
+                                     <%
+                                            String knop;
+                                            if(!groepen.contains(id)){
+                                            knop ="Verwijderen";
+                                           %>
+                                            
+                                            <input name="elements" type="hidden" value="<%=id%>"/>
+                                        <%}else{
+                                                knop="Annuleren";
+                                                Verwijder_knop=true;
+                                                
+                                            }
+                                        %>
+                                        
+                                        </td>
                                         <td> <%
                                            
                                             
-                                            for (String element : groepen) {%>
+                                            for (String element : groepen) {
+                                                if(!element.equals(id)){
+                                                
+                                                
+                                                
+                                                %>
                                     <input name="elements" type="hidden" value="<%=element%>"/>
                                     
                                     <%}
-                                        String extra = "";
-                                        if (groepen.contains(id)) {
-                                            extra = "visibility:hidden;";
+                                        
                                         }
                                     %></td>
                                         <td align='right' style='padding-right: 10px;padding-bottom: 10px;' >
-                                         <input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= extra%>"/>
-                                  </td>
+                                        <input type="submit" value="<%=knop%>" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
+                     </td>
                                         </tr>
                                 </form>
                                 </tbody>
@@ -143,16 +164,17 @@
                                         <td>
                                             <%
                                                                                         
-                                                                                        for (String element : groepen) {%>
+                                      for (String element : groepen) {%>
                                             <input name="elementsVerwijderen" type="hidden" value="<%=element%>"/>
 
                                             <%}
-                                              String status = "visibility: visible;";
-                                              if(groepen.isEmpty()){status="visibility: hidden;";}
-
+                                               String status = "visibility: visible;";
+                                                if (!Verwijder_knop) {
+                                                    status = "visibility: hidden;";
+                                                }
                                             %>
                                         </td>
-                                        <td><input onclick='' type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status %>"/> </td>
+                                        <td><input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status %>"/> </td>
                                          </form>
                                         
                                          <form action="groepen_aanpassen.jsp" method="GET">
@@ -182,5 +204,6 @@
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>
+        <a href="#top"><div id="TopPage"> Begin Pagina </div></a>
     </body>
 </html>

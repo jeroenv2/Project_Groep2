@@ -140,9 +140,7 @@
                                             String knop;
                                             if(!fest.contains(id)){
                                             knop ="Verwijderen";
-                                           
-    
-    %>
+                                           %>
                                         <input name="elements" type="hidden" value="<%=id%>"/>
                                             <%}else{
                                                 knop="Annuleren";
@@ -185,7 +183,7 @@
 
                                             %>
                                         </td>
-                                        <td><input onclick='' type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/> </td>
+                                        <td><input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/> </td>
                                         </form>
 
                                     <form action="festival_aanpassen.jsp" method="GET">
