@@ -80,10 +80,10 @@
         <script src="js/vendor/jquery.collapse_storage.js"></script>
         <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
         <script type="text/javascript">
-            function setDropDownValue() {
-                var ddl=document.add_ticket.ticket_add;
-                var value = ddl.options[a.selectedIndex].value;
-                document.add_ticket.add_typ_id.value = value;
+            function setDropDownValue(select) {
+                var val = select.options[select.selectedIndex].value;
+                var inp = document.getElementById("typ_id");
+                inp.value = val;
             }
         </script>
     </head>
@@ -215,7 +215,7 @@
                                             <input type="hidden" name="typ_id" value="<%= tickets.getString("typ_id") %>" />
                                             <button type="submit">
                                                 <img src="img/minus.png" alt="X" width="15px"/>
-                                            </buton>
+                                            </button>
                                         </form>
                                     </li>
                                     <li><%= tickets.getString("typ_prijs") %></li>
@@ -228,7 +228,7 @@
                                 <div class="nolist">
                                     <form id="form_add_ticket" name="add_ticket" action="details/add_ticket.jsp">
                                     Type:&nbsp;
-                                    <select id="ticket_add" onchange="setDropDownValue()">
+                                    <select id="ticket_add" onchange="setDropDownValue(this)">
                                     <% while (rsTicketTypes.next()) {
                                         if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { %>
                                         <option value="<%= rsTicketTypes.getString("typ_id") %>">
@@ -240,7 +240,7 @@
                                     Aantal:&nbsp;
                                     <input type="number" name="typ_aantal" min="1" required title="Niet negatief" />
                                     <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
-                                    <input type="hidden" name="typ_id" value="" />
+                                    <input type="hidden" id="typ_id" name="typ_id" value="" />
                                     <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
                                            style="margin-top: 5px; width: 100px;"/>
                                     </form>

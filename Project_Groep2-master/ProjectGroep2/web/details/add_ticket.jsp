@@ -51,24 +51,26 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <jsp:include page="/header.jsp" />
-        <jsp:include page="/navigation.jsp" />
-        <div id="content_wrapper">
-            <section id="content">
-                <article>
-                    <% if (strFouten.equals("")) { %>
-                    <script type="text/javascript">
-                        goBack();
-                    </script>
-                    <% } else { %>
-                    <h1>Helaas</h1>
-                    <p>Er heeft zich een fout voorgedaan bij het toevoegen van het ticket:<br /><%= strFouten %></p>
-                    <p>Probeer het opnieuw: <input type="button" onclick="goBack()" value="Ga terug" /></p>
-                    <% } %>
-                </article>
-            </section>
+        <div id="page_wrapper">
+            <jsp:include page="../header.jsp" />
+            <jsp:include page="../navigation.jsp" />
+            <div id="content_wrapper">
+                <section id="content">
+                    <article>
+                        <% if (strFouten.equals("")) { %>
+                        <script type="text/javascript">
+                            goBack();
+                        </script>
+                        <% } else { %>
+                        <h1>Helaas</h1>
+                        <p>Er heeft zich een fout voorgedaan bij het toevoegen van het ticket:<br /><%= strFouten %></p>
+                        <p>Probeer het opnieuw: <input type="button" onclick="goBack()" value="Ga terug" /></p>
+                        <% } %>
+                    </article>
+                </section>
+            </div>
+            <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
+            <jsp:include page="/footer.jsp" />
         </div>
-        <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-        <jsp:include page="/footer.jsp" />
     </body>
 </html>

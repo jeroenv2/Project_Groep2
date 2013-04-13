@@ -156,25 +156,25 @@ body {
     padding-left: 2px;
 }
 
-#page_wrapper input[type="password"] {
+input[type="password"] {
     padding-left: 2px;
 }
 
-#page_wrapper button {
+input[type="button"] {
     background: #14742a;
     padding: 2px 1px;
     color: #fff;
     border-color: #14742a;
 }
 
-#page_wrapper input[type="submit"] {
+input[type="submit"] {
     background: #14742a;
     padding: 2px 1px;
     color: #fff;
     border-color: #14742a;
 }
 
-#page_wrapper input[type="reset"] {
+input[type="reset"] {
     background: #14742a;
     padding: 2px 1px;
     color: #fff;
