@@ -14,17 +14,17 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <header id="header_wrapper">
-        <a href="index.jsp"><img src="img/header/logo.png" alt="Logo" width="250px" style="padding-top: 10px; padding-left: 20px;"/></a>
+        <a href="index.jsp"><img src="img/header/logo.png" alt="Logo" width="250" style="padding-top: 10px; padding-left: 20px;"/></a>
         <div align="right">
-            <input type="text" placeholder="Zoeken" name="Zoeken" size="30px" />
-            &nbsp;<img src="img/header/zoeken.png" alt="Zoeken" width="24px" style="float: right;" />
+            <input type="text" placeholder="Zoeken" name="Zoeken" size="30" />
+            &nbsp;<img src="img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
-        <form id="login" method="post" action="verifylogin.jsp" id="loginForm">
+        <form id="login" method="post" action="inlog">
             <input type="text" id="username" name="username" placeholder="Gebruikersnaam"/>
             <br/>
             <input type="password" id="password" name="password" placeholder="Paswoord" />
             <br/>
-            <input type="submit" value="Log In" id="loginButton" />
+            <input type="submit" value="Log In" id="loginButton"/>
         </form>
     </header>
 </html>
