@@ -17,45 +17,25 @@
                 String pageName = extractPageNameFromURLString(request.getRequestURI()).toString();
                 beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                 
-                if (pageName.equals("index") || pageName.equals("")) { %>
+                if (pageName.equals("index") || pageName.equals("") || pageName.equals("inlog") || pageName.equals("uitgelogd")) { %>
                     <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                <% } else if (pageName.equals("festivals")) { %>
+                <% } else if (pageName.equals("festivals") || pageName.equals("festivals_filter")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("groepen")) { %>
+                <%} else if (pageName.equals("groepen") || pageName.equals("groepen_filter") || pageName.equals("groepen_details")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("groepen_details")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("festivals_filter")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("groepen_filter")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("inlog")) { %>
-                    <a href="index.jsp"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("profiel")) { %>
+                <%} else if (pageName.equals("profiel") || pageName.equals("profiel_verwerking")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                     <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
-                <%} else if (pageName.equals("uitgelogd")) { %>
-                    <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
-                    <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
-                    <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                 <%}
-                if(gebruiker != null && !pageName.equals("profiel"))
+                if(gebruiker != null && !pageName.equals("profiel") && !pageName.equals("profiel_verwerking")) 
                 {%>
                     <a href="#"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
                 <%}%>

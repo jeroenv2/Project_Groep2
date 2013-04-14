@@ -88,7 +88,7 @@
                                 Date gebDatum = new SimpleDateFormat("yyyy-MM-dd").parse(strGebDatum);
                         %>
                         <h1>Profiel Aanpassen</h1>
-                        <form method="POST" action="#" name="form_profiel" onsubmit="return checkPaswoorden();">
+                        <form method="POST" action="profiel_verwerking.jsp" name="form_profiel" onsubmit="return checkPaswoorden();">
                             <table>
                                 <tbody>
                                     <tr>
