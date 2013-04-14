@@ -140,7 +140,7 @@
                                                         <b> <%= naam%> </b>
                                                         <input type="hidden" name="naam" value="<%=naam%>">
                                                      </td>
-                                                     <td class="TableDataWidth300" style="border-right: 1px solid white;">Begindatum: <%=beginDatum%> </td>
+                                                     <td class="TableDataWidth300 TableDataPaddingLeftTopBottom">Begindatum: <%=beginDatum%> </td>
                                                    </tr>
                                                    <tr>
                                                       <td class="TableDataPaddingLeftTopBottom">
