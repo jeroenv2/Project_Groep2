@@ -4,6 +4,15 @@
     Author     : Steven Verheyen
 --%>
 
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.List"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Databank.Connectie_Databank"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -18,33 +27,6 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-        <script src="js/vendor/jquery.collapse.js"></script>
-        <script>
-            //Bron: http://stackoverflow.com/questions/9280037/javascript-toggle-function-to-hide-and-display-text-how-to-add-images
-            function onChangeCheckboxDatums()
-            {
-                var checked = document.getElementById("datumTonen").checked;
-                var ele = document.getElementById("datums");
-                if (checked)
-                {
-                    ele.style.display = "inline";
-                }
-                else
-                {
-                    ele.style.display = "none";
-                }
-            }
-            //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
-            function resetFilter() {
-                var form_elementen = form_filter.elements;    
-                for(i=0; i<form_elementen.length; i++)
-                {
-                    form_elementen[i].checked = false;
-                }
-            }
-            window.onload = resetFilter;
-        </script>
     </head>
     <body>
         <div id="page_wrapper">
@@ -54,12 +36,47 @@
                 <section id="content">
                     <div id="ElementenCenter">
                         <div id="TekstCenter">
-                            <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
-                            klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...                            
+                            <%
+                                beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+                                
+                                Connectie_Databank connectie = new Connectie_Databank();
+
+                                connectie.maakConnectie();
+                                List<String> lijstParams = new ArrayList<String>();
+
+                                String adres = "";
+                                if(!request.getParameter("bus").equals(""))
+                                {
+                                    adres = request.getParameter("huisnummer") + "/" + request.getParameter("bus") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
+                                }
+                                else
+                                {
+                                    adres = request.getParameter("huisnummer") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
+                                }                                
+                                
+                                lijstParams.add(adres);
+                                lijstParams.add(request.getParameter("geboorteDatum"));
+                                lijstParams.add(request.getParameter("gebruikersnaam"));
+                                
+                                int aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
+
+                                if (aantalUpdate > 0)
+                                {
+                                    gebruiker.setAdres(adres);
+                                    
+                                    Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("geboorteDatum"));
+                                    gebruiker.setGeboorteDatum(geboortedatum);
+                        %>   
+                                    <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
+                                    
+                        <%      }else {%>
+                                    <h3>Er is iets fout gegaan. Probeer later uw profiel aan te passen</h3>
+                        <%      }%>
+                                klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan... 
                         </div>
                     </div>
-        </section>
-        </div>
+                </section>
+            </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
         </div>

@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
-import javax.swing.JOptionPane;
-
 
 public class Connectie_Databank
 {
@@ -147,7 +145,9 @@ public class Connectie_Databank
             inhoudQuery = null;
         }
         catch(Exception e)
-        {}
+        {
+            System.err.println("FOUT BIJ SLUITEN CONNECTIEVARIABELEN: " + e.getMessage());
+        }
     }
     
     public int updateQuery(String query, List<String> parameters)
@@ -166,15 +166,17 @@ public class Connectie_Databank
                 {
                    prepStatement.setString(i, parameters.get(i-1));
                 }
-                aantalUpdates = prepStatement.executeUpdate();
                 
+                aantalUpdates = prepStatement.executeUpdate(); 
             }
         }
         catch(Exception e)
         {
-            
             System.out.println(e.getMessage()+"");
         }
-        return aantalUpdates;
+        finally
+        {
+            return aantalUpdates;
+        }
     }
 }
