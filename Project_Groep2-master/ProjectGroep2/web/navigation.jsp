@@ -33,7 +33,8 @@
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                    <%if(gebruiker != null){%>
+                    <%if(gebruiker != null){ //Voor het geval een gebruiker naar een pagina wil gaan zonder ingelogd te zijn (inlog vereist)
+                    %>
                             <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
                 <%} }
                 if(gebruiker != null && !pageName.equals("profiel") && !pageName.equals("profiel_verwerking")) 
