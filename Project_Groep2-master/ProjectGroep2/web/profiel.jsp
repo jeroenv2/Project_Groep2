@@ -104,7 +104,7 @@
                                             Geboortedatum*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" /> 
+                                            <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" /> 
                                         </td>
                                     </tr>
                                     <tr>
