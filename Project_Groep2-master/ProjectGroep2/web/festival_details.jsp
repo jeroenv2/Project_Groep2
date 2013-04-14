@@ -106,7 +106,7 @@
                             land = locatie.substring(sep+1, locatie.length()).trim();
                         %>
                         <header>
-                            <h2><%=fest.getString("fest_naam")%></h2>
+                            <h2><%= fest.getString("fest_naam") %></h2>
                         </header>
                         
                         <table>
@@ -127,7 +127,7 @@
                                     <td>Einddatum:</td>
                                     <td><%= fest.getString("fest_einddatum") %></td>
                                 </tr>
-                                <tr>s
+                                <tr>
                                     <td>Duur:</td>
                                     <td><%= fest.getInt("fest_duur") %></td>
                                 </tr>
