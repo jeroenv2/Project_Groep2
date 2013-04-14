@@ -52,7 +52,6 @@
                 var paswoorden = document.getElementById("form_Paswoorden");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'inline';
-                document.getElementById("Paswoord").style.backgroundColor = 'white !important;';
             }
         </script>
     </head>
