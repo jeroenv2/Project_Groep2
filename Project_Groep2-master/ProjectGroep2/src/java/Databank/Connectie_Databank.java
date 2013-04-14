@@ -152,7 +152,7 @@ public class Connectie_Databank
     
     public int updateQuery(String query, List<String> parameters)
     {
-        int j=0;
+        int aantalUpdates = 0;
         try
         {
             if(parameters.size() > 0)
@@ -166,7 +166,7 @@ public class Connectie_Databank
                 {
                    prepStatement.setString(i, parameters.get(i-1));
                 }
-                j= prepStatement.executeUpdate();
+                aantalUpdates = prepStatement.executeUpdate();
                 
             }
         }
@@ -175,6 +175,6 @@ public class Connectie_Databank
             
             System.out.println(e.getMessage()+"");
         }
-        return j;
+        return aantalUpdates;
     }
 }
