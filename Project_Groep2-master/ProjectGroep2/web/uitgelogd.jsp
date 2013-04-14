@@ -20,6 +20,13 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
+        <%
+             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+             if(gebruiker != null)
+             {
+                request.getSession().removeAttribute("gegevensGebruiker");
+            }
+        %>
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
@@ -28,15 +35,13 @@
                     <div id="ElementenCenter">
                         <div id="TekstCenter">
                             <%
-                                beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                                 if(gebruiker != null)
                                 {
-                                    request.getSession().removeAttribute("gegevensGebruiker");
                             %>
-                                    <h3>U ben met succes uitgelogd</h3>
+                                    <h2>U ben met succes uitgelogd</h2>
                                     klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
                             <%  }else {%>
-                                <h3>U ben niet ingelogd</h3>
+                                <h2>U ben niet ingelogd</h2>
                                 klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan.
                             <%}%>
                         </div>
