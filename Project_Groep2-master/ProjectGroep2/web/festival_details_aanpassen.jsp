@@ -22,53 +22,53 @@
             Connectie_Databank connectie = new Connectie_Databank();
 
             connectie.maakConnectie();
-            List<String> lijstParams = new ArrayList<String>();
+            List<String> alParams = new ArrayList<String>();
             List<String> legeLijst = new ArrayList<String>();
-            lijstParams.add(request.getParameter("naam"));
+            alParams.add(request.getParameter("naam"));
 
             //ResultSet aanmaken voor het gekozen festival
             connectie.voerQueryUit("SELECT f.fest_id, f.fest_naam, f.fest_locatie, f.fest_datum, f.fest_duur, f.fest_einddatum, f.fest_url"
                     + " FROM festivals f"
-                    + " WHERE f.fest_naam = ?", lijstParams);
-            ResultSet fest = connectie.haalResultSetOp();
-            fest.first();
+                    + " WHERE f.fest_naam = ?", alParams);
+            ResultSet rsFest = connectie.haalResultSetOp();
+            rsFest.first();
             
-            lijstParams.remove(0);
-            lijstParams.add(fest.getString("fest_id"));
+            alParams.remove(0);
+            alParams.add(rsFest.getString("fest_id"));
             //ResultSet aanmaken voor alle groepen van op het festival
             connectie.voerQueryUit("SELECT b.band_id, b.band_naam, p.pod_id, p.pod_omschr"
             + " FROM bands b"
             + " JOIN bandsperfestival bf ON b.band_id = bf.band_id"
             + " JOIN podia p ON p.pod_id = bf.pod_id"
-            + " WHERE fest_id = ?", lijstParams);
-            ResultSet bands = connectie.haalResultSetOp();
+            + " WHERE fest_id = ?", alParams);
+            ResultSet rsBands = connectie.haalResultSetOp();
             
             //ResultSet aanmaken voor alle campings van een festival
             connectie.voerQueryUit("SELECT c.camp_id, c.camp_adres, c.camp_cap"
             + " FROM campings c"
             + " JOIN campingsperfestival cf ON c.camp_id = cf.camp_id"
-            + " WHERE fest_id = ?", lijstParams);
-            ResultSet campings = connectie.haalResultSetOp();
+            + " WHERE fest_id = ?", alParams);
+            ResultSet rsCamp = connectie.haalResultSetOp();
             
             //ResultSet aanmaken voor alle tickettypes beschikbaar op een festival
             connectie.voerQueryUit("SELECT tt.typ_id, tt.typ_omschr, tt.typ_prijs"
             + " FROM tickettypes tt"
             + " JOIN tickettypesperfestival ttf ON tt.typ_id = ttf.typ_id"
-            + " WHERE fest_id = ?", lijstParams);
-            ResultSet tickets = connectie.haalResultSetOp();
+            + " WHERE fest_id = ?", alParams);
+            ResultSet rsTick = connectie.haalResultSetOp();
             
             List<String> alTickets = new ArrayList<String>();
-            while(tickets.next()) {
-                alTickets.add(tickets.getString("typ_id"));
+            while(rsTick.next()) {
+                alTickets.add(rsTick.getString("typ_id"));
             }
-            tickets.beforeFirst();
+            rsTick.beforeFirst();
             
-            lijstParams.remove(0);
-            connectie.voerQueryUit("SELECT * FROM tickettypes", lijstParams);
+            alParams.remove(0);
+            connectie.voerQueryUit("SELECT * FROM tickettypes", alParams);
             ResultSet rsTicketTypes = connectie.haalResultSetOp();
 
             //Naam van pagina opslaan
-            String name = fest.getString("fest_naam");
+            String name = rsFest.getString("fest_naam");
         %>
         <title><%= name %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
@@ -105,7 +105,7 @@
                 <section id="content">
                     <article id="foto">
                         <% 
-                            String foto = fest.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
+                            String foto = rsFest.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
                         %>
                         <img src="img/festivals/<%= foto %>.jpg"
                              alt="<%= foto %>" width="95%"
@@ -118,14 +118,14 @@
                         <%
                             String land = "";
                             String gemeente = "";
-                            String locatie = fest.getString("fest_locatie");
+                            String locatie = rsFest.getString("fest_locatie");
                                 
                             int sep = locatie.indexOf("-");
                             gemeente = locatie.substring(0, sep).trim();
                             land = locatie.substring(sep+1, locatie.length()).trim();
                         %>
                         <header>
-                            <h2><%=fest.getString("fest_naam")%></h2>
+                            <h2><%=rsFest.getString("fest_naam")%></h2>
                         </header>
                         
                         <!--
@@ -146,17 +146,17 @@
                                 </tr>
                                 <tr>
                                     <td>Startdatum:</td>
-                                    <td><input type="date" id="bdatum" name="fest_datum" value="<%= fest.getString("fest_datum") %>"
+                                    <td><input type="date" id="bdatum" name="fest_datum" value="<%= rsFest.getString("fest_datum") %>"
                                                required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
                                 <tr>
                                     <td>Einddatum:</td>
-                                    <td><input type="date" id="edatum" name="fest_einddatum" value="<%= fest.getString("fest_einddatum") %>"
+                                    <td><input type="date" id="edatum" name="fest_einddatum" value="<%= rsFest.getString("fest_einddatum") %>"
                                                required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
-                                    <%  String website = fest.getString("fest_url");
+                                    <%  String website = rsFest.getString("fest_url");
                                     if (website != null) {%>
                                     <td><input type="text" id="murl" name="website" value="<%= website %>"
                                                pattern="(http:\/\/|https:\/\/)?www\.?([a-zA-Z0-9_%]*)\.[a-zA-Z]{1}[a-zA-Z]+"
@@ -167,8 +167,8 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
-                                        <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
+                                        <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
+                                        <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
                                         <input type="submit" id="festsave" name="festsave" value="Gegevens opslaan"
                                                style="width: 435px; margin-top: 10px;"/>
                                     </td>
@@ -186,28 +186,66 @@
                             <p class="open">Verwijder groep</p>
                             <ul>
                                 <% try {
-                                    while (bands.next()) { %>
+                                    while (rsBands.next()) { %>
                                 <li>
-                                    <%= bands.getString("band_naam") %>
+                                    <%= rsBands.getString("band_naam") %>
                                 </li>
                                 <li>
                                     <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
-                                    <%= bands.getString("pod_omschr") %>
+                                    <%= rsBands.getString("pod_omschr") %>
                                 </li>
                                 <%  }
                                    } catch (Exception e) { %>
                                 <li>Nog geen groepen</li>
                                 <% }%>
                             </ul>
+                            <p>Groep toevoegen</p>
+                            <div class="nolist">
+                                <form id="form_add_group" name="add_groep" action="details/add_group.jsp">
+                                Groep:&nbsp;
+                                <!-- 
+                                Controleren welke tickets nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
+                                -->
+                                <select id="ticket_add" onchange="setDropDownValue(this)" required oninvalid="setCustomValidity('Geen tickets meer')"
+                                        style="width: 150px;">
+                                <% 
+                                    int count = 0;
+                                    String val = "";
+                                    while (rsTicketTypes.next()) {
+                                    if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { 
+                                        if (count == 0) {
+                                            val = rsTicketTypes.getString("typ_id");
+                                            count++;
+                                        }
+                                 %>
+                                    <option value="<%= rsTicketTypes.getString("typ_id") %>">
+                                        <%= rsTicketTypes.getString("typ_omschr") %>
+                                    </option>
+                                    <% }
+                                } %>
+                                </select><br />
+                                Aantal:&nbsp;
+                                <!-- Hidden veld typ_id wordt opgevuld door javascript (select onchange) -->
+                                <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6"
+                                       oninvalid="setCustomValidity('Geef numerieke waarde')" />
+                                <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
+                                <input type="hidden" id="typ_id" name="typ_id" value="<%= val %>" />
+                                <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
+                                <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
+                                       style="margin-top: 5px; width: 100px;"/>
+                                </form>
+                            </div>
+                                
+                                
                             <p>Verwijder camping</p>
                             <ul>
                                 <% try {
-                                    while (campings.next()) { %>
+                                    while (rsCamp.next()) { %>
                                 <li>
-                                    <%= campings.getString("camp_adres") %>
+                                    <%= rsCamp.getString("camp_adres") %>
                                     <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
                                 </li>
-                                <li><%= campings.getString("camp_cap") %></li>
+                                <li><%= rsCamp.getString("camp_cap") %></li>
                                 <%  }
                                    } catch (Exception e) { %>
                                 <li>Nog geen campings</li>
@@ -223,19 +261,19 @@
                                     Dit formulier dient om een ticket te verwijderen voor dit festival
                                 -->
                                 <% try {
-                                    while (tickets.next()) { %>
+                                    while (rsTick.next()) { %>
                                 <li>
                                     <form action="./details/delete_ticket.jsp">
-                                        <%= tickets.getString("typ_omschr") %>
-                                        <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
-                                        <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
-                                        <input type="hidden" name="typ_id" value="<%= tickets.getString("typ_id") %>" />
+                                        <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
+                                        <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
+                                        <input type="hidden" name="typ_id" value="<%= rsTick.getString("typ_id") %>" />
                                         <button type="submit">
                                             <img src="img/minus.png" alt="X" width="15px"/>
                                         </button>
+                                        <%= rsTick.getString("typ_omschr") %>
                                     </form>
                                 </li>
-                                <li><%= tickets.getString("typ_prijs") %></li>
+                                <li><%= rsTick.getString("typ_prijs") %></li>
                                 <%  }
                                    } catch (Exception e) { %>
                                 <li>Nog geen tickets</li>
@@ -270,9 +308,9 @@
                                 <!-- Hidden veld typ_id wordt opgevuld door javascript (select onchange) -->
                                 <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6"
                                        oninvalid="setCustomValidity('Geef numerieke waarde')" />
-                                <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
                                 <input type="hidden" id="typ_id" name="typ_id" value="<%= val %>" />
-                                <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
+                                <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
                                 <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
                                 </form>
