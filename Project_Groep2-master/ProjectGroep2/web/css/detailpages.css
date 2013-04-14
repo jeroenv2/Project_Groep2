@@ -36,15 +36,16 @@ article {
     max-height: 1000px;
 }
 article[id="foto"] {
-    max-width: 250px;
+    max-width: 225px;
     padding: 10px 0px 10px 10px;
-    margin-left: -20px;
+    margin-left: -23px;
 }
 article[id="details"] {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
+    max-width: 300px;
     text-align: center;
     margin-left: 10px;
     margin-right: 10px;
@@ -69,10 +70,10 @@ td {
 }
 td:nth-child(1) {
     font-weight: bold;
-    min-width: 150px;
+    min-width: 200px;
 }
 td:nth-child(2) {
-    min-width: 250px;
+    min-width: 150px;
     text-align: right;
 }
 
