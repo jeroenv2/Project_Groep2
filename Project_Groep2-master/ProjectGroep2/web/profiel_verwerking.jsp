@@ -63,7 +63,7 @@
 
                                     aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
                                 
-                                    if (aantalUpdate > 0) //bean gegevensGebruiker updaten
+                                    if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                     {
                                         Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("geboorteDatum"));
                                     
@@ -80,7 +80,7 @@
                                         
                                     aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
                                 
-                                    if (aantalUpdate > 0) //bean gegevensGebruiker updaten
+                                    if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                     {
                                         gebruiker.setPaswoord(paswoord);
                                     }
