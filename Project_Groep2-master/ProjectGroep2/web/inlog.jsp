@@ -70,7 +70,7 @@
                     <div id='ElementenCenter'>
                         <div id='TekstCenter'>
                             <%
-                                if(gebruiker != null)
+                                if(gebruiker.getGebruikersnaam() != null)
                                 {
                             %>                      
                                         <h1>U bent met succes ingelogd!</h1>
