@@ -96,7 +96,7 @@
                                             Gebruikersnaam*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="text" name="gebruikersnaam" value="${gegevens.gebruikersnaam}" readonly />
+                                            <input type="text" name="gebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
                                         </td>
                                     </tr>
                                     <tr>
