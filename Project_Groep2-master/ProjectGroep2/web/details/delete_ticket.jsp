@@ -34,12 +34,6 @@
                 strFouten += "Kon ticket niet verwijderen:<br /> " + e.getMessage();
             }
         %>
-        <script type="text/javascript">
-            function goBack()
-            {
-            window.history.back()
-            } 
-        </script>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
@@ -52,8 +46,11 @@
                 <section id="content">
                     <article>
                         <% if (strFouten.equals("")) { %>
-                        <script type="text/javascript">
-                            goBack();
+                        <form id="back" action="../festival_details_aanpassen.jsp" method="post">
+                            <input type="hidden" name="naam" value="<%= request.getParameter("fest_naam") %>" />
+                        </form>
+                        <script>
+                            document.forms["back"].submit();
                         </script>
                         <% } else { %>
                         <h1>Helaas</h1>

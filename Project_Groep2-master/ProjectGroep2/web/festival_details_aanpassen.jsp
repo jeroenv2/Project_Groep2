@@ -67,10 +67,10 @@
             connectie.voerQueryUit("SELECT * FROM tickettypes", lijstParams);
             ResultSet rsTicketTypes = connectie.haalResultSetOp();
 
-            //ResultSet aanmaken voor alle campings van het festival
-
+            //Naam van pagina opslaan
+            String name = fest.getString("fest_naam");
         %>
-        <title><%= fest.getString("fest_naam") %> - Details</title>
+        <title><%= name %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detailpages.css">
@@ -80,6 +80,13 @@
         <script src="js/vendor/jquery.collapse_storage.js"></script>
         <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
         <script type="text/javascript">
+            function checkAangepast() {
+                if (window.name === "Aangepast") {
+                    window.name = <%= name %>;
+                    reloadPage(); 
+                }
+            }
+            
             function setDropDownValue(select) {
                 var val = select.options[select.selectedIndex].value;
                 var inp = document.getElementById("typ_id");
@@ -89,6 +96,9 @@
     </head>
     <body>
         <div id="page_wrapper">
+            <script>
+                checkAangepast();
+            </script>
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
@@ -219,6 +229,7 @@
                                     <form action="./details/delete_ticket.jsp">
                                         <%= tickets.getString("typ_omschr") %>
                                         <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
+                                        <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
                                         <input type="hidden" name="typ_id" value="<%= tickets.getString("typ_id") %>" />
                                         <button type="submit">
                                             <img src="img/minus.png" alt="X" width="15px"/>
@@ -240,8 +251,16 @@
                                 -->
                                 <select id="ticket_add" onchange="setDropDownValue(this)" required oninvalid="setCustomValidity('Geen tickets meer')"
                                         style="width: 150px;">
-                                <% while (rsTicketTypes.next()) {
-                                    if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { %>
+                                <% 
+                                    int count = 0;
+                                    String val = "";
+                                    while (rsTicketTypes.next()) {
+                                    if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { 
+                                        if (count == 0) {
+                                            val = rsTicketTypes.getString("typ_id");
+                                            count++;
+                                        }
+                                 %>
                                     <option value="<%= rsTicketTypes.getString("typ_id") %>">
                                         <%= rsTicketTypes.getString("typ_omschr") %>
                                     </option>
@@ -250,9 +269,11 @@
                                 </select><br />
                                 Aantal:&nbsp;
                                 <!-- Hidden veld typ_id wordt opgevuld door javascript (select onchange) -->
-                                <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6" />
+                                <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6"
+                                       oninvalid="setCustomValidity('Geef numerieke waarde')" />
                                 <input type="hidden" name="fest_id" value="<%= fest.getString("fest_id") %>" />
-                                <input type="hidden" id="typ_id" name="typ_id" value="" />
+                                <input type="hidden" id="typ_id" name="typ_id" value="<%= val %>" />
+                                <input type="hidden" name="fest_naam" value="<%= fest.getString("fest_naam") %>" />
                                 <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
                                 </form>
