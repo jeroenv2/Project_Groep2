@@ -30,6 +30,38 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
+        <%
+            gegevensGebruiker gebruiker = new gegevensGebruiker();
+            try
+            {
+                Databank.Connectie_Databank connectie = new Databank.Connectie_Databank();
+                connectie.maakConnectie();
+
+                String query = "SELECT * FROM geregistreerdegebruikers WHERE gebr_naam = ? AND gebr_wachtwoord = ?";
+                List<String> lijstParams = new ArrayList<String>();
+                lijstParams.add(request.getParameter("gebruikersnaam"));
+                lijstParams.add(request.getParameter("paswoord"));
+
+                connectie.voerQueryUit(query, lijstParams);
+                ResultSet res = connectie.haalResultSetOp();
+                res.last();
+                int lengteResultSet = res.getRow(); //Lengte van de ResultSet opvragen
+                if(lengteResultSet > 0)
+                {
+                    String gebruikersnaam = res.getString("gebr_naam");
+                    String paswoord = res.getString("gebr_wachtwoord");
+                    String adres = res.getString("gebr_adres");        
+                    Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("gebr_gebDat")); //Geboortedatum omzetten naar Date (controles nodig later in de webapp)
+                                        
+                    //In beans steken
+                    gebruiker.setGebruikersnaam(gebruikersnaam);
+                    gebruiker.setPaswoord(paswoord);
+                    gebruiker.setAdres(adres);
+                    gebruiker.setGeboorteDatum(geboortedatum);
+                                        
+                    session.setAttribute("gegevensGebruiker", gebruiker);
+                }
+        %>        
         <div id='page_wrapper'>
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
@@ -38,57 +70,16 @@
                     <div id='ElementenCenter'>
                         <div id='TekstCenter'>
                             <%
-                                try
+                                if(gebruiker != null)
                                 {
-                                    Databank.Connectie_Databank connectie = new Databank.Connectie_Databank();
-                                    connectie.maakConnectie();
-
-                                    String query = "SELECT * FROM geregistreerdegebruikers WHERE gebr_naam = ? AND gebr_wachtwoord = ?";
-                                    List<String> lijstParams = new ArrayList<String>();
-                                    lijstParams.add(request.getParameter("gebruikersnaam"));
-                                    lijstParams.add(request.getParameter("paswoord"));
-
-                                    connectie.voerQueryUit(query, lijstParams);
-                                    ResultSet res = connectie.haalResultSetOp();
-                                    res.last();
-                                    int lengteResultSet = res.getRow(); //Lengte van de ResultSet opvragen
-                                    if(lengteResultSet > 0)
-                                    {
-                                        beans.gegevensGebruiker persoon = new beans.gegevensGebruiker();
-
-                                        String gebruikersnaam = res.getString("gebr_naam");
-                                        String paswoord = res.getString("gebr_wachtwoord");
-                                        String adres = res.getString("gebr_adres");        
-                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("gebr_gebDat")); //Geboortedatum omzetten naar Date (controles nodig later in de webapp)
-                                        
-                                        //In beans steken
-                                        gegevensGebruiker gebruiker = new gegevensGebruiker();
-                                        gebruiker.setGebruikersnaam(gebruikersnaam);
-                                        gebruiker.setPaswoord(paswoord);
-                                        gebruiker.setAdres(adres);
-                                        gebruiker.setGeboorteDatum(geboortedatum);
-                                        
-                                        session.setAttribute("gegevensGebruiker", gebruiker);
-                                        
-                            %>                       
-                                   
-                                   <!--
-                                        <jsp:useBean id="gegevens" class="beans.gegevensGebruiker" scope="session">
-                                            <jsp:setProperty name="gegevens" property="gebruikersnaam" value="<%=gebruikersnaam%>" />
-                                            <jsp:setProperty name="gegevens" property="paswoord" value="<%=paswoord%>" />
-                                            <jsp:setProperty name="gegevens" property="adres" value="<%=adres%>" />
-                                            <jsp:setProperty name="gegevens" property="geboorteDatum" value="<%=geboortedatum%>" />
-                                        </jsp:useBean>
-                                   -->
+                            %>                      
                                         <h1>U bent met succes ingelogd!</h1>
                                         Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
-                                    <%}
-                                    else
-                                    {%>
-                                            <h2>U hebt verkeerde inloggegevens ingegeven</h2>
-                                            Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
-                                    <%}
-                                } catch(Exception e) {}
+                            <%  } else{%>
+                                        <h2>U hebt verkeerde inloggegevens ingegeven</h2>
+                                        Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
+                            <%  }
+                          } catch(Exception e) {}
                             %>
                         </div>
                     </div>
