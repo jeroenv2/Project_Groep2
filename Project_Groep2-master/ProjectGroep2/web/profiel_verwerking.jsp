@@ -77,8 +77,9 @@
                                     
                                     lijstParams.add(request.getParameter("NieuwPaswoord"));
                                     lijstParams.add(request.getParameter("gebruikersnaam"));
+                                    lijstParams.add(request.getParameter("HuidigPaswoord"));
                                         
-                                    aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
+                                    aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=? AND gebr_wachtwoord=?", lijstParams);
                                 
                                     if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                     {

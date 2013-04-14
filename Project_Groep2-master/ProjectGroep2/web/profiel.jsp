@@ -25,19 +25,16 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script type="text/javascript">
             function checkPaswoorden() {
-                if (document.form_profiel.NieuwPaswoord.value !== document.form_profiel.HertypePaswoord.value) {
-
+                if (document.getElementById("NieuwPaswoord").value !== document.getElementById("HertypePaswoord").value) {
                     alert('Bevestigd paswoord komt niet overeen met het nieuwe paswoord!');
-                    //Border textfield rood maken
-
-                    document.form_Paswoorden.HertypePaswoord.style.border = '2px solid red';
-                    //document.getElementById("HertypeWachtwoord").className = document.getElementById("HertypeWachtwoord").className + " WachtwoordError";
+                    document.getElementById("NieuwPaswoord").style.border = '2px solid red';
+                    document.getElementById("HertypePaswoord").style.border = '2px solid red';
+                    
                     return false;
                 } else {
                     return true;
                 }
             }
-            
             function ClickAlgemeen()
             {
                 var algemeen = document.getElementById("form_Algemeen");
@@ -201,24 +198,24 @@
                                             Huidig paswoord*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="password" name="HuidigPaswoord" placeholder="Huidig paswoord" required />
+                                            <input type="password" id="HuidigPaswoord" placeholder="Huidig paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="TableDataPaddingLeftTop">
-                                            Nieuw paswoord:
+                                            Nieuw paswoord*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
                                             <!-- Wachtwoord tussen 5 en 12 letters/nummers -->
-                                            <input type="password" name="NieuwPaswoord" placeholder="Nieuw paswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
+                                            <input type="password" id="NieuwPaswoord" placeholder="Nieuw paswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="TableDataPaddingLeftTop">
-                                            Bevestigd paswoord:
+                                            Bevestigd paswoord*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="password" name="HertypePaswoord" placeholder="Bevestigd paswoord" required />
+                                            <input type="password" id="HertypePaswoord" placeholder="Bevestigd paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
