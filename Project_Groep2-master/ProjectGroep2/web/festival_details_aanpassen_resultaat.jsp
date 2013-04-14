@@ -38,24 +38,14 @@
             String strDateFout = "";
             String strDuur = "";
             //Verschil tussen begin en einddatum bereken (voor de duur vh festival) met bean datumBean
-            try {
-                Calendar begin = Calendar.getInstance();
-                Calendar einde = Calendar.getInstance();
-                DateFormat formatter; 
-                formatter = new SimpleDateFormat("yyyy-mm-dd");
-                strDateFout = "begindatum";
-                Date tempDatum;
-                tempDatum = formatter.parse(strBeginDatum);
-                begin.setTime(tempDatum);
-                    
-                strDateFout = ", einddatum";
-                tempDatum = formatter.parse(strEindDatum);
-                einde.setTime(tempDatum);%>
-                <jsp:setProperty name="date" property="calBegin" value="<%= begin %>" />
-                <jsp:setProperty name="date" property="calEind" value="<%= einde %>" />
+            try { %>
+                <jsp:setProperty name="date" property="strBegin" value="<%= strBeginDatum %>" />
+                <jsp:setProperty name="date" property="strEind" value="<%= strEindDatum %>" />
                 <%
                 strDuur = "" + %><jsp:scriptlet> date.getDuur(); </jsp:scriptlet><%;
             } catch (IllegalArgumentException ia) {
+                strFouten += "<p id=\"error\">De ingegeven datum(s) "+ strDateFout + " zijn/is niet correct</p>\n";
+            } catch (ParseException pa) {
                 strFouten += "<p id=\"error\">De ingegeven datum(s) "+ strDateFout + " zijn/is niet correct</p>\n";
             }
             String strUrl = request.getParameter("website");
