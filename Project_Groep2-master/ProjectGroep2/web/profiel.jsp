@@ -25,12 +25,12 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script type="text/javascript">
             function checkPaswoorden() {
-                if(document.form_profiel.NieuwPaswoord.value !== document.form_profiel.HertypePaswoord.value){
-                    
+                if (document.form_profiel.NieuwPaswoord.value !== document.form_profiel.HertypePaswoord.value) {
+
                     alert('Bevestigd paswoord komt niet overeen met het nieuwe paswoord!');
                     //Border textfield rood maken
-                    
-                    document.form_profiel.HertypePaswoord.style.border='2px solid red';
+
+                    document.form_profiel.HertypePaswoord.style.border = '2px solid red';
                     //document.getElementById("HertypeWachtwoord").className = document.getElementById("HertypeWachtwoord").className + " WachtwoordError";
                     return false;
                 } else {
@@ -101,6 +101,14 @@
                                     </tr>
                                     <tr>
                                         <td class="TableDataPaddingLeftTop">
+                                            Geboortedatum*:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" /> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop">
                                             Huidig paswoord*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
@@ -125,24 +133,37 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop" style="vertical-align: top;">
-                                            Adres*:
+                                        <td class="TableDataPaddingLeftTop">
+                                            Huisnummer/bus*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="text" name="straatnaam" value="<%=straatnaam%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
-                                            <input type="text" name="huisnummer" value="<%=huisnmr%>" size="1" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
-                                            bus <input type="text" name="bus" value="<%=bus%>" size="1" pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> <br />
-                                            <input type="text" name="postcode" value="<%=postcode%>" size="6" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
-                                            <input type="text" name="gemeente" value="<%=gemeente%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /><br />
-                                            <input type="text" name="land" value="<%=land%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /><br />
+                                            <input type="text" name="huisnummer" placeholder="Nmr" value="<%=huisnmr%>" size="1" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> / 
+                                            <input type="text" name="bus" placeholder="Bus" value="<%=bus%>" size="1" pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="TableDataPaddingLeftTop">
-                                            Geboortedatum*:
+                                            Straat*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" /> 
+                                            <input type="text" name="straatnaam" placeholder="Straatnaam" value="<%=straatnaam%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop">
+                                            Postcode/Gemeente*:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <input type="text" name="postcode" placeholder="Postcode" value="<%=postcode%>" size="6" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                            <input type="text" name="gemeente"  placeholder="Gemeente" value="<%=gemeente%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop">
+                                            Land*:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <input type="text" name="land" placeholder="Land" value="<%=land%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
