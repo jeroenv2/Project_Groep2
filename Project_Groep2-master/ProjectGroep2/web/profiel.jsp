@@ -103,10 +103,10 @@
                                 String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
                                 Date gebDatum = new SimpleDateFormat("yyyy-MM-dd").parse(strGebDatum);
                         %>
-                        <div id="NavigatieProfiel">
-                            <input type="button" id="Algemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="ClickAlgemeen();" /><br />
-                            <input type="button" id="Paswoord" value=" Paswoord " onClick="ClickPaswoord();" />
-                        </div>
+                    <div id="NavigatieProfiel">
+                        <input type="button" id="Algemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="ClickAlgemeen();" /><br />
+                        <input type="button" id="Paswoord" value=" Paswoord " onClick="ClickPaswoord();" />
+                    </div>
                     <div id="ElementenCenter">
                         <!-- Formulier om algemene gegevens aan te passen -->
                         <form method="POST" action="profiel_verwerking.jsp" id="form_Algemeen">
@@ -230,17 +230,17 @@
                                 </tbody>
                             </table>
                         </form>
-                        <%} catch (Exception e) {%>
+                     </div>
+                     <%} catch (Exception e) {%>
                         <div id="TekstCenter">
                             <h3>U dient eerst ingelogd te zien alvorens u uw profiel kan wijzigen</h3>
                             Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
                         </div>
-                        <%}%>
-                    </div>
+                    <%}%>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="footer.jsp" />
-        </div>
+         </div>
     </body>
 </html>
