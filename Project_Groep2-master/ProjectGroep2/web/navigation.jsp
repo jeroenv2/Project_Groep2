@@ -33,8 +33,9 @@
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                    <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
-                <%}
+                    <%if(gebruiker != null){%>
+                            <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
+                <%} }
                 if(gebruiker != null && !pageName.equals("profiel") && !pageName.equals("profiel_verwerking")) 
                 {%>
                     <a href="#"><img src="img/header/admin.png" alt="Admin" height="33" /></a>

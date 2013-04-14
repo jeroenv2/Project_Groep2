@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class gegevensGebruiker
 {
-    String gebruikersnaam, paswoord, adres;
+    String gebruikersnaam = "", paswoord, adres;
     Date geboorteDatum;
     
     public gegevensGebruiker()
