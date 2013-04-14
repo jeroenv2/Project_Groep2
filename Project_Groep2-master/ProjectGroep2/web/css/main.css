@@ -345,6 +345,18 @@ h2 a:hover
     text-decoration: none;
 }
 
+/* ---- Opmaak profiel.jsp ---- */
+#NavigatieProfiel
+{
+    padding-top: 20px;
+    float: left;
+}
+
+.TableDataWidth200
+{
+    width: 200px;
+}
+
 /* ----------------------------
              HEADER 
    ----------------------------*/

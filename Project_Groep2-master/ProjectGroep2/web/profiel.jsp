@@ -30,12 +30,29 @@
                     alert('Bevestigd paswoord komt niet overeen met het nieuwe paswoord!');
                     //Border textfield rood maken
 
-                    document.form_profiel.HertypePaswoord.style.border = '2px solid red';
+                    document.form_Paswoorden.HertypePaswoord.style.border = '2px solid red';
                     //document.getElementById("HertypeWachtwoord").className = document.getElementById("HertypeWachtwoord").className + " WachtwoordError";
                     return false;
                 } else {
                     return true;
                 }
+            }
+            
+            function ClickAlgemeen()
+            {
+                var algemeen = document.getElementById("form_Algemeen");
+                var paswoorden = document.getElementById("form_Paswoorden");
+                algemeen.style.display = 'inline';
+                paswoorden.style.display = 'none';
+                document.getElementById("Algemeen").style.backgroundColor = 'white;';
+            }
+            function ClickPaswoord()
+            {
+                var algemeen = document.getElementById("form_Algemeen");
+                var paswoorden = document.getElementById("form_Paswoorden");
+                algemeen.style.display = 'none';
+                paswoorden.style.display = 'inline';
+                document.getElementById("Paswoord").style.backgroundColor = 'white !important;';
             }
         </script>
     </head>
@@ -45,8 +62,7 @@
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
                 <section id="content">
-                    <div id="ElementenCenter">
-                        <%
+                    <%
                             try {
                                 beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
 
@@ -87,12 +103,24 @@
                                 String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
                                 Date gebDatum = new SimpleDateFormat("yyyy-MM-dd").parse(strGebDatum);
                         %>
-                        <h1>Profiel Aanpassen</h1>
-                        <form method="POST" action="profiel_verwerking.jsp" name="form_profiel" onsubmit="return checkPaswoorden();">
+                        <div id="NavigatieProfiel">
+                            <input type="button" id="Algemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="ClickAlgemeen();" /><br />
+                            <input type="button" id="Paswoord" value=" Paswoord " onClick="ClickPaswoord();" />
+                        </div>
+                    <div id="ElementenCenter">
+                        <!-- Formulier om algemene gegevens aan te passen -->
+                        <form method="POST" action="profiel_verwerking.jsp" id="form_Algemeen">
                             <table>
+                                <thead>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h3>Algemene Gegevens</h3>
+                                        </td>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="TableDataPaddingLeftTop TableDataWidth200">
                                             Gebruikersnaam*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
@@ -105,31 +133,6 @@
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
                                             <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" /> 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="TableDataPaddingLeftTop">
-                                            Huidig paswoord*:
-                                        </td>
-                                        <td class="TableDataPaddingLeftTop">
-                                            <input type="password" name="paswoord" required />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="TableDataPaddingLeftTop">
-                                            Nieuw paswoord:
-                                        </td>
-                                        <td class="TableDataPaddingLeftTop">
-                                            <!-- Wachtwoord tussen 5 en 12 letters/nummers -->
-                                            <input type="password" name="NieuwPaswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="TableDataPaddingLeftTop">
-                                            Bevestigd paswoord:
-                                        </td>
-                                        <td class="TableDataPaddingLeftTop">
-                                            <input type="password" name="HertypePaswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
@@ -164,6 +167,59 @@
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
                                             <input type="text" name="land" placeholder="Land" value="<%=land%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTopBottom" colspan="2">
+                                            <input type="submit" name="verzend" value=" Wijzig " /> <input type="reset" name="reset" value=" Wis " />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                            
+                        <!-- Formulier om paswoorden te veranderen -->
+                        <form method="POST" action="profiel_verwerking.jsp" id="form_Paswoorden" hidden onsubmit="return checkPaswoorden();">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h3>Paswoorden</h3>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop TableDataWidth200">
+                                            Gebruikersnaam*:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <input type="text" name="gebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop">
+                                            Huidig paswoord*:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <input type="password" name="paswoord" placeholder="Huidig paswoord" required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop">
+                                            Nieuw paswoord:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <!-- Wachtwoord tussen 5 en 12 letters/nummers -->
+                                            <input type="password" name="NieuwPaswoord" placeholder="Nieuw paswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TableDataPaddingLeftTop">
+                                            Bevestigd paswoord:
+                                        </td>
+                                        <td class="TableDataPaddingLeftTop">
+                                            <input type="password" name="HertypePaswoord" placeholder="Bevestigd paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
