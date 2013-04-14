@@ -30,6 +30,7 @@
                         <%
                             Connectie_Databank connectie = new Connectie_Databank();
                             String doel = "";
+                            String foutenBericht = "";
                             int aantal = 0;
                             if (request.getParameter("festivalsVerwijderen") != null) {
 
@@ -60,6 +61,7 @@
                                     }
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
+                                    foutenBericht=e.getMessage();
                                 } finally {
                                     connectie.sluitConnectie();//Connectie met de databank sluiten}
                                     if (aantal > 1) {
