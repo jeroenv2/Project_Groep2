@@ -150,7 +150,7 @@ public class Connectie_Databank
         }
     }
     
-    public int updateQuery(String query, List<String> parameters)
+    public int updateQuery(String query, List<String> parameters) throws Exception
     {
         int aantalUpdates = 0;
         try
@@ -172,7 +172,8 @@ public class Connectie_Databank
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage()+"");
+            System.err.println("FOUT BIJ VERWIJDEREN/UPDATE: " + e.getMessage());
+            throw e;
         }
         finally
         {

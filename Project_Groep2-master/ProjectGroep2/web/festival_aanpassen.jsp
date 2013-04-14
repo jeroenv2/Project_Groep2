@@ -33,13 +33,13 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script>
             <%!List<String> fest = new ArrayList();
-            
+
             %>          
         </script>
     </head>
     <body>
         <a id="top"></a>
-        
+
         <div id="page_wrapper">
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
@@ -49,8 +49,8 @@
 
                         <%
                             fest.clear();
-                            
-                            boolean Verwijder_knop=false;
+
+                            boolean Verwijder_knop = false;
                             if ((request.getParameter("elements") != null) && request.getParameter("annuleren") == null) {
 
                                 for (String e : request.getParameterValues("elements")) {
@@ -96,10 +96,10 @@
                                         styleTable = "";
                                     }
                             %>
-
+                            <a id="<%= id%>"></a>
                             <table width='600px' style='border: 1px solid white;<%= styleTable%> '>
                                 <tbody style='padding: 10px;'>
-                                <form action="festival_aanpassen.jsp" method="POST" >
+                                <form action="festival_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST" >
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                     <input type="hidden" name="naam" value="<%=naam%>">
@@ -121,7 +121,7 @@
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-                                        %>
+%>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
                                             <input type="submit" name="Details" value=" Details " />
@@ -138,22 +138,23 @@
                                         <td></td>
                                         <%}
                                             String knop;
-                                            if(!fest.contains(id)){
-                                            knop ="Verwijderen";
-                                           %>
-                                        <input name="elements" type="hidden" value="<%=id%>"/>
-                                            <%}else{
-                                                knop="Annuleren";
-                                                Verwijder_knop=true;
-                                                
-                                            }
-                                                for (String element : fest) {
-                                                     if(!element.equals(id)){
-        
-        
-        %>
+                                            if (!fest.contains(id)) {
+                                                knop = "Verwijderen";
+                                        %>
+                                    <input name="elements" type="hidden" value="<%=id%>"/>
+                                    <%} else {
+                                            knop = "Annuleren";
+                                            Verwijder_knop = true;
+
+                                        }
+                                        for (String element : fest) {
+                                            if (!element.equals(id)) {
+
+
+                                    %>
                                     <input name="elements" type="hidden" value="<%=element%>"/>
-                                    <%}}
+                                    <%}
+                                        }
                                     %>
                                     <td></td>
                                     <td align="right" style='padding-right: 10px;padding-bottom: 10px;' >
@@ -166,14 +167,14 @@
                             </table><br />
                             <%
                                 }%>
-                            <form action="festival_aanpassen_resultaat.jsp">
+                            <form action="verwijderen_resultaat.jsp" method="POST">
                                 <table>
                                     <tr>
                                         <td>
                                             <%
 
                                                 for (String element : fest) {%>
-                                            <input name="elementsVerwijderen" type="hidden" value="<%=element%>"/>
+                                            <input name="festivalsVerwijderen" type="hidden" value="<%=element%>"/>
 
                                             <%}
                                                 String status = "visibility: visible;";
