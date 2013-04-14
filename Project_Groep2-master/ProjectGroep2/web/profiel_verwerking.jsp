@@ -77,22 +77,26 @@
                                     
                                     lijstParams.add(request.getParameter("NieuwPaswoord"));
                                     lijstParams.add(request.getParameter("gebruikersnaam"));
-                                    lijstParams.add(request.getParameter("HuidigPaswoord"));
-                                        
-                                    aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=? AND gebr_wachtwoord=?", lijstParams);
-                                
-                                    if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
+                                    
+                                    if(gebruiker.getPaswoord().equals(request.getParameter("HuidigPaswoord")))
                                     {
-                                        gebruiker.setPaswoord(paswoord);
+                                        aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
+                                
+                                        if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
+                                        {
+                                            gebruiker.setPaswoord(paswoord);
+                                        }
                                     }
+                                    else
+                                    {%>
+                                        <h3>Verkeerd paswoord</h3>
+                                        U heeft uw huidig paswoord verkeerd ingegeven. Gelieve deze na te kijken...<br />
+                                    <%}
                                 }
                                 if(aantalUpdate > 0)
                                 {
                         %>   
                                     <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
-                                    
-                        <%      }else {%>
-                                    <h3>Er is iets fout gegaan. Probeer later uw profiel aan te passen</h3>
                         <%      }%>
                                 klik <a href="profiel.jsp">hier</a> om terug naar de profielpagina te gaan... 
                         </div>
