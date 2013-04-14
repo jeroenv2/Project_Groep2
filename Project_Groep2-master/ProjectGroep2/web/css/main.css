@@ -181,6 +181,11 @@ input[type="reset"] {
     border-color: #14742a;
 }
 
+.WachtwoordError
+{
+    border: 2px solid red;
+}
+
 #OpmaakIngelogd
 {
     color: white;

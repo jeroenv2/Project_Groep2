@@ -17,7 +17,7 @@
     <header id="header_wrapper">
         <a href="index.jsp"><img src="<%= request.getContextPath() %>/img/header/logo.png" alt="Logo" width="250" style="padding-top: 10px; padding-left: 20px;"/></a>
         <div align="right">
-            <input type="text" placeholder="Zoeken" name="Zoeken" size="30" />
+            <input type="search" placeholder="Zoeken" name="Zoeken" size="30" />
             &nbsp;<img src="<%= request.getContextPath() %>/img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />
         </div><br />
         <%
