@@ -4,7 +4,11 @@
     Author     : robbie
 --%>
 
-<%@page import="java.sql.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.ParseException"%>
+<%@page import="java.util.Date"%>
 <%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -19,6 +23,7 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:useBean id="date" scope="page" class="beans.datumBean" />
         <%
             Connectie_Databank connectie = new Connectie_Databank();
 
@@ -30,7 +35,29 @@
             String strGemeente = request.getParameter("gemeente");
             String strBeginDatum = request.getParameter("fest_datum");
             String strEindDatum = request.getParameter("fest_einddatum");
-            String strDuur = request.getParameter("fest_duur");
+            String strDateFout = "";
+            String strDuur = "";
+            //Verschil tussen begin en einddatum bereken (voor de duur vh festival) met bean datumBean
+            try {
+                Calendar begin = Calendar.getInstance();
+                Calendar einde = Calendar.getInstance();
+                DateFormat formatter; 
+                formatter = new SimpleDateFormat("yyyy-mm-dd");
+                strDateFout = "begindatum";
+                Date tempDatum;
+                tempDatum = formatter.parse(strBeginDatum);
+                begin.setTime(tempDatum);
+                    
+                strDateFout = ", einddatum";
+                tempDatum = formatter.parse(strEindDatum);
+                einde.setTime(tempDatum);%>
+                <jsp:setProperty name="date" property="calBegin" value="<%= begin %>" />
+                <jsp:setProperty name="date" property="calEind" value="<%= einde %>" />
+                <%
+                strDuur = "" + %><jsp:scriptlet> date.getDuur(); </jsp:scriptlet><%;
+            } catch (IllegalArgumentException ia) {
+                strFouten += "<p id=\"error\">De ingegeven datum(s) "+ strDateFout + " zijn/is niet correct</p>\n";
+            }
             String strUrl = request.getParameter("website");
             String strLocatie = strGemeente + " - " + strLand;
             String strId = request.getParameter("fest_id");
@@ -45,12 +72,16 @@
             alParams.add(strUrl);
             alParams.add(strId);
             
-            try {
-                connectie.voerUpdateUit("UPDATE festivals"
-                + " SET fest_naam = ?, fest_locatie = ?, fest_datum = ?, fest_duur = ?, fest_einddatum = ?, fest_url = ?"
-                + " WHERE fest_id = ?", alParams);
-            } catch (Exception e) {
-                strFouten += "<p id=\"error\">Niet alle gegevens zijn correct, melding:<br />" + e.getMessage() + "<br />";
+            if (!strDuur.equals("")) {
+                try {
+                    connectie.voerUpdateUit("UPDATE festivals"
+                    + " SET fest_naam = ?, fest_locatie = ?, fest_datum = ?, fest_duur = ?, fest_einddatum = ?, fest_url = ?"
+                    + " WHERE fest_id = ?", alParams);
+                } catch (Exception e) {
+                    strFouten += "<p id=\"error\">Niet alle gegevens zijn correct, melding:<br />" + e.getMessage() + "</p>\n";
+                }
+            } else {
+                strFouten += "<p id=\"error\">De duur van het festival kon niet worden berekend.</p>\n";
             }
         %>
         <% if (strFouten.equals("")) { %>

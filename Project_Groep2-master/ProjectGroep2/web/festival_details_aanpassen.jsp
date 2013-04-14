@@ -154,10 +154,6 @@
                                     <td><input type="date" id="edatum" name="fest_einddatum" value="<%= fest.getString("fest_einddatum") %>"
                                                required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
-                                <tr>s
-                                    <td>Duur:</td>
-                                    <td><input type="text" id="duur" name="fest_duur" value="<%= fest.getString("fest_duur") %>" required/></td>
-                                </tr>
                                 <tr>
                                     <td>Website:</td>
                                     <%  String website = fest.getString("fest_url");
@@ -217,6 +213,9 @@
                                 <li>Nog geen campings</li>
                                 <% }%>
                             </ul>
+                            <!--
+                               TICKETS VERWIJDEREN EN TOEVOEGEN 
+                            -->
                             <p>Verwijder ticket</p>
                             <ul>
                                 <!-- 
