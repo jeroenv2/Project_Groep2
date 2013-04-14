@@ -43,36 +43,57 @@
 
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
-
-                                String adres = "";
-                                if(!request.getParameter("bus").equals(""))
-                                {
-                                    adres = request.getParameter("huisnummer") + "/" + request.getParameter("bus") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
-                                }
-                                else
-                                {
-                                    adres = request.getParameter("huisnummer") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
-                                }                                
+                                int aantalUpdate = 0;
                                 
-                                lijstParams.add(adres);
-                                lijstParams.add(request.getParameter("geboorteDatum"));
-                                lijstParams.add(request.getParameter("gebruikersnaam"));
-                                
-                                int aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
-
-                                if (aantalUpdate > 0)
+                                if(request.getParameter("land") != null) //Controle doen om te kijken welke formulier gebruikt werd
                                 {
-                                    gebruiker.setAdres(adres);
+                                    String adres = "";
+                                    if(!request.getParameter("bus").equals(""))
+                                    {
+                                        adres = request.getParameter("huisnummer") + "/" + request.getParameter("bus") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
+                                    }
+                                    else
+                                    {
+                                        adres = request.getParameter("huisnummer") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
+                                    }                                
+
+                                    lijstParams.add(adres);
+                                    lijstParams.add(request.getParameter("geboorteDatum"));
+                                    lijstParams.add(request.getParameter("gebruikersnaam"));
+
+                                    aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
+                                
+                                    if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
+                                    {
+                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("geboorteDatum"));
                                     
-                                    Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("geboorteDatum"));
-                                    gebruiker.setGeboorteDatum(geboortedatum);
+                                        gebruiker.setAdres(adres);
+                                        gebruiker.setGeboorteDatum(geboortedatum);
+                                    }
+                                }
+                                else if(request.getParameter("NieuwPaswoord") != null) //Controle om te kijken welke form gebruikt is
+                                {
+                                    String paswoord = request.getParameter("NieuwPaswoord");
+                                    
+                                    lijstParams.add(request.getParameter("NieuwPaswoord"));
+                                    lijstParams.add(request.getParameter("gebruikersnaam"));
+                                        
+                                    aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
+                                
+                                    if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
+                                    {
+                                        gebruiker.setPaswoord(paswoord);
+                                    }
+                                }
+                                if(aantalUpdate > 0)
+                                {
                         %>   
                                     <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
                                     
                         <%      }else {%>
                                     <h3>Er is iets fout gegaan. Probeer later uw profiel aan te passen</h3>
                         <%      }%>
-                                klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan... 
+                                klik <a href="profiel.jsp">hier</a> om terug naar de profielpagina te gaan... 
                         </div>
                     </div>
                 </section>

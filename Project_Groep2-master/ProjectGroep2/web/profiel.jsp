@@ -201,7 +201,7 @@
                                             Huidig paswoord*:
                                         </td>
                                         <td class="TableDataPaddingLeftTop">
-                                            <input type="password" name="paswoord" placeholder="Huidig paswoord" required />
+                                            <input type="password" name="HuidigPaswoord" placeholder="Huidig paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
