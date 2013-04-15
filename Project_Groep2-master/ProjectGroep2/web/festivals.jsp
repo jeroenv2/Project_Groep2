@@ -229,7 +229,10 @@
                                         </form>
                                    <%}
                                   } else {%>
-                                        <h3>Helaas! Er zijn geen festivals gevonden...</h3>
+                                  <div class="tekst_centreren">
+                                        <h3>Helaas! Er zijn geen festivals gevonden</h3>
+                                        Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
+                                  </div>
                                   <%}
                             connectie.sluitConnectie(); //Connectie met de databank sluiten
                         } catch (Exception e) {

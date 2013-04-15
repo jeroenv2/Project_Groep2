@@ -78,7 +78,7 @@
 
                                 if (lengteResultSet > 0) {
                         %>
-                        <div id="tekst_centreren">
+                        <div class="tekst_centreren">
                             <h1>Gefilterd Resultaat</h1>
                             Klik <a href='groepen.jsp'>hier</a> om terug te keren
                         </div>
@@ -135,8 +135,10 @@
                                 }
                             } else {
                             %>
-                            <h3>Helaas! Er zijn geen groepen gevonden...</h3>
-                            Klik <a href="groepen.jsp">hier</a> om terug te keren
+                            <div class="tekst_centreren">
+                                <h3>Helaas! Er zijn geen groepen gevonden...</h3>
+                                Klik <a href="groepen.jsp">hier</a> om terug te keren
+                            </div>
                             <%}
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {

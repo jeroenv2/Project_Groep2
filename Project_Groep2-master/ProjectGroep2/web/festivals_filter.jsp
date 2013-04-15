@@ -116,7 +116,7 @@
                                 
                                 if (lengteResultSet > 0) {
                         %>
-                        <div id="tekst_centreren">
+                        <div class="tekst_centreren">
                             <h1>Gefilterd Resultaat</h1>
                             Klik <a href='festivals.jsp'>hier</a> om terug te keren
                         </div>
@@ -193,19 +193,22 @@
                                         </form>
                                    <%}
                                   } else {%>
+                                  <div class="tekst_centreren">
                                         <h3>Helaas! Er zijn geen festivals gevonden...</h3>
+                                        Klik <a href="festivals.jsp">hier</a> om terug te keren...
+                                  </div>
                                   <%}
                             connectie.sluitConnectie(); //Connectie met de databank sluiten
                         } catch (Exception e) {
                             out.println(e.getMessage());
                         }%>
                     </div>
-            </div>
-        </section>
+                </div>
+            </section>
         </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
+            <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
         </div>
-        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
     </body>
 </html>
