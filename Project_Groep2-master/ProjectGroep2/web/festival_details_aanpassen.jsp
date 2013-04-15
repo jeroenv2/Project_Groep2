@@ -286,7 +286,7 @@
                                 <p>Tijd:
                                     <!-- in pattern (%3A) moet goedgekeurd worden voor browsers die type="time" kennen -->
                                 <input type="time" name="uur" class="inputveld" min="00:00" max="23:59"
-                                       required pattern="\d{2}(%3A)?\d{2}" title="HH:MM" oninvalid="setCustomValidity('Tijd niet correct')"
+                                       required pattern="\d{2}(%3A|:)?\d{2}" title="HH:MM" oninvalid="setCustomValidity('Tijd niet correct')"
                                        style="width: 50px;" /></p>
                                 
                                 <!-- Hidden velde band_id en pod_id worden opgevuld door javascript (select onchange) -->
