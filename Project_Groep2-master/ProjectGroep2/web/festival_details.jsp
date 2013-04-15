@@ -166,34 +166,34 @@
                         <div id="lijsten" data-collapse="persist">
                             <p class="open menu">Groepen</p>
                             <ul>
-                                <% try {
-                                    while (bands.next()) { %>
+                                <% if (bands.next()) {
+                                do { %>
                                 <li><%= bands.getString("band_naam") %></li>
                                 <li><%= bands.getString("pod_omschr") %></li>
-                                <%  }
-                                   } catch (Exception e) { %>
+                                <%  } while (bands.next());
+                                } else { %>
                                 <li>Nog geen groepen</li>
                                 <% }%>
                             </ul>
                             <p class="menu">Campings</p>
                             <ul>
-                                <% try {
-                                    while (campings.next()) { %>
+                                <% if (campings.next()) {
+                                do { %>
                                 <li><%= campings.getString("camp_adres") %></li>
                                 <li><%= campings.getString("camp_cap") %></li>
-                                <%  }
-                                   } catch (Exception e) { %>
+                                <%  } while (campings.next());
+                                } else { %>
                                 <li>Nog geen campings</li>
-                                <% }%>
+                                <% } %>
                             </ul>
                             <p class="menu">Tickets</p>
                             <ul>
-                                <% try {
-                                    while (tickets.next()) { %>
+                                <% if (tickets.next()) {
+                                do { %>
                                 <li><%= tickets.getString("typ_omschr") %></li>
                                 <li><%= tickets.getString("typ_prijs") %></li>
-                                <%  }
-                                   } catch (Exception e) { %>
+                                <%  } while (tickets.next());
+                                } else { %>
                                 <li>Nog geen tickets</li>
                                 <% }%>
                             </ul>

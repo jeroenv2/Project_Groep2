@@ -4,6 +4,7 @@
     Author     : robbie
 --%>
 
+<%@page import="java.sql.SQLException"%>
 <%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -204,8 +205,8 @@
                             -->
                            <p class="open menu">Verwijder groep</p>
                             <ul>
-                                <% try {
-                                    while (rsBands.next()) { %>
+                             <% if (rsBands.next()) {
+                                do { %>
                                 <li>
                                     <form action="./details/wis_groep.jsp" method="post">
                                         <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
@@ -220,11 +221,10 @@
                                 <li>
                                     <%= rsBands.getString("pod_omschr") %>
                                 </li>
-                                <%  }
-                                   } catch (Exception e) { %>
-                                <li>Nog geen groepen</li>
-                                <% } 
-                                   rsBands.beforeFirst();%>
+                                <% } while (rsBands.next());
+                                } else { %>
+                                    <li>Nog geen groepen</li>
+                             <% } %>
                             </ul>
                             <!--
                                GROEPEN TOEVOEGEN 
@@ -304,17 +304,21 @@
                                 
                             <p class="menu">Verwijder camping</p>
                             <ul>
-                                <% try {
-                                    while (rsCamp.next()) { %>
+                             <% if (rsCamp.next()) {
+                                do { %>
                                 <li>
-                                    <%= rsCamp.getString("camp_adres") %>
-                                    <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
+                                    <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
+                                    <input type="hidden" name="camp_id" value="<%= rsCamp.getString("camp_id") %>" />
+                                    <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
+                                    <button type="submit">
+                                            <img src="img/minus.png" alt="X" width="15px"/>
+                                    </button>&nbsp;<%= rsCamp.getString("camp_adres") %>
                                 </li>
                                 <li><%= rsCamp.getString("camp_cap") %></li>
-                                <%  }
-                                   } catch (Exception e) { %>
+                                <% } while (rsCamp.next());
+                                } else { %>
                                 <li>Nog geen campings</li>
-                                <% }%>
+                                <% } %>
                             </ul>
                             <!--
                                TICKETS VERWIJDEREN EN TOEVOEGEN 
@@ -325,8 +329,8 @@
                                     Voor elk record in de tickets voor dit festival dynamisch een formulier aanmaken.
                                     Dit formulier dient om een ticket te verwijderen voor dit festival
                                 -->
-                                <% try {
-                                    while (rsTick.next()) { %>
+                                <% if (rsTick.next()) {
+                                do { %>
                                 <li>
                                     <form action="./details/wis_ticket.jsp" method="post">
                                         <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
@@ -339,10 +343,10 @@
                                     </form>
                                 </li>
                                 <li><%= rsTick.getString("typ_prijs") %></li>
-                                <%  }
-                                   } catch (Exception e) { %>
+                                <%  } while (rsTick.next());
+                                } else { %> 
                                 <li>Nog geen tickets</li>
-                                <% }%>
+                                <% } %>
                             </ul>
                             <p class="menu">Ticket toevoegen</p>
                             <div class="geen_lijst">
