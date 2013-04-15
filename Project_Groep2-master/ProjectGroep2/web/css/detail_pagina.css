@@ -152,6 +152,7 @@ li:first-child {
 /* inputvelden van formulieren in rechterkolom (festivaldetails aapassen) */
 .inputveld {
     position: relative;
+    min-width: 50px;
     width: fit-content;
     float: right;
     clear: right;

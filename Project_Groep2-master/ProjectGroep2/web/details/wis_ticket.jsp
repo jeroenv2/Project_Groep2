@@ -26,7 +26,7 @@
                 Connectie_Databank connectie = new Connectie_Databank();
                 connectie.maakConnectie();
 
-                connectie.voerUpdateUit("DELETE FROM tickettypesperfestival"
+                connectie.voerVeranderingUit("DELETE FROM tickettypesperfestival"
                 + " WHERE fest_id = ? AND typ_id = ?", alParams);
 
                 connectie.sluitConnectie();

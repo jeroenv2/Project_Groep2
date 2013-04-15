@@ -202,15 +202,22 @@
                             <!--
                                GROEPEN VERWIJDEREN 
                             -->
-                            <p class="open menu">Verwijder groep</p>
+                           <p class="open menu">Verwijder groep</p>
                             <ul>
                                 <% try {
                                     while (rsBands.next()) { %>
                                 <li>
-                                    <%= rsBands.getString("band_naam") %>
+                                    <form action="./details/wis_groep.jsp" method="post">
+                                        <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
+                                        <input type="hidden" name="band_id" value="<%= rsBands.getString("band_id") %>" />
+                                        <input type="hidden" name="pod_id" value="<%= rsBands.getString("pod_id") %>" />
+                                        <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
+                                        <button type="submit">
+                                            <img src="img/minus.png" alt="X" width="15px"/>
+                                        </button>&nbsp;<%= rsBands.getString("band_naam") %>
+                                    </form>
                                 </li>
                                 <li>
-                                    <input type="image" id="" src="img/minus.png" width="15px"/>&nbsp;
                                     <%= rsBands.getString("pod_omschr") %>
                                 </li>
                                 <%  }
@@ -227,7 +234,7 @@
                                 <form id="form_toev_groep" name="toev_groep" action="details/toev_groep.jsp" method="post">
                                     
                                 <p style="margin-top: 0px !important">Groep:
-                                <select id="sel_groep_toev" class="inputveld" onchange="setDropDownValue(this, 'band_id')"
+                                <select id="sel_groep_toev" class="inputveld" onchange="setDropDownValue(this, 'band_id');"
                                         required oninvalid="setCustomValidity('Geen groepen meer')"
                                         style="width: 150px;">
                                 <!-- 
@@ -271,14 +278,16 @@
                                 </select></p>
                                 <p>Datum:
                                 <input type="date" class="inputveld" name="groep_datum" value="<%= rsFest.getString("fest_datum") %>"
-                                       required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd"
+                                       required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" oninvalid="setCustomValidity('Datum incorrect')"
                                        min="<%= rsFest.getString("fest_datum") %>"
                                        max="<%= rsFest.getString("fest_einddatum") %>"
                                        maxlength="10"
                                        style="width: 100px;"/></p>
                                 <p>Tijd:
-                                <input type="time" name="uur" class="inputveld" min="23:59" max="00:00"
-                                       required pattern="\d{2}:\d{2}" title="HH:MM" style="width: 50px;" /></p>
+                                    <!-- in pattern (%3A) moet goedgekeurd worden voor browsers die type="time" kennen -->
+                                <input type="time" name="uur" class="inputveld" min="00:00" max="23:59"
+                                       required pattern="\d{2}(%3A)?\d{2}" title="HH:MM" oninvalid="setCustomValidity('Tijd niet correct')"
+                                       style="width: 50px;" /></p>
                                 
                                 <!-- Hidden velde band_id en pod_id worden opgevuld door javascript (select onchange) -->
                                 <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />

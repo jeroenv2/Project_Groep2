@@ -48,6 +48,7 @@
                 alParams.add(strBandId);
                 alParams.add(strPodId);
                 alParams.add(strDatum);
+                System.out.println(strUur);
                 alParams.add(strUur);
                 
                 if (strFouten.equals("")) {
@@ -55,7 +56,7 @@
                         Connectie_Databank connectie = new Connectie_Databank();
                         connectie.maakConnectie();
 
-                        connectie.voerUpdateUit("INSERT INTO bandsperfestival"
+                        connectie.voerVeranderingUit("INSERT INTO bandsperfestival"
                         + " (fest_id, band_id, pod_id, datum, uur)"
                         + " VALUES (?, ?, ?, ?, ?)", alParams);
 
