@@ -45,21 +45,21 @@
                                 List<String> lijstParams = new ArrayList<String>();
                                 int aantalUpdate = 0;
                                 
-                                if(request.getParameter("land") != null) //Controle doen om te kijken welke formulier gebruikt werd
+                                if(request.getParameter("txtLand") != null) //Controle doen om te kijken welke formulier gebruikt werd
                                 {
                                     String adres = "";
-                                    if(!request.getParameter("bus").equals(""))
+                                    if(!request.getParameter("txtBus").equals(""))
                                     {
-                                        adres = request.getParameter("huisnummer") + "/" + request.getParameter("bus") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
+                                        adres = request.getParameter("txtHuisnummer") + "/" + request.getParameter("txtBus") + " " + request.getParameter("txtStraatnaam") + ", " + request.getParameter("txtPostcode") + " " + request.getParameter("txtGemeente") + " - " + request.getParameter("txtLand");
                                     }
                                     else
                                     {
-                                        adres = request.getParameter("huisnummer") + " " + request.getParameter("straatnaam") + ", " + request.getParameter("postcode") + " " + request.getParameter("gemeente") + " - " + request.getParameter("land");
+                                        adres = request.getParameter("TxtHuisnummer") + " " + request.getParameter("txtStraatnaam") + ", " + request.getParameter("txtPostcode") + " " + request.getParameter("txtGemeente") + " - " + request.getParameter("txtLand");
                                     }                                
 
                                     lijstParams.add(adres);
-                                    lijstParams.add(request.getParameter("geboorteDatum"));
-                                    lijstParams.add(request.getParameter("gebruikersnaam"));
+                                    lijstParams.add(request.getParameter("dtGeboorteDatum"));
+                                    lijstParams.add(request.getParameter("dtGebruikersnaam"));
 
                                     aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
                                 
@@ -71,14 +71,14 @@
                                         gebruiker.setGeboorteDatum(geboortedatum);
                                     }
                                 }
-                                else if(request.getParameter("NieuwPaswoord") != null) //Controle om te kijken welke form gebruikt is
+                                else if(request.getParameter("passNieuwPaswoord") != null) //Controle om te kijken welke form gebruikt is
                                 {
-                                    String paswoord = request.getParameter("NieuwPaswoord");
+                                    String paswoord = request.getParameter("passNieuwPaswoord");
                                     
-                                    lijstParams.add(request.getParameter("NieuwPaswoord"));
-                                    lijstParams.add(request.getParameter("gebruikersnaam"));
+                                    lijstParams.add(request.getParameter("passNieuwPaswoord"));
+                                    lijstParams.add(request.getParameter("txtGebruikersnaam"));
                                     
-                                    if(gebruiker.getPaswoord().equals(request.getParameter("HuidigPaswoord")))
+                                    if(gebruiker.getPaswoord().equals(request.getParameter("passHuidigPaswoord")))
                                     {
                                         aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
                                 

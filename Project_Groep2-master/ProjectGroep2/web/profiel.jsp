@@ -119,7 +119,7 @@
                                             Gebruikersnaam*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="text" name="gebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
+                                            <input type="text" name="txtGebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
                                         </td>
                                     </tr>
                                     <tr>
@@ -127,7 +127,7 @@
                                             Geboortedatum*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" /> 
+                                            <input type="date" name="dtGeboorteDatum" value="<%=strGebDatum%>" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" /> 
                                         </td>
                                     </tr>
                                     <tr>
@@ -135,8 +135,8 @@
                                             Huisnummer/bus*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="text" name="huisnummer" placeholder="Nmr" value="<%=huisnmr%>" size="1" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> / 
-                                            <input type="text" name="bus" placeholder="Bus" value="<%=bus%>" size="1" pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
+                                            <input type="text" name="txtHuisnummer" placeholder="Nmr" value="<%=huisnmr%>" size="1" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> / 
+                                            <input type="text" name="txtBus" placeholder="Bus" value="<%=bus%>" size="1" pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
                                         </td>
                                     </tr>
                                     <tr>
@@ -144,7 +144,7 @@
                                             Straat*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="text" name="straatnaam" placeholder="Straatnaam" value="<%=straatnaam%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                            <input type="text" name="txtStraatnaam" placeholder="Straatnaam" value="<%=straatnaam%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -152,8 +152,8 @@
                                             Postcode/Gemeente*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="text" name="postcode" placeholder="Postcode" value="<%=postcode%>" size="6" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
-                                            <input type="text" name="gemeente"  placeholder="Gemeente" value="<%=gemeente%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                            <input type="text" name="txtPostcode" placeholder="Postcode" value="<%=postcode%>" size="6" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                            <input type="text" name="txtGemeente"  placeholder="Gemeente" value="<%=gemeente%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -161,12 +161,12 @@
                                             Land*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="text" name="land" placeholder="Land" value="<%=land%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                            <input type="text" name="txtLand" placeholder="Land" value="<%=land%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven_onder" colspan="2">
-                                            <input type="submit" name="verzend" value=" Wijzig " /> <input type="reset" name="reset" value=" Wis " />
+                                            <input type="submit" name="btnVerzend" value=" Wijzig " /> <input type="reset" name="btnWis" value=" Wis " />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -189,7 +189,7 @@
                                             Gebruikersnaam*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="text" name="gebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
+                                            <input type="text" name="txtGebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
                                         </td>
                                     </tr>
                                     <tr>
@@ -197,7 +197,7 @@
                                             Huidig paswoord*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="password" name="HuidigPaswoord" placeholder="Huidig paswoord" required />
+                                            <input type="password" name="passHuidigPaswoord" placeholder="Huidig paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
@@ -206,7 +206,7 @@
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
                                             <!-- Wachtwoord tussen 5 en 12 letters/nummers -->
-                                            <input type="password" name="NieuwPaswoord" id="Nieuw" placeholder="Nieuw paswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
+                                            <input type="password" name="passNieuwPaswoord" id="Nieuw" placeholder="Nieuw paswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
                                         </td>
                                     </tr>
                                     <tr>
@@ -214,12 +214,12 @@
                                             Bevestigd paswoord*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="password" name="HertypePaswoord" id="Hertype" placeholder="Bevestigd paswoord" required />
+                                            <input type="password" name="passHertypePaswoord" id="Hertype" placeholder="Bevestigd paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven_onder" colspan="2">
-                                            <input type="submit" name="verzend" value=" Wijzig " /> <input type="reset" name="reset" value=" Wis " />
+                                            <input type="submit" name="btnVerzend" value=" Wijzig " /> <input type="reset" name="btnWis" value=" Wis " />
                                         </td>
                                     </tr>
                                 </tbody>
