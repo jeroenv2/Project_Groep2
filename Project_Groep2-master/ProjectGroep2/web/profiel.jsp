@@ -53,11 +53,11 @@
         </script>
     </head>
     <body>
-        <div id="page_wrapper">
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
+        <div id="pagina_omslag">
+            <jsp:include page="hoofding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
                     <%
                             try {
                                 beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
@@ -99,74 +99,74 @@
                                 String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
                                 Date gebDatum = new SimpleDateFormat("yyyy-MM-dd").parse(strGebDatum);
                         %>
-                    <div id="NavigatieProfiel">
-                        <input type="button" id="Algemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="ClickAlgemeen();" /><br />
-                        <input type="button" id="Paswoord" value=" Paswoord " onClick="ClickPaswoord();" />
+                    <div id="profiel_navigatie">
+                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="ClickAlgemeen();" /><br />
+                        <input type="button" id="btnPaswoord" value=" Paswoord " onClick="ClickPaswoord();" />
                     </div>
-                    <div id="ElementenCenter">
+                    <div id="elementen_centreren">
                         <!-- Formulier om algemene gegevens aan te passen -->
                         <form method="POST" action="profiel_verwerking.jsp" id="form_Algemeen">
                             <table>
                                 <thead>
                                     <tr>
                                         <td colspan="2">
-                                            <h3>Algemene Gegevens</h3>
+                                            <h2>Algemene Gegevens</h2>
                                         </td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop TableDataWidth200">
+                                        <td class="inhoud_tabel_spatie_links_boven inhoud_tabel_breedte_200px">
                                             Gebruikersnaam*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="text" name="gebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Geboortedatum*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="date" name="geboorteDatum" value="<%=strGebDatum%>" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" /> 
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Huisnummer/bus*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="text" name="huisnummer" placeholder="Nmr" value="<%=huisnmr%>" size="1" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> / 
                                             <input type="text" name="bus" placeholder="Bus" value="<%=bus%>" size="1" pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Straat*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="text" name="straatnaam" placeholder="Straatnaam" value="<%=straatnaam%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Postcode/Gemeente*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="text" name="postcode" placeholder="Postcode" value="<%=postcode%>" size="6" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                             <input type="text" name="gemeente"  placeholder="Gemeente" value="<%=gemeente%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Land*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="text" name="land" placeholder="Land" value="<%=land%>" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTopBottom" colspan="2">
+                                        <td class="inhoud_tabel_spatie_links_boven_onder" colspan="2">
                                             <input type="submit" name="verzend" value=" Wijzig " /> <input type="reset" name="reset" value=" Wis " />
                                         </td>
                                     </tr>
@@ -180,46 +180,46 @@
                                 <thead>
                                     <tr>
                                         <td colspan="2">
-                                            <h3>Paswoorden</h3>
+                                            <h2>Paswoorden</h2>
                                         </td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop TableDataWidth200">
+                                        <td class="inhoud_tabel_spatie_links_boven inhoud_tabel_breedte_200px">
                                             Gebruikersnaam*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="text" name="gebruikersnaam" value="<%=gebruiker.getGebruikersnaam()%>" readonly />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Huidig paswoord*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="password" name="HuidigPaswoord" placeholder="Huidig paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Nieuw paswoord*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <!-- Wachtwoord tussen 5 en 12 letters/nummers -->
                                             <input type="password" name="NieuwPaswoord" id="Nieuw" placeholder="Nieuw paswoord" pattern="[a-zA-Z0-9]{5,12}" title="Minimum 5 en maximum 12 letters/nummers" required />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             Bevestigd paswoord*:
                                         </td>
-                                        <td class="TableDataPaddingLeftTop">
+                                        <td class="inhoud_tabel_spatie_links_boven">
                                             <input type="password" name="HertypePaswoord" id="Hertype" placeholder="Bevestigd paswoord" required />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTopBottom" colspan="2">
+                                        <td class="inhoud_tabel_spatie_links_boven_onder" colspan="2">
                                             <input type="submit" name="verzend" value=" Wijzig " /> <input type="reset" name="reset" value=" Wis " />
                                         </td>
                                     </tr>
@@ -228,7 +228,7 @@
                         </form>
                      </div>
                      <%} catch (Exception e) {%>
-                        <div id="TekstCenter">
+                        <div class="tekst_centreren">
                             <h3>U dient eerst ingelogd te zien alvorens u uw profiel kan wijzigen</h3>
                             Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
                         </div>
