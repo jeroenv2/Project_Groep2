@@ -57,11 +57,11 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <div id="page_wrapper">
-            <jsp:include page="../header.jsp" />
-            <jsp:include page="../navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
+        <div id="pagina_omslag">
+            <jsp:include page="../hoofding.jsp" />
+            <jsp:include page="../navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
                     <article>
                         <% if (strFouten.equals("")) { %>
                         <form id="back" action="../festival_details_aanpassen.jsp" method="post">
@@ -79,7 +79,7 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="/footer.jsp" />
+            <jsp:include page="/voettekst.jsp" />
         </div>
     </body>
 </html>

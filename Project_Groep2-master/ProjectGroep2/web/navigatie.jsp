@@ -9,10 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Navigation</title>
+        <title>Navigatie</title>
     </head>
     <body>
-        <nav id="nav_wrapper">
+        <nav id="navigatie_omslag">
             <%
                 String pageName = extractPageNameFromURLString(request.getRequestURI()).toString();
                 beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");

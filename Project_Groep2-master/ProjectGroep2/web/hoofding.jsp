@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <header id="header_wrapper">
+    <header id="hoofding_omslag">
         <a href="index.jsp"><img src="<%= request.getContextPath() %>/img/header/logo.png" alt="Logo" width="250" style="padding-top: 10px; padding-left: 20px;"/></a>
         <div align="right">
             <input type="search" placeholder="Zoeken" name="Zoeken" size="30" />
