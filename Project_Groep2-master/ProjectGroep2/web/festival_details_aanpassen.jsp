@@ -80,7 +80,8 @@
             //Alle groepen ophalen om te linken aan dit festival -> zie groepen toevoegen
             connectie.voerQueryUit("SELECT bf.band_id, b.band_naam"
             + " FROM bandsperfestival bf"
-            + " JOIN bands b ON bf.band_id = b.band_id", alLeeg);
+            + " JOIN bands b ON bf.band_id = b.band_id"
+            + " GROUP BY b.band_naam", alLeeg);
             ResultSet rsBandsFestival = connectie.haalResultSetOp();
                 
             //Alle beschikbare podia ophalen
@@ -201,7 +202,7 @@
                             <!--
                                GROEPEN VERWIJDEREN 
                             -->
-                            <p class="open">Verwijder groep</p>
+                            <p class="open menu">Verwijder groep</p>
                             <ul>
                                 <% try {
                                     while (rsBands.next()) { %>
@@ -221,11 +222,11 @@
                             <!--
                                GROEPEN TOEVOEGEN 
                             -->
-                            <p>Groep toevoegen</p>
+                            <p class="menu">Groep toevoegen</p>
                             <div class="geen_lijst">
                                 <form id="form_toev_groep" name="toev_groep" action="details/toev_groep.jsp" method="post">
                                     
-                                Groep:&nbsp;
+                                <p style="margin-top: 0px !important">Groep:
                                 <select id="sel_groep_toev" class="inputveld" onchange="setDropDownValue(this, 'band_id')"
                                         required oninvalid="setCustomValidity('Geen groepen meer')"
                                         style="width: 150px;">
@@ -249,47 +250,50 @@
                                     </option>
                                     <% }
                                     } %>
-                                </select>
-                                Podium:&nbsp;
-                                <select id="pod_toev" class="inputveld" onchange="setDropDownValue(this, 'pod_id')">
+                                </select></p>
+                                <p>Podium:</p>
+                                <p><select id="pod_toev" class="inputveld" onchange="setDropDownValue(this, 'pod_id')">
                                 <% 
                                     count = 0;
                                     String strPId = "";
                                     while (rsPodia.next()) {
                                         String strPodId = rsPodia.getString("pod_id");
-                                        System.out.println(strPodId);
+                                        if (count == 0) {
+                                            strPId = strPodId;
+                                            count++;
+                                        }
                                  %>
                                      <option value="<%= strPodId %>">
                                         <%= rsPodia.getString("pod_omschr") %>
                                     </option>
                                     <% 
                                     } %>
-                                </select>
-                                <p>Datum:&nbsp;
+                                </select></p>
+                                <p>Datum:
                                 <input type="date" class="inputveld" name="groep_datum" value="<%= rsFest.getString("fest_datum") %>"
                                        required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd"
                                        min="<%= rsFest.getString("fest_datum") %>"
                                        max="<%= rsFest.getString("fest_einddatum") %>"
                                        maxlength="10"
-                                       style="width: 100px;"/>
-                                </p> 
-                               Tijd:&nbsp;
-                                <input type="time" name="tijd" min="23:59" max="00:00" required pattern="\d{2}:\d{2}" title="HH:MM" />
+                                       style="width: 100px;"/></p>
+                                <p>Tijd:
+                                <input type="time" name="uur" class="inputveld" min="23:59" max="00:00"
+                                       required pattern="\d{2}:\d{2}" title="HH:MM" style="width: 50px;" /></p>
                                 
                                 <!-- Hidden velde band_id en pod_id worden opgevuld door javascript (select onchange) -->
-                                <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6"
-                                       oninvalid="setCustomValidity('Geef numerieke waarde')" />
                                 <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
                                 <input type="hidden" id="band_id" name="band_id" value="<%= strBId %>" />
                                 <input type="hidden" id="pod_id" name="pod_id" value="<%= strPId %>" />
                                 <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
+                                <input type="hidden" name="fest_datum" value="<%= rsFest.getString("fest_datum") %>" />
+                                <input type="hidden" name="fest_einddatum" value="<%= rsFest.getString("fest_einddatum") %>" />
                                 <input type="submit" id="toev_ticket" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
                                 </form>
                             </div>
                                 
                                 
-                            <p>Verwijder camping</p>
+                            <p class="menu">Verwijder camping</p>
                             <ul>
                                 <% try {
                                     while (rsCamp.next()) { %>
@@ -306,7 +310,7 @@
                             <!--
                                TICKETS VERWIJDEREN EN TOEVOEGEN 
                             -->
-                            <p>Verwijder ticket</p>
+                            <p class="menu">Verwijder ticket</p>
                             <ul>
                                 <!-- 
                                     Voor elk record in de tickets voor dit festival dynamisch een formulier aanmaken.
@@ -331,7 +335,7 @@
                                 <li>Nog geen tickets</li>
                                 <% }%>
                             </ul>
-                            <p>Ticket toevoegen</p>
+                            <p class="menu">Ticket toevoegen</p>
                             <div class="geen_lijst">
                                 <form id="form_toev_ticket" name="toev_ticket" action="details/toev_ticket.jsp" method="post">
                                 Type:&nbsp;

@@ -104,7 +104,7 @@ article[id="details"] input[type="submit"] {
            OVERZICHT 
    ----------------------------*/
 
-p {
+.menu {
     text-align: center;
     border: 2px solid #cbcbcb;
     border-bottom: none;
@@ -152,8 +152,7 @@ li:first-child {
 /* inputvelden van formulieren in rechterkolom (festivaldetails aapassen) */
 .inputveld {
     position: relative;
-    margin-right: 0px;
-    min-width: 50px;
-    max-width: 150px;
+    width: fit-content;
     float: right;
+    clear: right;
 }

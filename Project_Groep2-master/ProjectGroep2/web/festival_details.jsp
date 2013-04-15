@@ -159,46 +159,46 @@
                             </tbody>
                         </table>
                     </article>
-                        <article id="overzicht">
-                            <header>
-                                <h2>Overzicht</h2>
-                            </header>
-                            <div id="lijsten" data-collapse="persist">
-                                <p class="open">Groepen</p>
-                                <ul>
-                                    <% try {
-                                        while (bands.next()) { %>
-                                    <li><%= bands.getString("band_naam") %></li>
-                                    <li><%= bands.getString("pod_omschr") %></li>
-                                    <%  }
-                                       } catch (Exception e) { %>
-                                    <li>Nog geen groepen</li>
-                                    <% }%>
-                                </ul>
-                                <p>Campings</p>
-                                <ul>
-                                    <% try {
-                                        while (campings.next()) { %>
-                                    <li><%= campings.getString("camp_adres") %></li>
-                                    <li><%= campings.getString("camp_cap") %></li>
-                                    <%  }
-                                       } catch (Exception e) { %>
-                                    <li>Nog geen campings</li>
-                                    <% }%>
-                                </ul>
-                                <p>Tickets</p>
-                                <ul>
-                                    <% try {
-                                        while (tickets.next()) { %>
-                                    <li><%= tickets.getString("typ_omschr") %></li>
-                                    <li><%= tickets.getString("typ_prijs") %></li>
-                                    <%  }
-                                       } catch (Exception e) { %>
-                                    <li>Nog geen tickets</li>
-                                    <% }%>
-                                </ul>
-                            </div>
-                        </article>
+                    <article id="overzicht">
+                        <header>
+                            <h2>Overzicht</h2>
+                        </header>
+                        <div id="lijsten" data-collapse="persist">
+                            <p class="open menu">Groepen</p>
+                            <ul>
+                                <% try {
+                                    while (bands.next()) { %>
+                                <li><%= bands.getString("band_naam") %></li>
+                                <li><%= bands.getString("pod_omschr") %></li>
+                                <%  }
+                                   } catch (Exception e) { %>
+                                <li>Nog geen groepen</li>
+                                <% }%>
+                            </ul>
+                            <p class="menu">Campings</p>
+                            <ul>
+                                <% try {
+                                    while (campings.next()) { %>
+                                <li><%= campings.getString("camp_adres") %></li>
+                                <li><%= campings.getString("camp_cap") %></li>
+                                <%  }
+                                   } catch (Exception e) { %>
+                                <li>Nog geen campings</li>
+                                <% }%>
+                            </ul>
+                            <p class="menu">Tickets</p>
+                            <ul>
+                                <% try {
+                                    while (tickets.next()) { %>
+                                <li><%= tickets.getString("typ_omschr") %></li>
+                                <li><%= tickets.getString("typ_prijs") %></li>
+                                <%  }
+                                   } catch (Exception e) { %>
+                                <li>Nog geen tickets</li>
+                                <% }%>
+                            </ul>
+                        </div>
+                    </article>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

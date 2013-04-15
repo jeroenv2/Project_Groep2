@@ -22,6 +22,7 @@ public class datumBean {
     private String strBegin, strEind;
     private Date dtBegin, dtEind;
     private Calendar calBegin, calEind;
+    private DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd"); //Gebruikt om een String in een Date object te plaatsen
 
     public datumBean() {
     }
@@ -58,12 +59,19 @@ public class datumBean {
         this.strEind = strEind;
     }    
     
-    public long getDuur() throws IllegalArgumentException, ParseException {
+    /**
+     * Berekend de duur tussen de twee data van deze instantie.
+     * @return De duur in type long tussen twee data.
+     * @throws ParseException, IllegalArgumentException
+     */
+    public long getDuur() throws ParseException {
         try {
-            createCalendars(strBegin, strEind);
-            long lDagenBegin = calBegin.getTimeInMillis();
-            long lDagenEinde = calEind.getTimeInMillis();
-            long lDiff = lDagenEinde - lDagenBegin;
+            if (calBegin == null) {
+                maakKalenders(strBegin, strEind);
+            }
+            long lMiliBegin = calBegin.getTimeInMillis();
+            long lMiliEind = calEind.getTimeInMillis();
+            long lDiff = lMiliEind - lMiliBegin;
             long lDuur = lDiff / (24 * 60 * 60 * 1000);
             return lDuur;
         } catch (IllegalArgumentException ia) {
@@ -73,8 +81,56 @@ public class datumBean {
         }
     }
     
-    public void createCalendars(String strBegin, String strEind) throws ParseException {
-        DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
+    /**
+     * Controleert of een ingegeven datum gelegen is tussen de begindatum en einddatum.
+     * Als dit niet het geval is, wordt een standaardexception opgegooid.
+     * @param strDatum
+     * @return Resultaat in boolean
+     * @throws Exception
+     */
+    public boolean isDatumTussen(String strDatum) throws ParseException {
+        if (calBegin == null) {
+                maakKalenders(strBegin, strEind);
+        }
+        Calendar calDatum = maakTijdelijkeKalender(strDatum);
+        long lMiliBegin = calBegin.getTimeInMillis();
+        long lMiliDatum = calDatum.getTimeInMillis();
+        long lMiliEind = calEind.getTimeInMillis();
+        if (lMiliDatum >= lMiliBegin & lMiliDatum <= lMiliEind) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("De datum moet tussen " + strBegin + " en " + strEind + " vallen.");
+        }
+    }
+    
+    /**
+     * Maakt een kalenderobject aan ahv het ingegeven String object.
+     * Indien het String object geen Date object is, treedt een ParseException op.
+     * @param strDatum
+     * @return Calendar
+     * @throws ParseException, IllegalArgumentException
+     */
+    public Calendar maakTijdelijkeKalender(String strDatum) throws ParseException {
+        try {
+            Date tempDatum = formatter.parse(strBegin);
+            Calendar calTemp = Calendar.getInstance();
+            calTemp.setTime(tempDatum);
+            return calTemp;
+        } catch (IllegalArgumentException ia) {
+            throw ia;
+        } catch (ParseException pe) {
+            throw pe;
+        }
+    }
+    
+    /**
+     * Maakt kalenderobjecten calBegin en calEind van de twee String objecten.
+     * Indien deze Strings geen Date objecten zijn, treedt een ParseException op.
+     * @param strBegin
+     * @param strEind
+     * @throws ParseException 
+     */
+    public void maakKalenders(String strBegin, String strEind) throws ParseException {
         Date tempDatum = formatter.parse(strBegin);
         calBegin = Calendar.getInstance();
         calBegin.setTime(tempDatum);

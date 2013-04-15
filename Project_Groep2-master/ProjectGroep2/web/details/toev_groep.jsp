@@ -4,6 +4,10 @@
     Author     : robbie
 --%>
 
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="Databank.Connectie_Databank"%>
@@ -12,39 +16,55 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <jsp:useBean id="datum" scope="page" class="beans.datumBean" />
+        <title>Groep toevoegen</title>
         <% 
             String strFouten = "";
             List<String> alParams = new ArrayList<String>();
-            try {
                 String strFestId = request.getParameter("fest_id");
                 String strBandId = request.getParameter("band_id");
                 String strPodId = request.getParameter("pod_id");
-                String strDatum = request.getParameter("datum");
+                String strDatum = request.getParameter("groep_datum");
+                String strBeginDatum = request.getParameter("fest_datum");
+                String strEindDatum = request.getParameter("fest_einddatum");
                 String strUur = request.getParameter("uur");
+                try { %>
+                    <jsp:setProperty name="datum" property="strBegin" value="<%= strBeginDatum %>" />
+                    <jsp:setProperty name="datum" property="strEind" value="<%= strEindDatum %>" />    
+                    <%
+                    boolean boolDatumOk = datum.isDatumTussen(strDatum);
+                    System.out.println("Datum ok? - " + boolDatumOk);
+                    if (!boolDatumOk) {
+                        throw new IllegalArgumentException();
+                    }
+                } catch (IllegalArgumentException ia) {
+                    strFouten += "<p>ARGUMENT: Enkele gegevens werden niet goed verwerkt:<br /> " + ia.getMessage() + "</p>";
+                } catch (ParseException pe) {
+                    strFouten += "<p>DATA: Een van de datums zijn niet in het correcte formaat:<br /> " + pe.getMessage() + "</p>";
+                } catch (Exception e) {
+                    strFouten += "<p>ONBEKEND: Een onbekende fout werd opgevangen<br /> " + e.getMessage() + "</p>";
+                }
+                alParams.add(strFestId);
                 alParams.add(strBandId);
                 alParams.add(strPodId);
                 alParams.add(strDatum);
                 alParams.add(strUur);
-                alParams.add(strFestId);
-                    
-                Connectie_Databank connectie = new Connectie_Databank();
-                connectie.maakConnectie();
+                
+                if (strFouten.equals("")) {
+                    try {
+                        Connectie_Databank connectie = new Connectie_Databank();
+                        connectie.maakConnectie();
 
-                connectie.voerUpdateUit("INSERT INTO bandsperfestival"
-                + " (band_id, pod_id, datum, uur)"
-                + " VALUES (?, ?, ?, ?)"
-                + " WHERE fest_id = ?", alParams);
-                                
-                //Connectie sluiten voor deze pagina
-                connectie.sluitConnectie();
-            } catch (Exception e) {
-                strFouten += "Kon ticket niet toevoegen:<br /> " + e.getMessage();
-            }
-            
-            if (strFouten.equals("")) {
+                        connectie.voerUpdateUit("INSERT INTO bandsperfestival"
+                        + " (fest_id, band_id, pod_id, datum, uur)"
+                        + " VALUES (?, ?, ?, ?, ?)", alParams);
 
-            }
+                        //Connectie sluiten voor deze pagina
+                        connectie.sluitConnectie();
+                    } catch (SQLException se) {
+                        strFouten += "<p>SQL: Kon ticket niet toevoegen:<br /> " + se.getMessage() + "</p>";
+                    }
+                }
         %>
         <script type="text/javascript">
             //Indien fout -> vorige pagina met ingegeven details (zie onclick van button)
