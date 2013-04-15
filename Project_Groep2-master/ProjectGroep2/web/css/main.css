@@ -175,7 +175,6 @@ body {
 
 #inhoud { /*Eigenlijke tekst/artikels*/
     color: white; 
-    font-size: 1.1em;
     max-width: 880px;
     /*We maken van de alles in de pagina_omslag een flexbox om kinderelementen te beheren*/
     -webkit-box-flex: 1;
