@@ -112,8 +112,8 @@
                                                             }
                                                         %>
                                                     </td>
-                                                    <td class="TableDataPaddingLeftTop">
-                                                        <div class="TekstOnderlijning">Locatie:</div>
+                                                    <td class="inhoud_tabel_spatie_links_boven_onder">
+                                                        <div class="tekst_onderlijning">Locatie:</div>
                                                         <%
                                                             //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
                                                             rsInhoudfestivals.first();
@@ -214,11 +214,11 @@
                                                        cal.set(Calendar.DAY_OF_WEEK, 0);
                                                        if (begindatum.after(new Date()))
                                                        {%>
-                                                           <td class="TableDataPaddingRightBottom">
+                                                           <td class="inhoud_tabel_spatie_links_boven">
                                                                <input type="submit" name="Details" value=" Details " />
                                                            </td>
                                                        <%} else {%>
-                                                             <td class="TableDataPaddingRightBottom">
+                                                             <td class="inhoud_tabel_spatie_links_boven">
                                                                  <div id="FontVerlopenFestival">Dit festival is verlopen</div>
                                                              </td>
                                                        <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
