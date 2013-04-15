@@ -62,31 +62,29 @@
                     session.setAttribute("gegevensGebruiker", gebruiker);
                 }
         %>        
-        <div id='page_wrapper'>
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id='content_wrapper'>
-                <section id='content'>
-                    <div id='ElementenCenter'>
-                        <div id='TekstCenter'>
+        <div id="pagina_omslag">
+            <jsp:include page="hoofding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
+                    <div class="tekst_centreren">
                             <%
                                 if(gebruiker.getGebruikersnaam() != null)
                                 {
                             %>                      
                                         <h1>U bent met succes ingelogd!</h1>
-                                        Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
                             <%  } else{%>
                                         <h2>U hebt verkeerde inloggegevens ingegeven</h2>
-                                        Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
+                                        
                             <%  }
                           } catch(Exception e) {}
                             %>
-                        </div>
+                            Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
                     </div>
                 </section>
             </div>
             <hr style='width: auto; margin-left: 20px; margin-right: 20px;' />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
         </div>
     </body>
 </html>
