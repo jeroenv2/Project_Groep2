@@ -54,18 +54,18 @@
                                     }
                                     else
                                     {
-                                        adres = request.getParameter("TxtHuisnummer") + " " + request.getParameter("txtStraatnaam") + ", " + request.getParameter("txtPostcode") + " " + request.getParameter("txtGemeente") + " - " + request.getParameter("txtLand");
+                                        adres = request.getParameter("txtHuisnummer") + " " + request.getParameter("txtStraatnaam") + ", " + request.getParameter("txtPostcode") + " " + request.getParameter("txtGemeente") + " - " + request.getParameter("txtLand");
                                     }                                
 
                                     lijstParams.add(adres);
                                     lijstParams.add(request.getParameter("dtGeboorteDatum"));
-                                    lijstParams.add(request.getParameter("dtGebruikersnaam"));
+                                    lijstParams.add(request.getParameter("txtGebruikersnaam"));
 
                                     aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
                                 
                                     if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                     {
-                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("geboorteDatum"));
+                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("dtGeboorteDatum"));
                                     
                                         gebruiker.setAdres(adres);
                                         gebruiker.setGeboorteDatum(geboortedatum);
@@ -97,8 +97,11 @@
                                 {
                         %>   
                                     <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
+                        <%      }
+                                else {%>
+                                    <h3>Er is iets mis gegaan. Probeer later uw profiel aan te passen</h3>
                         <%      }%>
-                                klik <a href="profiel.jsp">hier</a> om terug naar de profielpagina te gaan... 
+                        klik <a href="profiel.jsp">hier</a> om terug naar de profielpagina te gaan... 
                         </div>
                     </div>
                 </section>
