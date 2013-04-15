@@ -33,14 +33,14 @@
         <script src="js/vendor/jquery.collapse.js"></script>
         <script>
             //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
-            function resetFilter() {
-                var form_elementen = form_filter.elements;    
-                for(i=0; i<form_elementen.length; i++)
+            function leegFilter() {
+                var frmElementen = form_filter.elements;    
+                for(i=0; i<frmElementen.length; i++)
                 {
-                    form_elementen[i].checked = false;
+                    frmElementen[i].checked = false;
                 }
             }
-            window.onload = resetFilter;
+            window.onload = leegFilter;
         </script>
     </head>
     <body>
@@ -61,13 +61,13 @@
                                 List<String> lijstParams = new ArrayList<String>();
 
                                 connectie.voerQueryUit("SELECT b.*, bf.*, f.fest_naam FROM bands b, bandsperfestival bf, festivals f WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id", lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();
+                                ResultSet rsInhoudGroepen = connectie.haalResultSetOp();
 
-                                res.last();
-                                int lengteResultSet = res.getRow();
+                                rsInhoudGroepen.last();
+                                int lengteResultSet = rsInhoudGroepen.getRow();
 
-                                res.first();
-                                res.previous();
+                                rsInhoudGroepen.first();
+                                rsInhoudGroepen.previous();
 
                                 if (lengteResultSet > 0) {
                         %>
@@ -79,21 +79,21 @@
                                 <tbody class="inhoud_tabel_links_uitlijning">
                                     <tr>
                                         <td><div class="tekst_onderlijning">Genre:</div>
-                                        <%while (res.next()) {
-                                                String genre = res.getString("band_soortMuziek");
+                                        <%while (rsInhoudGroepen.next()) {
+                                                String genre = rsInhoudGroepen.getString("band_soortMuziek");
 
                                                 if (!lijstGenres.contains(genre)) {
                                                     lijstGenres.add(genre);
                                                 }
                                             }
-                                            res.first();
-                                            res.previous();
+                                            rsInhoudGroepen.first();
+                                            rsInhoudGroepen.previous();
                                             
                                             //De ArrayList alfabetisch ordenen
                                             java.util.Collections.sort(lijstGenres);
                                             for (String genre : lijstGenres) {
                                         %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='genre' value='<%= genre%>' /> <%= genre%><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkGenre' value='<%= genre%>' /> <%= genre%><br />
                                 <%
                                     }
                                 %>
@@ -102,8 +102,8 @@
                                 <div class="tekst_onderlijning">Festival:</div>
                                 <%
                                       List<String> lijstFestivals = new ArrayList<String>();
-                                      while (res.next()) {
-                                                String festival = res.getString("fest_naam");
+                                      while (rsInhoudGroepen.next()) {
+                                                String festival = rsInhoudGroepen.getString("fest_naam");
 
                                                 if (!lijstFestivals.contains(festival)) {
                                                     lijstFestivals.add(festival);
@@ -113,7 +113,7 @@
                                             java.util.Collections.sort(lijstFestivals);
                                             for (String festival : lijstFestivals) {
                                         %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='festival' value='<%=festival%>' /> <%=festival%><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='radFestival' value='<%=festival%>' /> <%=festival%><br />
                                 <%
                                     }
                                 %>
@@ -121,8 +121,8 @@
                                 </tr>
                                 <tr>
                                     <td class="inhoud_tabel_spatie_links_boven_onder">
-                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> 
-                                        <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
+                                        <input type='submit' name='btnZoekFilter' value=' Zoeken ' /> 
+                                        <input type='reset' name='btnLeegFilter' value=' Wissen ' /></td>
                                     <td></td>
                                 </tr>
                                 </tbody >
@@ -134,12 +134,12 @@
                         <div id="WitruimteTabelFilter">
                             <!-- Informatie groepen -->
                             <%
-                                res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                while (res.next()) {
-                                    String naam = res.getString("band_naam");
-                                    String genre = res.getString("band_soortMuziek");
-                                    String afbeelding = res.getString("band_afbeelding");
+                                rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                rsInhoudGroepen.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                while (rsInhoudGroepen.next()) {
+                                    String naam = rsInhoudGroepen.getString("band_naam");
+                                    String genre = rsInhoudGroepen.getString("band_soortMuziek");
+                                    String afbeelding = rsInhoudGroepen.getString("band_afbeelding");
                             %>
                             <form action="groepen_details.jsp" method="POST">
                             <table id="tabel_breedte_600px_omrand">
@@ -162,8 +162,8 @@
                                     </tr>
                                     <tr>
                                         <%
-                                            if (res.getString("band_url") != null) {
-                                                String url = res.getString("band_url");
+                                            if (rsInhoudGroepen.getString("band_url") != null) {
+                                                String url = rsInhoudGroepen.getString("band_url");
                                                 url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
                                                 <td class="inhoud_tabel_spatie_links_onder">
@@ -173,7 +173,7 @@
                                                 <td></td>
                                         <%}%>
                                         <td class="inhoud_tabel_spatie_rechts_onder">
-                                            <input type="submit" name="Details" value=" Details " />
+                                            <input type="submit" name="btnDetails" value=" Details " />
                                         </td>
                                     </tr> <!-- Warning negeren. De controle wordt genegeerd. Daarom ziet HTML 3 kolommen ipv 2 -->
                                 </tbody>
