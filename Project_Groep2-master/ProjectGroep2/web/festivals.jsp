@@ -56,13 +56,13 @@
         </script>
     </head>
     <body>
-        <a id="top"></a>
-        <div id="page_wrapper">
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
-                    <div id="ElementenCenter">
+        <a id="boven"></a>
+        <div id="pagina_omslag">
+            <jsp:include page="hoofdding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
+                    <div id="elementen_centreren">
                         <%
                             try
                             {
@@ -75,28 +75,28 @@
                                 List<String> lijstParams = new ArrayList<String>();
 
                                 connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();
+                                ResultSet rsInhoudfestivals = connectie.haalResultSetOp();
 
-                                res.last();
-                                int lengteResultSet = res.getRow();
+                                rsInhoudfestivals.last();
+                                int lengteRsInhoudfestivals = rsInhoudfestivals.getRow();
 
-                                res.first();
-                                res.previous();
+                                rsInhoudfestivals.first();
+                                rsInhoudfestivals.previous();
 
-                                if (lengteResultSet > 0)
+                                if (lengteRsInhoudfestivals > 0)
                                 {
                         %>   
-                                    <div data-collapse id="CollapseOpmaak">
-                                        <h2 id="geavZoeken">+ Geavanceerd Zoeken </h2>
+                                    <div data-collapse id="opmaak_openklapper">
+                                        <h2 id="geavanceerd_zoeken_filter">+ Geavanceerd Zoeken </h2>
                                     <div>
                                       <form id="form_filter" action='festivals_filter.jsp' method='POST'>
-                                        <table id="TableFilter">
-                                            <tbody id="tbodyAlignLeft" >
+                                        <table id="tabel_filter">
+                                            <tbody id="inhoud_tabel_links_uitlijning" >
                                                 <tr>
-                                                    <td class="TableDataWidth300">
-                                                        <div class="TekstOnderlijning">Naam begint met:</div>
-                                                        <%while (res.next()) {
-                                                                String letter = res.getString("fest_naam").substring(0, 1);
+                                                    <td class="inhoud_tabel_breedte_300px">
+                                                        <div class="tekst_onderlijning">Naam begint met:</div>
+                                                        <%while (rsInhoudfestivals.next()) {
+                                                                String letter = rsInhoudfestivals.getString("fest_naam").substring(0, 1);
 
                                                                 if (!lijstLetters.contains(letter)) {
                                                                     lijstLetters.add(letter);
@@ -116,10 +116,10 @@
                                                         <div class="TekstOnderlijning">Locatie:</div>
                                                         <%
                                                             //Ervoor zorgen dat een locatie maar 1x getoond wordt (geen dubbels!)
-                                                            res.first();
-                                                            res.previous();
-                                                            while (res.next()) {
-                                                                String locatie = res.getString("fest_locatie");
+                                                            rsInhoudfestivals.first();
+                                                            rsInhoudfestivals.previous();
+                                                            while (rsInhoudfestivals.next()) {
+                                                                String locatie = rsInhoudfestivals.getString("fest_locatie");
 
                                                                 if (!lijstLocaties.contains(locatie)) {
                                                                     lijstLocaties.add(locatie);
@@ -135,7 +135,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="TableDataPaddingLeftTopBottom">
+                                                    <td class="inhoud_tabel_spatie_links_boven_onder">
                                                         <input type='checkbox' id='datumTonen' name='opDatum' onChange='AanvinkenCheckboxDatums();' /> Filteren op datums
                                                     </td>
                                                     <td></td>
@@ -147,7 +147,7 @@
                                                     </td>
                                                </tr>
                                                <tr>
-                                                   <td class="TableDataPaddingLeftTopBottom">
+                                                   <td class="inhoud_tabel_spatie_links_boven_onder">
                                                        <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='FilterLegen' value=' Wissen ' /></td>
                                                    <td></td>
                                                </tr>
@@ -159,26 +159,26 @@
                             <div id="WitruimteTabelFilter">
                                 <!-- Informatie Festivals -->
                                 <%
-                                   res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                   res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                   while (res.next())
+                                   rsInhoudfestivals.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                   rsInhoudfestivals.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                   while (rsInhoudfestivals.next())
                                    {
-                                       String naam = res.getString("fest_naam");
-                                       String beginDatum = res.getString("fest_datum");
-                                       String locatie = res.getString("fest_locatie");
+                                       String naam = rsInhoudfestivals.getString("fest_naam");
+                                       String beginDatum = rsInhoudfestivals.getString("fest_datum");
+                                       String locatie = rsInhoudfestivals.getString("fest_locatie");
                                 %>
                                        <form action="festival_details.jsp" method="POST">
                                           <table id="TableWidth600Border">
-                                              <tbody class="tbodyAlignLeft" style='padding: 10px;'>
+                                              <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                                   <tr>
-                                                     <td class="TableDataWidth300" style='padding-left: 10px; padding-top: 10px;'>
-                                                         <div class="TekstVet"> <%= naam%> </div>
+                                                     <td class="inhoud_tabel_breedte_300px" style='padding-left: 10px; padding-top: 10px;'>
+                                                         <div class="tekst_vet"> <%= naam%> </div>
                                                         <input type="hidden" name="naam" value="<%=naam%>">
                                                      </td>
-                                                     <td class="TableDataWidth300 TableDataPaddingLeftTopBottom">Begindatum: <%=beginDatum%> </td>
+                                                     <td class="inhoud_tabel_breedte_300px inhoud_tabel_spatie_links_boven_onder">Begindatum: <%=beginDatum%> </td>
                                                    </tr>
                                                    <tr>
-                                                      <td class="TableDataPaddingLeftTopBottom">
+                                                      <td class="inhoud_tabel_spatie_links_boven_onder">
                                                           Locatie: <%=locatie%>
                                                       </td>
                                                         <!-- Datums berekenen -->
@@ -189,17 +189,17 @@
                                                          //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
                                                          Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
                                                          cal.setTime(begindatum);                //De begindatum in cal steken
-                                                         cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+                                                         cal.add(cal.DATE, Integer.parseInt(rsInhoudfestivals.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
 
                                                          Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                                          String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
                                                        %>
-                                                       <td class="TableDataPaddingLeftTop"  style="border-right: 1px solid white;">Einddatum: <%=strEinddatum%></td>
+                                                       <td class="inhoud_tabel_spatie_links_boven"  style="border-right: 1px solid white;">Einddatum: <%=strEinddatum%></td>
                                                     </tr>
                                                     <tr>
                                                        <%
-                                                            if (res.getString("fest_url") != null) {
-                                                            String url = res.getString("fest_url");
+                                                            if (rsInhoudfestivals.getString("fest_url") != null) {
+                                                            String url = rsInhoudfestivals.getString("fest_url");
                                                             url = url.replace(" ", "%20");  //Bij een spatie in de url moet deze vervangen worden door %20 (spatie in hexadeci)
                                                        %>
                                                        <td style='padding-left: 10px; padding-bottom: 7px;'>
@@ -239,8 +239,8 @@
         </section>
         </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
         </div>
-        <a href="#top"><div id="TopPage">Begin Pagina</div></a>
+        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
     </body>
 </html>
