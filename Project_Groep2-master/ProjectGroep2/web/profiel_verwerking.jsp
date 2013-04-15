@@ -61,7 +61,7 @@
                                     lijstParams.add(request.getParameter("dtGeboorteDatum"));
                                     lijstParams.add(request.getParameter("txtGebruikersnaam"));
 
-                                    aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
+                                    aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
                                 
                                     if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                     {
@@ -80,7 +80,7 @@
                                     
                                     if(gebruiker.getPaswoord().equals(request.getParameter("passHuidigPaswoord")))
                                     {
-                                        aantalUpdate = connectie.updateQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
+                                        aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
                                 
                                         if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                         {

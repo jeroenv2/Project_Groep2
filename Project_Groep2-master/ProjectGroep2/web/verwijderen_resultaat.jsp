@@ -57,7 +57,7 @@
                                         }
                                         verwijder_query += ")";
 
-                                        aantal = connectie.updateQuery(verwijder_query, festivals);
+                                        aantal = connectie.veranderQuery(verwijder_query, festivals);
                                     }
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
@@ -92,7 +92,7 @@
                                         }
                                         verwijder_query += ")";
 
-                                        aantal = connectie.updateQuery(verwijder_query, groepen);
+                                        aantal = connectie.veranderQuery(verwijder_query, groepen);
                                     }
                                 } catch (Exception e) {
                                     out.println(e.getMessage());

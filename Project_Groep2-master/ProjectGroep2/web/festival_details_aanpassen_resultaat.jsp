@@ -64,7 +64,7 @@
             
             if (!strDuur.equals("")) {
                 try {
-                    connectie.voerUpdateUit("UPDATE festivals"
+                    connectie.voerVeranderingUit("UPDATE festivals"
                     + " SET fest_naam = ?, fest_locatie = ?, fest_datum = ?, fest_duur = ?, fest_einddatum = ?, fest_url = ?"
                     + " WHERE fest_id = ?", alParams);
                 } catch (Exception e) {

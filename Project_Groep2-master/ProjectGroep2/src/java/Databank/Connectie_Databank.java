@@ -85,7 +85,7 @@ public class Connectie_Databank
         }
     }
     
-    public void voerUpdateUit(String query, List<String> parameters) throws Exception
+    public void voerVeranderingUit(String query, List<String> parameters) throws Exception
     {
         try
         {
@@ -150,7 +150,7 @@ public class Connectie_Databank
         }
     }
     
-    public int updateQuery(String query, List<String> parameters) throws Exception
+    public int veranderQuery(String query, List<String> parameters) throws Exception
     {
         int aantalUpdates = 0;
         try
