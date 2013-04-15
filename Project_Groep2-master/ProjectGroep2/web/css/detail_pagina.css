@@ -1,4 +1,4 @@
-.centertext {
+.tekst_centreren {
     text-align: center;
 }
 
@@ -6,7 +6,7 @@
          EXTRA OP MAIN 
    ----------------------------*/
 
-#content { /*Eigenlijke tekst/artikels*/    
+#inhoud { /*Eigenlijke tekst/artikels*/    
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -20,12 +20,12 @@
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
-    
+
     /* Hoe omgaan met witruimte */
     -webkit-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
-    
+
     /* pack = horizontaal */
     -webkit-box-pack: justify;
     -moz-box-pack: justify;
@@ -35,7 +35,7 @@
     -webkit-align-content: stretch;
     -ms-flex-line-pack: stretch;
     align-content: stretch;
-    
+
     /* align = verticaal */
     -webkit-box-align: start;
     -moz-box-align: start;
@@ -45,7 +45,7 @@
 }
 
 /* ----------------------------
-           ARTIKKELS 
+           ARTIKELS 
    ----------------------------*/
 
 article {
@@ -66,7 +66,7 @@ article[id="details"] {
     margin-left: 10px;
     margin-right: 10px;
     max-width: 430px;
-    
+
     /* 
     the-echoplex.net/flexyboxes/?legacy=on&display=flex&flex-direction=row&flex-wrap=nowrap&justify-content=center&align-items=flex-start&align-content=stretch&order[]=0&flex-grow[]=0&flex-shrink[]=0&flex-basis[]=auto&align-self[]=auto&order[]=0&flex-grow[]=1&flex-shrink[]=1&flex-basis[]=auto&align-self[]=auto&order[]=0&flex-grow[]=0&flex-shrink[]=0&flex-basis[]=auto&align-self[]=auto
     */
@@ -146,7 +146,7 @@ li:first-child {
     padding-top: 3px;
 }
 
-.nolist {
+.geen_lijst {
     background-color: rgba(255, 255, 200, 0.2);
     padding: 5px;
     border: 2px solid #cbcbcb;
