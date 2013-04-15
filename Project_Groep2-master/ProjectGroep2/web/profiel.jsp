@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script type="text/javascript">
-            function checkPaswoorden() {
+            function controlePaswoorden() {
                 if (document.getElementById("Nieuw").value !== document.getElementById("Hertype").value) {
                     alert('Bevestigd paswoord komt niet overeen met het nieuwe paswoord!');
                     document.getElementById("Nieuw").style.border = '2px solid red';
@@ -35,18 +35,18 @@
                     return true;
                 }
             }
-            function ClickAlgemeen()
+            function klikAlgemeen()
             {
-                var algemeen = document.getElementById("form_Algemeen");
-                var paswoorden = document.getElementById("form_Paswoorden");
+                var algemeen = document.getElementById("frmAlgemeen");
+                var paswoorden = document.getElementById("frmPaswoorden");
                 algemeen.style.display = 'inline';
                 paswoorden.style.display = 'none';
                 document.getElementById("Algemeen").style.backgroundColor = 'white;';
             }
-            function ClickPaswoord()
+            function klikPaswoord()
             {
-                var algemeen = document.getElementById("form_Algemeen");
-                var paswoorden = document.getElementById("form_Paswoorden");
+                var algemeen = document.getElementById("frmAlgemeen");
+                var paswoorden = document.getElementById("frmPaswoorden");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'inline';
             }
@@ -97,15 +97,14 @@
 
                                 //Conversies geboortedatum
                                 String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
-                                Date gebDatum = new SimpleDateFormat("yyyy-MM-dd").parse(strGebDatum);
                         %>
                     <div id="profiel_navigatie">
-                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="ClickAlgemeen();" /><br />
-                        <input type="button" id="btnPaswoord" value=" Paswoord " onClick="ClickPaswoord();" />
+                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="klikAlgemeen();" /><br />
+                        <input type="button" id="btnPaswoord" value=" Paswoord " onClick="klikPaswoord();" />
                     </div>
                     <div id="elementen_centreren">
                         <!-- Formulier om algemene gegevens aan te passen -->
-                        <form method="POST" action="profiel_verwerking.jsp" id="form_Algemeen">
+                        <form method="POST" action="profiel_verwerking.jsp" id="frmAlgemeen">
                             <table>
                                 <thead>
                                     <tr>
@@ -175,7 +174,7 @@
                         </form>
                             
                         <!-- Formulier om paswoorden te veranderen -->
-                        <form method="POST" action="profiel_verwerking.jsp" id="form_Paswoorden" hidden onsubmit="return checkPaswoorden();">
+                        <form method="POST" action="profiel_verwerking.jsp" id="frmPaswoorden" hidden onsubmit="return controlePaswoorden();">
                             <table>
                                 <thead>
                                     <tr>
