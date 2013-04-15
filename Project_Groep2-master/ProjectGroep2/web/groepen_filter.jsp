@@ -83,7 +83,6 @@
                             Klik <a href='groepen.jsp'>hier</a> om terug te keren
                         </div>
                         
-                        <div id="WitruimteTabelFilter">
                             <!-- Informatie groepen -->
                             <%
                                 rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -146,7 +145,6 @@
                                 }
                             %>
                         </div>
-                    </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
