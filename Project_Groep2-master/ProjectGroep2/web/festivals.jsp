@@ -31,11 +31,11 @@
         <script src="js/vendor/jquery.collapse.js"></script>
         <script>
             //Bron: http://stackoverflow.com/questions/9280037/javascript-toggle-function-to-hide-and-display-text-how-to-add-images
-            function onChangeCheckboxDatums()
+            function AanvinkenCheckboxDatums()
             {
-                var checked = document.getElementById("datumTonen").checked;
+                var chkAangevinkt = document.getElementById("datumTonen").checked;
                 var ele = document.getElementById("datums");
-                if (checked)
+                if (chkAangevinkt)
                 {
                     ele.style.display = "inline";
                 }
@@ -45,14 +45,14 @@
                 }
             }
             //Bron: http://www.javascript-coder.com/javascript-form/javascript-reset-form.phtml
-            function resetFilter() {
-                var form_elementen = form_filter.elements;    
-                for(i=0; i<form_elementen.length; i++)
+            function FilterLegen() {
+                var frmElementen = form_filter.elements;    
+                for(i=0; i<frmElementen.length; i++)
                 {
-                    form_elementen[i].checked = false;
+                    frmElementen[i].checked = false;
                 }
             }
-            window.onload = resetFilter;
+            window.onload = FilterLegen;
         </script>
     </head>
     <body>
@@ -136,7 +136,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="TableDataPaddingLeftTopBottom">
-                                                        <input type='checkbox' id='datumTonen' name='opDatum' onChange='onChangeCheckboxDatums();' /> Filteren op datums
+                                                        <input type='checkbox' id='datumTonen' name='opDatum' onChange='AanvinkenCheckboxDatums();' /> Filteren op datums
                                                     </td>
                                                     <td></td>
                                                 <tr>
@@ -148,7 +148,7 @@
                                                </tr>
                                                <tr>
                                                    <td class="TableDataPaddingLeftTopBottom">
-                                                       <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
+                                                       <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='FilterLegen' value=' Wissen ' /></td>
                                                    <td></td>
                                                </tr>
                                         </tbody>
