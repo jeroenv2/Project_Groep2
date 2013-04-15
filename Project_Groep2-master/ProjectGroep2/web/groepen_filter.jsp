@@ -30,13 +30,13 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <a id="top"></a>
-        <div id="page_wrapper">
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
-                    <div id="ElementenCenter">
+        <a id="boven"></a>
+        <div id="pagina_omslag">
+            <jsp:include page="hoofding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
+                    <div id="elementen_centreren">
                         <%
                             try {
                                 Connectie_Databank connectie = new Connectie_Databank();
@@ -46,9 +46,9 @@
                                 String query = "SELECT b.* FROM bands b, festivals f, bandsperfestival bf WHERE  b.band_id = bf.band_id AND bf.fest_id = f.fest_id";
                                 //WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id
 
-                                if (request.getParameter("genre") != null) {
+                                if (request.getParameter("chkGenre") != null) {
                                     query += " AND (b.band_soortMuziek = ?"; //Beginletters geselecteerd
-                                    String[] genres = request.getParameterValues("genre");
+                                    String[] genres = request.getParameterValues("chkGenre");
                                     //Vormen van query
                                     for (int i = 0; i < genres.length - 1; i++) //ervoor zorgen dat de query juist eindigt
                                     {                                     //Begin 0: Array letters begin ook vanaf 0
@@ -62,23 +62,23 @@
                                     }
                                 }
 
-                                if (request.getParameter("festival") != null) {
+                                if (request.getParameter("radFestival") != null) {
                                     query += " AND f.fest_naam = ?";
-                                    lijstParams.add(request.getParameter("festival"));
+                                    lijstParams.add(request.getParameter("radFestival"));
                                 }
 
                                 connectie.voerQueryUit(query, lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();
+                                ResultSet rsInhoudGroepen = connectie.haalResultSetOp();
 
-                                res.last();
-                                int lengteResultSet = res.getRow();
+                                rsInhoudGroepen.last();
+                                int lengteResultSet = rsInhoudGroepen.getRow();
 
-                                res.first();
-                                res.previous();
+                                rsInhoudGroepen.first();
+                                rsInhoudGroepen.previous();
 
                                 if (lengteResultSet > 0) {
                         %>
-                        <div id="TekstCenter">
+                        <div id="tekst_centreren">
                             <h1>Gefilterd Resultaat</h1>
                             Klik <a href='groepen.jsp'>hier</a> om terug te keren
                         </div>
@@ -86,46 +86,46 @@
                         <div id="WitruimteTabelFilter">
                             <!-- Informatie groepen -->
                             <%
-                                res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                while (res.next()) {
-                                    String naam = res.getString("band_naam");
-                                    String genre = res.getString("band_soortMuziek");
-                                    String afbeelding = res.getString("band_afbeelding");
+                                rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                rsInhoudGroepen.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                while (rsInhoudGroepen.next()) {
+                                    String naam = rsInhoudGroepen.getString("band_naam");
+                                    String genre = rsInhoudGroepen.getString("band_soortMuziek");
+                                    String afbeelding = rsInhoudGroepen.getString("band_afbeelding");
                             %>
                             <form action="groepen_details.jsp" method="POST">
-                            <table id="TableWidth600Border">
-                                <tbody class="tbodyAlignLeft" style='padding: 10px;'>
+                            <table id="tabel_breedte_600px_omrand">
+                                <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                     <tr>
                                         <td rowspan="4" style="width: 120px;">
-                                            <img id="afbeeldingOpmaak" src="<%=afbeelding%>" alt="Afbeelding Band" />
+                                            <img id="opmaak_afbeelding" src="<%=afbeelding%>" alt="Afbeelding Band" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop" style="border-top: 1px solid white;"><b>
-                                                <div class="TekstVet"> <%= naam%> </div>
+                                        <td class="inhoud_tabel_spatie_links_boven" style="border-top: 1px solid white;"><b>
+                                                <div class="tekst_vet"> <%= naam%> </div>
                                                 <input type="hidden" name="naam" value="<%=naam%>">
                                         </td>
                                         <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">Genre: <%=genre%></td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Genre: <%=genre%></td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <%
-                                            if (res.getString("band_url") != null) {
-                                                String url = res.getString("band_url");
+                                            if (rsInhoudGroepen.getString("band_url") != null) {
+                                                String url = rsInhoudGroepen.getString("band_url");
                                                 url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
-                                                <td class="TableDataPaddingLeftBottom">
+                                                <td class="inhoud_tabel_spatie_links_onder">
                                                     <a href="http://<%=url%>" target="_blank">Site</a>
                                                 </td>
                                         <% } else { %>
                                                 <td></td>
                                         <%}%>
-                                        <td class="TableDataPaddingRightBottom">
-                                            <input type="submit" name="Details" value=" Details " />
+                                        <td class="inhoud_tabel_spatie_rechts_onder">
+                                            <input type="submit" name="btnDetails" value=" Details " />
                                         </td>
                                     </tr> <!-- Warning negeren. De controle wordt genegeerd. Daarom ziet HTML 3 kolommen ipv 2 -->
                                 </tbody>
@@ -148,8 +148,8 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
         </div>
-        <a href="#top"><div id="TopPage">Begin Pagina</div></a>
+        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
     </body>
 </html>
