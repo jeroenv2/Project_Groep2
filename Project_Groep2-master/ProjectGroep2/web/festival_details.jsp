@@ -88,6 +88,9 @@
                         <% 
                             String foto = fest.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
                         %>
+                        <header>
+                            <h2>Afbeelding</h2>
+                        </header>
                         <img src="img/festivals/<%= foto %>.jpg"
                              alt="<%= foto %>" width="95%"
                              draggable="true" />

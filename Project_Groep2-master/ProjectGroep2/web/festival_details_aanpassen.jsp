@@ -123,6 +123,9 @@
                         <% 
                             String foto = rsFest.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
                         %>
+                        <header>
+                            <h2>Afbeelding</h2>
+                        </header>
                         <img src="img/festivals/<%= foto %>.jpg"
                              alt="<%= foto %>" width="95%"
                              draggable="true" />
@@ -145,7 +148,7 @@
                         <!--
                             In principe het zelfde formulier als bij festivaldetails, maar met invoervelden met de actuele gegevens in.
                         -->
-                        <form action="festival_details_aanpassen_resultaat.jsp" method="POST">
+                        <form action="festival_details_aanpassen_resultaat.jsp" method="post">
                         <table>
                             <tbody>
                                 <tr>
@@ -183,8 +186,7 @@
                                     <td colspan="2">
                                         <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
                                         <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
-                                        <input type="submit" id="festsave" name="festsave" value="Gegevens opslaan"
-                                               style="width: 400px; margin-top: 10px;"/>
+                                        <input type="submit" id="festsave" name="festsave" value="Gegevens opslaan" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -221,10 +223,11 @@
                             -->
                             <p>Groep toevoegen</p>
                             <div class="geen_lijst">
-                                <form id="form_add_group" name="add_groep" action="details/add_group.jsp">
+                                <form id="form_toev_groep" name="toev_groep" action="details/toev_groep.jsp" method="post">
                                     
                                 Groep:&nbsp;
-                                <select id="group_add" onchange="setDropDownValue(this, 'band_id')" required oninvalid="setCustomValidity('Geen groepen meer')"
+                                <select id="sel_groep_toev" class="inputveld" onchange="setDropDownValue(this, 'band_id')"
+                                        required oninvalid="setCustomValidity('Geen groepen meer')"
                                         style="width: 150px;">
                                 <!-- 
                                 Controleren welke groepen nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
@@ -248,7 +251,7 @@
                                     } %>
                                 </select>
                                 Podium:&nbsp;
-                                <select id="pod_toev" onchange="setDropDownValue(this, 'pod_id')">
+                                <select id="pod_toev" class="inputveld" onchange="setDropDownValue(this, 'pod_id')">
                                 <% 
                                     count = 0;
                                     String strPId = "";
@@ -262,14 +265,15 @@
                                     <% 
                                     } %>
                                 </select>
-                                Datum:&nbsp;
-                                <input type="date" name="groep_datum" value="<%= rsFest.getString("fest_datum") %>"
+                                <p>Datum:&nbsp;
+                                <input type="date" class="inputveld" name="groep_datum" value="<%= rsFest.getString("fest_datum") %>"
                                        required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd"
                                        min="<%= rsFest.getString("fest_datum") %>"
                                        max="<%= rsFest.getString("fest_einddatum") %>"
                                        maxlength="10"
-                                       style="width: 100px;"/><br />
-                                Tijd:&nbsp;
+                                       style="width: 100px;"/>
+                                </p> 
+                               Tijd:&nbsp;
                                 <input type="time" name="tijd" min="23:59" max="00:00" required pattern="\d{2}:\d{2}" title="HH:MM" />
                                 
                                 <!-- Hidden velde band_id en pod_id worden opgevuld door javascript (select onchange) -->
@@ -279,7 +283,7 @@
                                 <input type="hidden" id="band_id" name="band_id" value="<%= strBId %>" />
                                 <input type="hidden" id="pod_id" name="pod_id" value="<%= strPId %>" />
                                 <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
-                                <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
+                                <input type="submit" id="toev_ticket" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
                                 </form>
                             </div>
@@ -311,7 +315,7 @@
                                 <% try {
                                     while (rsTick.next()) { %>
                                 <li>
-                                    <form action="./details/delete_ticket.jsp">
+                                    <form action="./details/wis_ticket.jsp" method="post">
                                         <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
                                         <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
                                         <input type="hidden" name="typ_id" value="<%= rsTick.getString("typ_id") %>" />
@@ -329,7 +333,7 @@
                             </ul>
                             <p>Ticket toevoegen</p>
                             <div class="geen_lijst">
-                                <form id="form_add_ticket" name="add_ticket" action="details/add_ticket.jsp">
+                                <form id="form_toev_ticket" name="toev_ticket" action="details/toev_ticket.jsp" method="post">
                                 Type:&nbsp;
                                 <!-- 
                                 Controleren welke tickets nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
@@ -360,7 +364,7 @@
                                 <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
                                 <input type="hidden" id="typ_id" name="typ_id" value="<%= val %>" />
                                 <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
-                                <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
+                                <input type="submit" id="toev_ticket" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
                                 </form>
                             </div>
