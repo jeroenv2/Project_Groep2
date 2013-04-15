@@ -125,7 +125,7 @@ body {
         EIGENLIJKE PAGINA 
    ----------------------------*/
 
-#page_wrapper {
+#pagina_omslag {
     /*Flexbox vult alles op, daarom geven we max-width mee*/
     width: 1000px;
     margin: auto;
@@ -137,7 +137,7 @@ body {
 /* ----------------------------
              INHOUD 
    ----------------------------*/
-#content_wrapper { /*Witte rand*/
+#inhoud_omslag { /*Witte rand*/
     margin: 35px 30px 15px 30px;
     width: 900px;
     padding: 20px;
@@ -173,11 +173,11 @@ body {
     align-items: flex-center;
 }
 
-#content { /*Eigenlijke tekst/artikels*/
+#inhoud { /*Eigenlijke tekst/artikels*/
     color: white; 
     font-size: 1.1em;
     max-width: 880px;
-    /*We maken van de alles in de page_wrapper een flexbox om child elements te beheren*/
+    /*We maken van de alles in de pagina_omslag een flexbox om kinderelementen te beheren*/
     -webkit-box-flex: 1;
     -webkit-flex: 1;
     -moz-box-flex: 1;
@@ -185,7 +185,7 @@ body {
     flex-flex: 1;
 }
 
-#page_wrapper input[type="text"] {
+#pagina_omslag input[type="text"] {
     padding-left: 2px;
 }
 
@@ -214,18 +214,18 @@ input[type="reset"] {
     border-color: #14742a;
 }
 
-.WachtwoordError
+.wachtwoord_fout
 {
     border: 2px solid red;
 }
 
-#OpmaakIngelogd
+#opmaak_ingelogd
 {
     color: white;
     text-align: right;
 }
 
-#TopPage{
+#pagina_boven{
     background: #14742a;
     padding: 5px;
     color: #fff;
@@ -233,7 +233,7 @@ input[type="reset"] {
     bottom: 25px;
 }
 
-#CollapseOpmaak
+#opmaak_openklapper
 {
     width: 600px;
     border: 1px solid white;
@@ -241,17 +241,18 @@ input[type="reset"] {
     margin-bottom: 20px;
 }
 
-#TekstCenter
+#tekst_centreren
 {
     text-align: center;
 }
 
-#WitruimteTabelFilter
+#witruimte_tabel_filter
 {
     padding-top: 25px;
     padding-bottom: 10px;
 }
 
+/* VERANDEREN */
 #geavZoeken
 {
     margin: 0px;
@@ -260,7 +261,7 @@ input[type="reset"] {
     text-align: center;
 }
 
-.TekstOnderlijning
+.tekst_onderlijning
 {
     padding-top: 10px;
     padding-left: 10px;
@@ -268,76 +269,76 @@ input[type="reset"] {
     text-decoration: underline;
 }
 
-.TekstVet
+.tekst_vet
 {
     font-weight: bold;
 }
 
-#TableFilter
+#tabel_filter
 {
     width: 625px;
     padding-left: 20px;
 }
 
-#ElementenCenter
+#elementen_centreren
 {
     margin: 0px auto;
     width: 600px;
 }
 
 /* ---- Opmaak Festivals.jsp ---- */
-.tbodyAlignLeft
+.inhoud_tabel_links_uitleining
 {
     text-align: left;
 }
 
-.TableDataWidth300
+.inhoud_tabel_breedte_300px
 {
     width: 300px;
 }
 
-#TableWidth600Border
+#tabel_breedte_600px_omrand
 {
     margin-top: 15px;
     width: 600px;
     border: 1px solid white;
 }
 
-.TableDataPaddingLeftTop
+.inhoud_tabel_spatie_links_boven
 {
     padding-left: 10px;
     padding-top: 15px;
 }
 
-.TableDataPaddingLeftTopBottom
+.inhoud_tabel_spatie_links_boven_onder
 {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-top: 10px;
 }
 
-.TableDataPaddingRightBottom
+.inhoud_tabel_spatie_rechts_onder
 {
     padding-right: 7px;
     padding-bottom: 7px;
     text-align: right;
 }
 
-#FontVerlopenFestival
+#tekstkleur_verlopen_festival
 {
     color: mediumseagreen;
     font-weight: bold; 
 }
 
 /* ---- Opmaak groepen.jsp ---- */
-#afbeeldingOpmaak
+#opmaak_afbeelding
 {
     padding: 7px;
     width: 120px;
     height: 80px;
 }
 
-.TableDataPaddingLeftBottom
+.inhoud_tabel_spatie_links_onder
 {
     padding-left: 10px;
     padding-bottom: 7px;
@@ -378,13 +379,13 @@ h2 a:hover
 }
 
 /* ---- Opmaak profiel.jsp ---- */
-#NavigatieProfiel
+#profiel_navigatie
 {
     padding-top: 20px;
     float: left;
 }
 
-.TableDataWidth200
+.inhoud_tabel_breedte_200px
 {
     width: 200px;
 }
@@ -392,11 +393,11 @@ h2 a:hover
 /* ----------------------------
              HEADER 
    ----------------------------*/
-#header_wrapper {
+#hoofdding_omslag {
     padding: 20px;
     min-height: 100px;
 }
-#header_wrapper img {
+#hoofdding_omslag img {
     float: left;
 }
 
@@ -436,7 +437,7 @@ h2 a:hover
 /* ----------------------------
               MENU 
    ----------------------------*/
-#nav_wrapper {
+#navigatie_omslag {
     text-align: center; /*Menu centreren*/
     margin-top: 10px;
 }
@@ -444,7 +445,7 @@ h2 a:hover
 /* ----------------------------
              FOOTER 
    ----------------------------*/
-#footer_wrapper {
+#voettekst_omslag {
     height:35px;
     color: #fff;
     padding-left: 25px;
@@ -474,6 +475,8 @@ h2 a:hover
     width: 0;
     height: 150%;
 }
+
+/* NAKIJKEN */
 
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
