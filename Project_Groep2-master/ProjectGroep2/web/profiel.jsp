@@ -236,7 +236,7 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
          </div>
     </body>
 </html>
