@@ -53,8 +53,8 @@
     </head>
     <body>
         <div id="page_wrapper">
-            <jsp:include page="../header.jsp" />
-            <jsp:include page="../navigation.jsp" />
+            <jsp:include page="../hoofding.jsp" />
+            <jsp:include page="../navigatie.jsp" />
             <div id="content_wrapper">
                 <section id="content">
                     <article>
@@ -74,7 +74,7 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="/footer.jsp" />
+            <jsp:include page="/voettekst.jsp" />
         </div>
     </body>
 </html>
