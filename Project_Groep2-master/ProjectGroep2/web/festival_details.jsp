@@ -168,7 +168,10 @@
                             <ul>
                                 <% if (bands.next()) {
                                 do { %>
-                                <li><%= bands.getString("band_naam") %></li>
+                                <li><form action="groepen_details.jsp" method="post">
+                                    <input type="hidden" name="naam" value="<%= bands.getString("band_naam") %>" />
+                                    <a href="javascript:;" onclick="parentNode.submit();"><%= bands.getString("band_naam") %></a>
+                                    </form></li>
                                 <li><%= bands.getString("pod_omschr") %></li>
                                 <%  } while (bands.next());
                                 } else { %>

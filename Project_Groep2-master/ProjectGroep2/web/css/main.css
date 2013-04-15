@@ -345,7 +345,7 @@ input[type="reset"] {
 /* ---- Opmaak hyperlinks ---- */
 a:link
 {
-    color: white;
+    color: palegreen;
     text-decoration: none;
 }
 
