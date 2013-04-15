@@ -25,6 +25,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
 
+            try{
             Connectie_Databank connectie = new Connectie_Databank();
             connectie.maakConnectie();
             List<String> lijstParams = new ArrayList<String>();
@@ -49,6 +50,12 @@
                 i++;
 
             }
+            }
+            catch(Exception sqlexception){
+                out.println("De volgende fout wordt opgeworpen in Groepen_details:"); 
+                out.println("<br/>");
+                out.println(sqlexception);
+            }
 
         %>
        
@@ -57,15 +64,15 @@
         <title><% out.println(request.getParameter("naam"));%> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/detailpages.css">
+        <link rel="stylesheet" href="css/detail_pagina.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-        <div id="page_wrapper">
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
+        <div id="pagina_omslag">
+            <jsp:include page="hoofding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
                     <article id="foto">
                         <img src="<%=AfbeeldingGroep%>" alt="foto <%out.println(request.getParameter("naam"));%> " width="95%" draggable="true"  />
                     </article>
@@ -112,7 +119,7 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
         </div>
     </body>
 </html>
