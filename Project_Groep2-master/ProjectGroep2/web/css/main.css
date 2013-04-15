@@ -392,11 +392,11 @@ h2 a:hover
 /* ----------------------------
              HEADER 
    ----------------------------*/
-#hoofdding_omslag {
+#hoofding_omslag {
     padding: 20px;
     min-height: 100px;
 }
-#hoofdding_omslag img {
+#hoofding_omslag img {
     float: left;
 }
 
