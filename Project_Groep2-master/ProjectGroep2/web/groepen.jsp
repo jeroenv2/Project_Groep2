@@ -44,13 +44,13 @@
         </script>
     </head>
     <body>
-        <a id="top"></a>
-        <div id="page_wrapper">
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
-                    <div id="ElementenCenter">
+        <a id="boven"></a>
+        <div id="pagina_omslag">
+            <jsp:include page="hoofding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
+                    <div id="elementen_centreren">
                         <%
                             try {
                                 ArrayList<String> lijstGenres = new ArrayList<String>();
@@ -71,14 +71,14 @@
 
                                 if (lengteResultSet > 0) {
                         %>
-                        <div data-collapse id="CollapseOpmaak">
-                            <h2 id="geavZoeken">+ Geavanceerd Zoeken </h2>
+                        <div data-collapse id="opmaak_openklapper">
+                            <h2 id="geavanceerd_zoeken_filter">+ Geavanceerd Zoeken </h2>
                         <div>
                         <form id="form_filter" action='groepen_filter.jsp' method='POST'>
-                            <table id="TableFilter">
-                                <tbody class="tbodyAlignLeft">
+                            <table id="tabel_filter">
+                                <tbody class="inhoud_tabel_links_uitlijning">
                                     <tr>
-                                        <td><div class="TekstOnderlijning">Genre:</div>
+                                        <td><div class="tekst_onderlijning">Genre:</div>
                                         <%while (res.next()) {
                                                 String genre = res.getString("band_soortMuziek");
 
@@ -99,7 +99,7 @@
                                 %>
                                 </td>
                                 <td>
-                                <div class="TekstOnderlijning">Festival:</div>
+                                <div class="tekst_onderlijning">Festival:</div>
                                 <%
                                       List<String> lijstFestivals = new ArrayList<String>();
                                       while (res.next()) {
@@ -120,7 +120,7 @@
                                 </td>
                                 </tr>
                                 <tr>
-                                    <td class="TableDataPaddingLeftTopBottom">
+                                    <td class="inhoud_tabel_spatie_links_boven_onder">
                                         <input type='submit' name='ZoekFilter' value=' Zoeken ' /> 
                                         <input type='reset' name='ResetFilter' value=' Wissen ' /></td>
                                     <td></td>
@@ -142,22 +142,22 @@
                                     String afbeelding = res.getString("band_afbeelding");
                             %>
                             <form action="groepen_details.jsp" method="POST">
-                            <table id="TableWidth600Border">
-                                <tbody class="tbodyAlignLeft" style='padding: 10px;'>
+                            <table id="tabel_breedte_600px_omrand">
+                                <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                     <tr>
                                         <td rowspan="4" style="width: 120px;">
-                                            <img id="afbeeldingOpmaak" src="<%=afbeelding%>" alt="Afbeelding Band" />
+                                            <img id="opmaak_afbeelding" src="<%=afbeelding%>" alt="Afbeelding Band" />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop" style="border-top: 1px solid white;"><b>
-                                                <div class="TekstVet"> <%= naam%> </div>
+                                        <td class="inhoud_tabel_spatie_links_boven" style="border-top: 1px solid white;"><b>
+                                                <div class="tekst_vet"> <%= naam%> </div>
                                                 <input type="hidden" name="naam" value="<%=naam%>">
                                         </td>
                                         <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <td class="TableDataPaddingLeftTop">Genre: <%=genre%></td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Genre: <%=genre%></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -166,13 +166,13 @@
                                                 String url = res.getString("band_url");
                                                 url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
-                                                <td class="TableDataPaddingLeftBottom">
+                                                <td class="inhoud_tabel_spatie_links_onder">
                                                     <a href="http://<%=url%>" target="_blank">Site</a>
                                                 </td>
                                         <% } else { %>
                                                 <td></td>
                                         <%}%>
-                                        <td class="TableDataPaddingRightBottom">
+                                        <td class="inhoud_tabel_spatie_rechts_onder">
                                             <input type="submit" name="Details" value=" Details " />
                                         </td>
                                     </tr> <!-- Warning negeren. De controle wordt genegeerd. Daarom ziet HTML 3 kolommen ipv 2 -->
@@ -195,8 +195,8 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
         </div>
-        <a href="#top"><div id="TopPage">Begin Pagina</div></a>
+        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
     </body>
 </html>
