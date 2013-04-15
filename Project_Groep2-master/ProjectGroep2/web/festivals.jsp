@@ -155,8 +155,9 @@
                                     </table>
                                  </form>
                               </div>
-                            </div>   
-                            <div id="WitruimteTabelFilter">
+                            </div>
+                                                    
+                            <div id="witruimte_tabel_filter">
                                 <!-- Informatie Festivals -->
                                 <%
                                    rsInhoudfestivals.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
@@ -168,7 +169,7 @@
                                        String locatie = rsInhoudfestivals.getString("fest_locatie");
                                 %>
                                        <form action="festival_details.jsp" method="POST">
-                                          <table id="TableWidth600Border">
+                                          <table id="tabel_breedte_600px_omrand">
                                               <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                                   <tr>
                                                      <td class="inhoud_tabel_breedte_300px" style='padding-left: 10px; padding-top: 10px;'>
@@ -214,15 +215,15 @@
                                                        calBegindatum.set(Calendar.DAY_OF_WEEK, 0);
                                                        if (begindatum.after(new Date()))
                                                        {%>
-                                                           <td class="inhoud_tabel_spatie_links_boven">
+                                                           <td class="inhoud_tabel_spatie_rechts_onder">
                                                                <input type="submit" name="btnDetails" value=" Details " />
                                                            </td>
                                                        <%} else {%>
-                                                             <td class="inhoud_tabel_spatie_links_boven">
-                                                                 <div id="FontVerlopenFestival">Dit festival is verlopen</div>
+                                                             <td class="inhoud_tabel_spatie_rechts_onder">
+                                                                 <div id="tekstkleur_verlopen_festival">Dit festival is verlopen</div>
                                                              </td>
-                                                       <%}%> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
-                                                    </tr> <!-- Warning negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                       <%}%> <!-- Waarschuwing negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
+                                                    </tr> <!-- Waarschuwing negeren. De controles worden hier genegeert en zo telt HTML 4 kolommen ipv 2 -->
                                                 </tbody>
                                             </table>
                                         </form>
