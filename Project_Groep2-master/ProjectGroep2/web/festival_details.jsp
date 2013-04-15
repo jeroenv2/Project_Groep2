@@ -156,8 +156,7 @@
                             </tbody>
                         </table>
                     </article>
-                        <article id="overzicht"
-                                 style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
+                        <article id="overzicht">
                             <header>
                                 <h2>Overzicht</h2>
                             </header>

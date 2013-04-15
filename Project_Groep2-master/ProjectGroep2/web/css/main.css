@@ -118,41 +118,73 @@ body {
 }
 
 body {
-    /*Chrome, Opera en Safari ondersteuning*/
-    display: -webkit-box;
-    -webkit-box-pack: center;
-    -webkit-box-align: start;
-    /*Firefox ondersteuning*/
-    display: -moz-box;
-    -moz-box-pack: center;
-    -moz-box-align: start;
-    /*Internet explorer ondersteuning*/
-    display: -ms-flexbox;
-    -ms-flex-pack: center;
-    -ms-flex-align: start;
-    /*Nieuwste vorm (gebruikt wanneer ondersteund door browser)*/
-    display: flexbox;
-    -flexbox-pack: center;
-    -flexbox-align: start;
-
     background-image: url("../img/achtergrond.png");
 }
 
 /* ----------------------------
         EIGENLIJKE PAGINA 
    ----------------------------*/
+
 #page_wrapper {
     /*Flexbox vult alles op, daarom geven we max-width mee*/
-    max-width: 1000px;
-    min-width: 1000px;
-    margin: 20px 0px;
-    /*We maken van de alles in de page_wrapper een flexbox om child elements te beheren*/
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -ms-flex-flex: 1;
-    -flexbox-flex: 1;
+    width: 1000px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
     background-color: rgba(255, 255, 255, 0.2);
 }
+
+/* ----------------------------
+             INHOUD 
+   ----------------------------*/
+#content_wrapper { /*Witte rand*/
+    margin: 35px 30px 15px 30px;
+    width: 900px;
+    padding: 20px;
+    border: 1px solid white;
+    
+    display: -webkit-box; /* Oude syntax (Chrome, Safari, Opera) */
+    display: -moz-box; /* Recente (2011) syntax (Firefox) */
+    display: -ms-flexbox; /* Microsoft buitenbeentje */
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: flex-center;
+    -ms-flex-align: center;
+    align-items: flex-center;
+}
+
+#content { /*Eigenlijke tekst/artikels*/
+    color: white; 
+    font-size: 1.1em;
+    max-width: 880px;
+    /*We maken van de alles in de page_wrapper een flexbox om child elements te beheren*/
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -moz-box-flex: 1;
+    -ms-flex-flex: 1;
+    flex-flex: 1;
+}
+
 #page_wrapper input[type="text"] {
     padding-left: 2px;
 }
@@ -407,24 +439,6 @@ h2 a:hover
 #nav_wrapper {
     text-align: center; /*Menu centreren*/
     margin-top: 10px;
-}
-
-/* ----------------------------
-             INHOUD 
-   ----------------------------*/
-#content_wrapper { /*Witte rand*/
-    margin: 35px 20px 15px 20px;
-    min-width: 940px;
-    border:1px solid white;
-}
-
-#content { /*Eigenlijke tekst/artikels*/
-    min-width: 950px;
-    padding: 10px;
-    color: white; 
-    font-size: 16px;
-    margin-left: 25px;
-    margin-right: 10px;
 }
 
 /* ----------------------------

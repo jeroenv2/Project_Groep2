@@ -65,7 +65,6 @@ public class datumBean {
             long lDagenEinde = calEind.getTimeInMillis();
             long lDiff = lDagenEinde - lDagenBegin;
             long lDuur = lDiff / (24 * 60 * 60 * 1000);
-            System.out.println("lDagenBegin: " + lDagenBegin + " lDagenEinde: " + lDagenEinde + "\nlDiff: " + lDiff + " lDuur: " + lDuur);
             return lDuur;
         } catch (IllegalArgumentException ia) {
             throw ia;

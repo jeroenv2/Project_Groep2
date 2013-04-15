@@ -18,18 +18,23 @@
             List<String> alParams = new ArrayList<String>();
             try {
                 String strFestId = request.getParameter("fest_id");
-                String strTypId = request.getParameter("typ_id");
-                String strTypAantal = request.getParameter("typ_aantal");
+                String strBandId = request.getParameter("band_id");
+                String strPodId = request.getParameter("pod_id");
+                String strDatum = request.getParameter("datum");
+                String strUur = request.getParameter("uur");
+                alParams.add(strBandId);
+                alParams.add(strPodId);
+                alParams.add(strDatum);
+                alParams.add(strUur);
                 alParams.add(strFestId);
-                alParams.add(strTypId);
-                alParams.add(strTypAantal);
                     
                 Connectie_Databank connectie = new Connectie_Databank();
                 connectie.maakConnectie();
 
-                connectie.voerUpdateUit("INSERT INTO tickettypesperfestival"
-                + " (fest_id, typ_id, aantal)"
-                + " VALUES (?, ?, ?)", alParams);
+                connectie.voerUpdateUit("INSERT INTO bandsperfestival"
+                + " (band_id, pod_id, datum, uur)"
+                + " VALUES (?, ?, ?, ?)"
+                + " WHERE fest_id = ?", alParams);
                                 
                 //Connectie sluiten voor deze pagina
                 connectie.sluitConnectie();

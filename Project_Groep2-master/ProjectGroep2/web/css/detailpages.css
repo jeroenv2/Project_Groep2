@@ -6,25 +6,42 @@
          EXTRA OP MAIN 
    ----------------------------*/
 
-#content { /*Eigenlijke tekst/artikels*/
-    /* Oude chome, Android, Opera, IOS & safari syntax */
+#content { /*Eigenlijke tekst/artikels*/    
     display: -webkit-box;
-    -webkit-box-orient: horizontal;
-
-    /* Oude firefox syntax */
     display: -moz-box;
-    -moz-box-orient: horizontal;
-
-    /* Microsoft moet weer speciaal doen (IE) */
     display: -ms-flexbox;
-    -ms-flex-orient: horizontal;
-
-    /* Nieuwe chome syntax */
     display: -webkit-flex;
+    display: flex;
+    /* Hoe alles uitlijnen? */
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
     -webkit-flex-direction: row;
-
-    /* Nieuwste syntax 
-    display: flex;*/
+    -ms-flex-direction: row;
+    flex-direction: row;
+    
+    /* Hoe omgaan met witruimte */
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    
+    /* pack = horizontaal */
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    
+    /* align = verticaal */
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -webkit-align-items: start;
+    -ms-flex-align: start;
+    align-items: flex-center;
 }
 
 /* ----------------------------
@@ -33,27 +50,35 @@
 
 article {
     border: 1px solid black;
-    max-height: 1000px;
 }
 article[id="foto"] {
-    max-width: 225px;
-    padding: 10px 0px 10px 10px;
-    margin-left: -23px;
+    width: 220px;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
 }
 article[id="details"] {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    max-width: 300px;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
     text-align: center;
     margin-left: 10px;
     margin-right: 10px;
-    padding: 10px;
+    max-width: 430px;
+    
+    /* 
+    the-echoplex.net/flexyboxes/?legacy=on&display=flex&flex-direction=row&flex-wrap=nowrap&justify-content=center&align-items=flex-start&align-content=stretch&order[]=0&flex-grow[]=0&flex-shrink[]=0&flex-basis[]=auto&align-self[]=auto&order[]=0&flex-grow[]=1&flex-shrink[]=1&flex-basis[]=auto&align-self[]=auto&order[]=0&flex-grow[]=0&flex-shrink[]=0&flex-basis[]=auto&align-self[]=auto
+    */
+    /* http://www.css-tricks.com/using-flexbox/ */
 }
 article[id="overzicht"] {
-    width: 230px;
-    padding: 10px;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    max-width: 200px;
 }
 
 /* ----------------------------
@@ -61,8 +86,7 @@ article[id="overzicht"] {
    ----------------------------*/
 
 table {
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 430px;
 }
 
 td {
@@ -70,10 +94,10 @@ td {
 }
 td:nth-child(1) {
     font-weight: bold;
-    min-width: 200px;
+    max-width: 200px;
 }
 td:nth-child(2) {
-    min-width: 150px;
+    max-width: 230px;
     text-align: right;
 }
 
@@ -81,8 +105,10 @@ td:nth-child(2) {
            OVERZICHT 
    ----------------------------*/
 
+article[id="details"] p {
+    width: max-content;
+}
 p {
-    font-size: 1.2em;
     text-align: center;
     border: 2px solid #cbcbcb;
     border-bottom: none;

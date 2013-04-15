@@ -23,7 +23,7 @@
 
             connectie.maakConnectie();
             List<String> alParams = new ArrayList<String>();
-            List<String> legeLijst = new ArrayList<String>();
+            List<String> alLeeg = new ArrayList<String>();
             alParams.add(request.getParameter("naam"));
 
             //ResultSet aanmaken voor het gekozen festival
@@ -33,8 +33,10 @@
             ResultSet rsFest = connectie.haalResultSetOp();
             rsFest.first();
             
+            //fest_naam niet meer nodig -> verwijderen en fest_id in de plaats
             alParams.remove(0);
             alParams.add(rsFest.getString("fest_id"));
+                
             //ResultSet aanmaken voor alle groepen van op het festival
             connectie.voerQueryUit("SELECT b.band_id, b.band_naam, p.pod_id, p.pod_omschr"
             + " FROM bands b"
@@ -43,6 +45,13 @@
             + " WHERE fest_id = ?", alParams);
             ResultSet rsBands = connectie.haalResultSetOp();
             
+            //Lijst aanmaken met alle band_id's voor later... zie groepen toevoegen/verwijderen
+            List<String> alBands = new ArrayList<String>();
+            while(rsBands.next()) {
+                alBands.add(rsBands.getString("band_id"));
+            }
+            rsBands.beforeFirst();
+                
             //ResultSet aanmaken voor alle campings van een festival
             connectie.voerQueryUit("SELECT c.camp_id, c.camp_adres, c.camp_cap"
             + " FROM campings c"
@@ -57,18 +66,35 @@
             + " WHERE fest_id = ?", alParams);
             ResultSet rsTick = connectie.haalResultSetOp();
             
+            //Lijst aanmaken met alle typ_id's voor later... zie tickets toevoegen/verwijderen
             List<String> alTickets = new ArrayList<String>();
             while(rsTick.next()) {
                 alTickets.add(rsTick.getString("typ_id"));
             }
             rsTick.beforeFirst();
             
-            alParams.remove(0);
-            connectie.voerQueryUit("SELECT * FROM tickettypes", alParams);
+            //Alle tickettypes ophalen om te linken aan dit festival -> zie tickets toevoegen
+            connectie.voerQueryUit("SELECT * FROM tickettypes", alLeeg);
             ResultSet rsTicketTypes = connectie.haalResultSetOp();
 
+            //Alle groepen ophalen om te linken aan dit festival -> zie groepen toevoegen
+            connectie.voerQueryUit("SELECT bf.band_id, b.band_naam"
+            + " FROM bandsperfestival bf"
+            + " JOIN bands b ON bf.band_id = b.band_id", alLeeg);
+            ResultSet rsBandsFestival = connectie.haalResultSetOp();
+                
+            //Alle beschikbare podia ophalen
+            connectie.voerQueryUit("SELECT pod_omschr, pod_id"
+            + " FROM podia", alLeeg);
+            ResultSet rsPodia = connectie.haalResultSetOp();
+                
             //Naam van pagina opslaan
             String name = rsFest.getString("fest_naam");
+                
+            //Hergebruikte Strings
+            String val;
+            int count;
+            String browser = request.getHeader("User-Agent"); 
         %>
         <title><%= name %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
@@ -80,25 +106,15 @@
         <script src="js/vendor/jquery.collapse_storage.js"></script>
         <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
         <script type="text/javascript">
-            function checkAangepast() {
-                if (window.name === "Aangepast") {
-                    window.name = <%= name %>;
-                    reloadPage(); 
-                }
-            }
-            
-            function setDropDownValue(select) {
+            function setDropDownValue(select, input) {
                 var val = select.options[select.selectedIndex].value;
-                var inp = document.getElementById("typ_id");
+                var inp = document.getElementById(input);
                 inp.value = val;
             }
         </script>
     </head>
     <body>
         <div id="page_wrapper">
-            <script>
-                checkAangepast();
-            </script>
             <jsp:include page="header.jsp" />
             <jsp:include page="navigation.jsp" />
             <div id="content_wrapper">
@@ -112,8 +128,6 @@
                              draggable="true" />
                     </article>
                     <article id="details">
-                        <!-- Naam van browser ophalen -->
-                        <% String browser = request.getHeader("User-Agent"); %>
                         <!-- gemeente scheiden van land -->
                         <%
                             String land = "";
@@ -170,19 +184,21 @@
                                         <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
                                         <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
                                         <input type="submit" id="festsave" name="festsave" value="Gegevens opslaan"
-                                               style="width: 435px; margin-top: 10px;"/>
+                                               style="width: 400px; margin-top: 10px;"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         </form>
                     </article>
-                    <article id="overzicht"
-                             style="<% if (browser.contains("Chrome") || browser.contains("MSIE")) {%>margin-right: 45px;<%}%>">
+                    <article id="overzicht">
                         <header>
                             <h2>Verwijderen / toevoegen</h2>
                         </header>
                         <div id="lijsten" data-collapse="persist">
+                            <!--
+                               GROEPEN VERWIJDEREN 
+                            -->
                             <p class="open">Verwijder groep</p>
                             <ul>
                                 <% try {
@@ -197,39 +213,71 @@
                                 <%  }
                                    } catch (Exception e) { %>
                                 <li>Nog geen groepen</li>
-                                <% }%>
+                                <% } 
+                                   rsBands.beforeFirst();%>
                             </ul>
+                            <!--
+                               GROEPEN TOEVOEGEN 
+                            -->
                             <p>Groep toevoegen</p>
                             <div class="nolist">
                                 <form id="form_add_group" name="add_groep" action="details/add_group.jsp">
+                                    
                                 Groep:&nbsp;
-                                <!-- 
-                                Controleren welke tickets nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
-                                -->
-                                <select id="ticket_add" onchange="setDropDownValue(this)" required oninvalid="setCustomValidity('Geen tickets meer')"
+                                <select id="group_add" onchange="setDropDownValue(this, 'band_id')" required oninvalid="setCustomValidity('Geen groepen meer')"
                                         style="width: 150px;">
+                                <!-- 
+                                Controleren welke groepen nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
+                                -->
                                 <% 
-                                    int count = 0;
-                                    String val = "";
-                                    while (rsTicketTypes.next()) {
-                                    if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { 
-                                        if (count == 0) {
-                                            val = rsTicketTypes.getString("typ_id");
-                                            count++;
-                                        }
+                                    count = 0;
+                                    String strBId = "";
+                                    while (rsBandsFestival.next()) {
+                                        String strBandId = rsBandsFestival.getString("band_id");
+                                        System.out.println(strBandId);
+                                        if (!alBands.contains(strBandId)) { 
+                                            if (count == 0) {
+                                                strBId = strBandId;
+                                                count++;
+                                            }
                                  %>
-                                    <option value="<%= rsTicketTypes.getString("typ_id") %>">
-                                        <%= rsTicketTypes.getString("typ_omschr") %>
+                                    <option value="<%= strBandId %>">
+                                        <%= rsBandsFestival.getString("band_naam") %>
                                     </option>
                                     <% }
-                                } %>
-                                </select><br />
-                                Aantal:&nbsp;
-                                <!-- Hidden veld typ_id wordt opgevuld door javascript (select onchange) -->
+                                    } %>
+                                </select>
+                                Podium:&nbsp;
+                                <select id="pod_add" onchange="setDropDownValue(this, 'pod_id')">
+                                <% 
+                                    count = 0;
+                                    String strPId = "";
+                                    while (rsPodia.next()) {
+                                        String strPodId = rsPodia.getString("pod_id");
+                                        System.out.println(strPodId);
+                                 %>
+                                     <option value="<%= strPodId %>">
+                                        <%= rsPodia.getString("pod_omschr") %>
+                                    </option>
+                                    <% 
+                                    } %>
+                                </select>
+                                Datum:&nbsp;
+                                <input type="date" name="groep_datum" value="<%= rsFest.getString("fest_datum") %>"
+                                       required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd"
+                                       min="<%= rsFest.getString("fest_datum") %>"
+                                       max="<%= rsFest.getString("fest_einddatum") %>"
+                                       maxlength="10"
+                                       style="width: 100px;"/><br />
+                                Tijd:&nbsp;
+                                <input type="time" name="tijd" min="23:59" max="00:00" required pattern="\d{2}:\d{2}" title="HH:MM" />
+                                
+                                <!-- Hidden velde band_id en pod_id worden opgevuld door javascript (select onchange) -->
                                 <input type="number" name="typ_aantal" min="1" required title="Niet negatief" style="width: 75px;" max="6"
                                        oninvalid="setCustomValidity('Geef numerieke waarde')" />
                                 <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
-                                <input type="hidden" id="typ_id" name="typ_id" value="<%= val %>" />
+                                <input type="hidden" id="band_id" name="band_id" value="<%= strBId %>" />
+                                <input type="hidden" id="pod_id" name="pod_id" value="<%= strPId %>" />
                                 <input type="hidden" name="fest_naam" value="<%= rsFest.getString("fest_naam") %>" />
                                 <input type="submit" id="add_ticket" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
@@ -286,19 +334,20 @@
                                 <!-- 
                                 Controleren welke tickets nog niet gelinkt zijn aan dit festival en toevoegen aan het dropdown menu
                                 -->
-                                <select id="ticket_add" onchange="setDropDownValue(this)" required oninvalid="setCustomValidity('Geen tickets meer')"
+                                <select id="ticket_add" onchange="setDropDownValue(this, 'typ_id')" required oninvalid="setCustomValidity('Geen tickets meer')"
                                         style="width: 150px;">
                                 <% 
-                                    int count = 0;
-                                    String val = "";
-                                    while (rsTicketTypes.next()) {
-                                    if (!alTickets.contains(rsTicketTypes.getString("typ_id"))) { 
+                                count = 0;
+                                val = "";
+                                while (rsTicketTypes.next()) {
+                                    String strTypId = rsTicketTypes.getString("typ_id");
+                                    if (!alTickets.contains(strTypId)) { 
                                         if (count == 0) {
-                                            val = rsTicketTypes.getString("typ_id");
+                                            val = strTypId;
                                             count++;
                                         }
                                  %>
-                                    <option value="<%= rsTicketTypes.getString("typ_id") %>">
+                                    <option value="<%= strTypId %>">
                                         <%= rsTicketTypes.getString("typ_omschr") %>
                                     </option>
                                     <% }
