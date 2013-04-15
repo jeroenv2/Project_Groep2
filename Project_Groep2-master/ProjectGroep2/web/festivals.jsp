@@ -58,7 +58,7 @@
     <body>
         <a id="boven"></a>
         <div id="pagina_omslag">
-            <jsp:include page="hoofdding.jsp" />
+            <jsp:include page="hoofding.jsp" />
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
                 <section id="inhoud">
@@ -107,7 +107,7 @@
                                                             java.util.Collections.sort(lijstLetters);
                                                             for (String letter : lijstLetters) {
                                                         %>
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='beginletter' value='<%= letter%>' /> <%= letter%><br />
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkBeginletter' value='<%= letter%>' /> <%= letter%><br />
                                                         <%
                                                             }
                                                         %>
@@ -130,25 +130,25 @@
                                                             java.util.Collections.sort(lijstLocaties);
                                                             for (String locatie : lijstLocaties) {
                                                         %>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='locatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkLocatieFestival' value='<%=locatie%>' /> <%= locatie%><br />
                                                         <%}%>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="inhoud_tabel_spatie_links_boven_onder">
-                                                        <input type='checkbox' id='datumTonen' name='opDatum' onChange='AanvinkenCheckboxDatums();' /> Filteren op datums
+                                                        <input type='checkbox' id='datumTonen' name='chkOpDatum' onChange='AanvinkenCheckboxDatums();' /> Filteren op datums
                                                     </td>
                                                     <td></td>
                                                 <tr>
                                                     <td colspan="2" style='padding-left: 10px;'>
                                                         <div id='datums' style='display: none;'>
-                                                        Tussen <input type='date' name='begindatum' value='2013-04-01' style='font-size: 14px;' /> en&nbsp; <input type='date' name='einddatum' value='2013-04-01' style='font-size: 14px;' />
+                                                        Tussen <input type='date' name='dtBegindatum' value='2013-04-01' style='font-size: 14px;' /> en&nbsp; <input type='date' name='dtEinddatum' value='2013-04-01' style='font-size: 14px;' />
                                                         </div>
                                                     </td>
                                                </tr>
                                                <tr>
                                                    <td class="inhoud_tabel_spatie_links_boven_onder">
-                                                       <input type='submit' name='ZoekFilter' value=' Zoeken ' /> <input type='reset' name='FilterLegen' value=' Wissen ' /></td>
+                                                       <input type='submit' name='btnZoekFilter' value=' Zoeken ' /> <input type='reset' name='btnFilterLegen' value=' Wissen ' /></td>
                                                    <td></td>
                                                </tr>
                                         </tbody>
@@ -183,16 +183,16 @@
                                                       </td>
                                                         <!-- Datums berekenen -->
                                                         <%
-                                                         DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
-                                                         Date begindatum = formaatDatum.parse(beginDatum);
+                                                         DateFormat dfFormaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
+                                                         Date begindatum = dfFormaatDatum.parse(beginDatum);
 
                                                          //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                                         Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                                         cal.setTime(begindatum);                //De begindatum in cal steken
-                                                         cal.add(cal.DATE, Integer.parseInt(rsInhoudfestivals.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+                                                         Calendar calBegindatum = Calendar.getInstance();  //Huidige datum in cal steken
+                                                         calBegindatum.setTime(begindatum);                //De begindatum in cal steken
+                                                         calBegindatum.add(calBegindatum.DATE, Integer.parseInt(rsInhoudfestivals.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
 
-                                                         Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                                         String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
+                                                         Date einddatum = calBegindatum.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
+                                                         String strEinddatum = dfFormaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
                                                        %>
                                                        <td class="inhoud_tabel_spatie_links_boven"  style="border-right: 1px solid white;">Einddatum: <%=strEinddatum%></td>
                                                     </tr>
@@ -209,13 +209,13 @@
                                                             <td></td>
                                                        <%}
 
-                                                       cal.set(Calendar.YEAR, 0);
-                                                       cal.set(Calendar.MONTH, 0);
-                                                       cal.set(Calendar.DAY_OF_WEEK, 0);
+                                                       calBegindatum.set(Calendar.YEAR, 0);
+                                                       calBegindatum.set(Calendar.MONTH, 0);
+                                                       calBegindatum.set(Calendar.DAY_OF_WEEK, 0);
                                                        if (begindatum.after(new Date()))
                                                        {%>
                                                            <td class="inhoud_tabel_spatie_links_boven">
-                                                               <input type="submit" name="Details" value=" Details " />
+                                                               <input type="submit" name="btnDetails" value=" Details " />
                                                            </td>
                                                        <%} else {%>
                                                              <td class="inhoud_tabel_spatie_links_boven">
