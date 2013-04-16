@@ -188,6 +188,10 @@ body {
     padding-left: 2px;
 }
 
+input[type="search"] {
+    padding-left: 2px;
+}
+
 input[type="password"] {
     padding-left: 2px;
 }
