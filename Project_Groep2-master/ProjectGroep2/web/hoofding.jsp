@@ -43,17 +43,17 @@
                 {
                     
                     var frmZoekenJS = document.getElementById('frmZoeken');
-                    frmZoekenJS.naam.value = invoerZoekveld;
+                    frmZoekenJS.naam.value = invoerZoekveld; //Waarde van 'naam' veranderen
 
-                    frmZoekenJS.action = "festival_details.jsp";
+                    frmZoekenJS.action = "festival_details.jsp"; //url veranderen van frmZoeken
                     frmZoekenJS.submit();
                 }
                 else if(bevatWaarde(lijstBands, invoerZoekveld))
                 {
                     var frmZoekenJS = document.getElementById('frmZoeken');
-                    frmZoekenJS.naam.value = invoerZoekveld;
+                    frmZoekenJS.naam.value = invoerZoekveld; //Waarde van 'naam' veranderen
 
-                    frmZoekenJS.action = "groepen_details.jsp";
+                    frmZoekenJS.action = "groepen_details.jsp"; //url veranderen van frmZoeken
                     frmZoekenJS.submit();
                 }
                 else
@@ -100,7 +100,7 @@
                             <%=lijstBands.add(naamBand)%>
                       <%}
                   %>
-                </datalist>&nbsp;<input type="submit" value="ga dan!!!"/>
+                </datalist>&nbsp;<input type="image" src="img/header/zoeken.png" alt="Logo" width="24" style="float: right;" />
 
                 <%
                       for(String festivals : lijstFestivals)
@@ -111,8 +111,6 @@
                       {%>
                             <script>lijstBands.push("<%=bands%>");</script>
                <%     }%>
-                      
-                <!--<img src="img/header/zoeken.png" alt="Zoeken" width="24" style="float: right;" />-->
             </form>
         </div><br />
         <%
