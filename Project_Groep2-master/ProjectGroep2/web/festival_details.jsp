@@ -42,21 +42,21 @@
             + " JOIN bandsperfestival bf ON b.band_id = bf.band_id"
             + " JOIN podia p ON p.pod_id = bf.pod_id"
             + " WHERE fest_id = ?", lijstParams);
-            ResultSet bands = connectie.haalResultSetOp();
+            ResultSet rsBandPFest = connectie.haalResultSetOp();
             
             //ResultSet aanmaken voor alle campings van een festival
             connectie.voerQueryUit("SELECT c.camp_adres, c.camp_cap"
             + " FROM campings c"
             + " JOIN campingsperfestival cf ON c.camp_id = cf.camp_id"
             + " WHERE fest_id = ?", lijstParams);
-            ResultSet campings = connectie.haalResultSetOp();
+            ResultSet rsCampPFest = connectie.haalResultSetOp();
             
             //Capaciteit van campings ophalen
             int cap = 0;
-            while (campings.next()) {
-                cap += Integer.parseInt(campings.getString("camp_cap"));
+            while (rsCampPFest.next()) {
+                cap += Integer.parseInt(rsCampPFest.getString("camp_cap"));
             }
-            campings.beforeFirst();
+            rsCampPFest.beforeFirst();
                 
                 
             //ResultSet aanmaken voor alle tickettypes beschikbaar op een festival
@@ -89,9 +89,6 @@
                         <% 
                             String foto = fest.getString(2).toLowerCase().replace(" ", "_").replace("'", "");
                         %>
-                        <header>
-                            <h2>Afbeelding</h2>
-                        </header>
                         <img src="img/festivals/<%= foto %>.jpg"
                              alt="<%= foto %>" width="95%"
                              draggable="true" />
@@ -169,25 +166,25 @@
                         <div id="lijsten" data-collapse="persist">
                             <p class="open menu">Groepen</p>
                             <ul>
-                                <% if (bands.next()) {
+                                <% if (rsBandPFest.next()) {
                                 do { %>
                                 <li><form action="groepen_details.jsp" method="post">
-                                    <input type="hidden" name="naam" value="<%= bands.getString("band_naam") %>" />
-                                    <a href="javascript:;" onclick="parentNode.submit();"><%= bands.getString("band_naam") %></a>
+                                    <input type="hidden" name="naam" value="<%= rsBandPFest.getString("band_naam") %>" />
+                                    <a href="javascript:;" onclick="parentNode.submit();"><%= rsBandPFest.getString("band_naam") %></a>
                                     </form></li>
-                                <li><%= bands.getString("pod_omschr") %></li>
-                                <%  } while (bands.next());
+                                <li><%= rsBandPFest.getString("pod_omschr") %></li>
+                                <%  } while (rsBandPFest.next());
                                 } else { %>
                                 <li>Nog geen groepen</li>
                                 <% }%>
                             </ul>
                             <p class="menu">Campings</p>
                             <ul>
-                                <% if (campings.next()) {
+                                <% if (rsCampPFest.next()) {
                                 do { %>
-                                <li><%= campings.getString("camp_adres") %></li>
-                                <li><%= campings.getString("camp_cap") %></li>
-                                <%  } while (campings.next());
+                                <li><%= rsCampPFest.getString("camp_adres") %></li>
+                                <li><%= rsCampPFest.getString("camp_cap") %></li>
+                                <%  } while (rsCampPFest.next());
                                 } else { %>
                                 <li>Nog geen campings</li>
                                 <% } %>

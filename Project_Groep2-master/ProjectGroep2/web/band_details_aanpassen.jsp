@@ -1,18 +1,15 @@
 <%-- 
     Document   : layout
     Created on : 28-mrt-2013, 9:04:18
-    Author     : anke
+    Author     : robbie
 --%>
 
 <%@page import="java.sql.SQLException"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Databank.Connectie_Databank" %>
-<%@page import="java.sql.ResultSet"%>
+<%@page import="Databank.Connectie_Databank"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.sql.ResultSetMetaData"%>
 <%@page import="java.util.List"%>
-<%@page import="com.mysql.jdbc.StringUtils"%>
-<%!String MuziekSoort, SiteGroep;%>
+<%@page import="java.sql.ResultSet"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -23,49 +20,47 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
+            ResultSet rsBand = null, rsFestPBand = null;
+            String strFouten = "", strNaam = "", strFoto="", strSiteGroep="";
+            Connectie_Databank connectie = null;
+            
             // Bean voor gebruikergegevens
             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                 
-            String strFouten = "", strBandNaam = "";
-            ResultSet rsBand = null, rsFestPBand = null;
             try {
-                strBandNaam = request.getParameter("naam");
-                Connectie_Databank connectie = new Connectie_Databank();
+                connectie = new Connectie_Databank();
+
                 connectie.maakConnectie();
                 List<String> alParams = new ArrayList<String>();
-                alParams.add(strBandNaam);
-                    
+                List<String> alLeeg = new ArrayList<String>();
+                alParams.add(request.getParameter("naam"));
+
+                //ResultSet aanmaken voor de gekozen band
                 connectie.voerQueryUit("SELECT band_id, band_soortMuziek, band_url"
                 + " FROM bands"
                 + " WHERE band_naam = ?", alParams);
                 rsBand = connectie.haalResultSetOp();
-                rsBand.beforeFirst();
-                
-                if (rsBand.next()) {
-                    MuziekSoort = rsBand.getString("band_soortMuziek");
-                    SiteGroep = rsBand.getString("band_url");
-                    alParams.remove(0);
-                    alParams.add(rsBand.getString("band_id"));
-                }
-                
-                // Bandnaam niet meer nodig, vervangen door band_id                    
+
                 connectie.voerQueryUit("SELECT f.fest_naam"
                 + " FROM festivals f"
                 + " JOIN bandsperfestival bf ON f.fest_id = bf.fest_id"
                 + " WHERE bf.band_id = ?", alParams);
                 rsFestPBand = connectie.haalResultSetOp();
-            } catch (IllegalArgumentException ia) {
-                strFouten = "[ARGUMENTEN]: Een van de opgegeven argumenten waren niet correct:<br />"
-                + ia.getMessage();
+                    
+                //Hergebruikte Strings
+                strNaam = rsBand.getString("band_naam");
+                strSiteGroep = rsBand.getString("band_url");
+                strFoto = rsBand.getString("band_naam").toLowerCase().replace(" ", "_").replace("'", "");
+                
             } catch(SQLException se){
-                strFouten = "[SQL]: Fout bij het uitvoeren van een query:<br />"
+                strFouten = "[SQL]: Fout bij het uitvoeren van de query:<br />"
                 + se.getMessage();
             } catch(Exception e) {
                 strFouten = "[ONBEKEND]: Gegevens konden niet worden opgehaald:<br />"
                 + e.getMessage();
-            } %>
-       
-        <title><%= strBandNaam %> - Details</title>
+            }
+        %>
+        <title><%= strNaam %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detail_pagina.css">
@@ -74,6 +69,7 @@
         <script src="js/vendor/jquery.collapse.js"></script>
         <script src="js/vendor/jquery.collapse_storage.js"></script>
         <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
+        <script type="text/javascript" src="js/uploadify/jquery.uploadify-3.1.min.js"></script>
     </head>
     <body>
         <div id="pagina_omslag">
@@ -83,37 +79,43 @@
                 <section id="inhoud">
                     <% if (strFouten.equals("")) { %>
                     <article id="foto">
-                        <% 
-                            String foto = strBandNaam.toLowerCase().replace(" ", "_").replace("'", "");
-                        %>
-                        <img src="img/bands/<%= foto %>.jpg"
-                             alt="<%= foto %>" width="95%"
-                             draggable="true" />
+                        <img src="img/festivals/<%= strFoto %>.jpg"
+                             alt="<%= strFoto %>" width="95%"
+                             draggable="true"
+                             style="margin-top: 35px; margin-bottom: 20px;"
+                        />
                     </article>
                     <article id="details">
+
                         <header>
-                            <h2> <%= strBandNaam %></h2>
+                            <h2><%=strNaam%></h2>
                         </header>
+                        
+                        <!--
+                            In principe het zelfde formulier als bij banddetails, maar met invoervelden met de actuele gegevens in.
+                        -->
+                        <form action="festival_details_aanpassen_resultaat.jsp" method="post">
                         <table >
                             <tbody>
                                 <tr>
                                     <td >Naam:</td>
-                                    <td><%= strBandNaam %> </td>
+                                    <td><%= strNaam %> </td>
                                 </tr>
                                 <tr style="padding-bottom: 20px;">
                                     <td>Genre:</td>
-                                    <td><%= MuziekSoort %></td>
+                                    <td><input type="text" id="txtBandNaam" name="band_naam" value="<%= strNaam %>" 
+                                               required title="Geef de bandnaam" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="padding-top: 15px !important;">
-                                        <a href="http://<%= SiteGroep %>" target="_blank">Site Groep</a>
+                                        <a href="http://<%= strSiteGroep %>" target="_blank">Site Groep</a>
                                     </td>
                                 </tr>
                                 <% if (gebruiker != null) { %>
                                 <tr>
                                     <td colspan="2">
                                         <form action="band_details_aanpassen.jsp" method="POST">
-                                            <input type="hidden" name="naam" value="<%= strBandNaam %>">
+                                            <input type="hidden" name="naam" value="<%= strNaam %>">
                                             <input type="submit" name="bandedit" value="Band aanpassen"
                                                    style="width: 435px; margin-top: 10px;"/>
                                         </form>
@@ -122,13 +124,18 @@
                                 <% } %>
                             </tbody>
                         </table>
+                        </form>
                     </article>
                     <article id="overzicht">
                         <header>
-                            <h2>Overzicht</h2>
+                            <h2>Verwijderen / toevoegen</h2>
                         </header>
                         <div id="lijsten" data-collapse="persist">
-                            <p class="open menu">Festivals</p>
+                            <!--
+                               Overzicht festivals 
+                            -->
+                           <div id="lijsten" data-collapse="persist">
+                           <p class="open menu">Festivals</p>
                             <ul  >
                             <% if (rsFestPBand.next()) {
                                   do {%>
@@ -152,6 +159,7 @@
                     <% } %>
                 </section>
             </div>
+            <% connectie.sluitConnectie(); %>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
         </div>
