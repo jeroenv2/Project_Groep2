@@ -40,20 +40,20 @@
     <body>
         <a id="top"></a>
 
-        <div id="page_wrapper">
-            <jsp:include page="header.jsp" />
-            <jsp:include page="navigation.jsp" />
-            <div id="content_wrapper">
-                <section id="content">
+        <div id="pagina_omslag">
+            <jsp:include page="hoofding.jsp" />
+            <jsp:include page="navigatie.jsp" />
+            <div id="inhoud_omslag">
+                <section id="inhoud">
                     <div align="center">
 
                         <%
                             fest.clear();
 
                             boolean Verwijder_knop = false;
-                            if ((request.getParameter("elements") != null) && request.getParameter("annuleren") == null) {
+                            if ((request.getParameter("elementen") != null) && request.getParameter("annuleren") == null) {
 
-                                for (String e : request.getParameterValues("elements")) {
+                                for (String e : request.getParameterValues("elementen")) {
                                     if (!fest.contains(e)) {
                                         fest.add(e);
                                     }
@@ -99,7 +99,7 @@
                             <a id="<%= id%>"></a>
                             <table width='600px' style='border: 1px solid white;<%= styleTable%> '>
                                 <tbody style='padding: 10px;'>
-                                <form action="festival_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST" >
+                                
                                     <tr>
                                         <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                     <input type="hidden" name="naam" value="<%=naam%>">
@@ -124,7 +124,10 @@
 %>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
                                         <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                            <form action="festival_details_aanpassen.jsp" method="POST" >
+                                             <input name="naam" type="hidden" value="<%=naam%>"/>
                                             <input type="submit" name="Details" value=" Details " />
+                                            </form><form action="festival_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST" >
                                     </tr>
                                     <tr>
                                         <%
@@ -141,7 +144,7 @@
                                             if (!fest.contains(id)) {
                                                 knop = "Verwijderen";
                                         %>
-                                    <input name="elements" type="hidden" value="<%=id%>"/>
+                                    <input name="elementen" type="hidden" value="<%=id%>"/>
                                     <%} else {
                                             knop = "Annuleren";
                                             Verwijder_knop = true;
@@ -152,13 +155,13 @@
 
 
                                     %>
-                                    <input name="elements" type="hidden" value="<%=element%>"/>
+                                    <input name="elementen" type="hidden" value="<%=element%>"/>
                                     <%}
                                         }
                                     %>
                                     <td></td>
                                     <td align="right" style='padding-right: 10px;padding-bottom: 10px;' >
-                                        <input type="submit" value="<%=knop%>" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;"/>
+                                        <input type="submit" value="<%=knop%>"/>
 
                                     </td>
                                     </tr>
@@ -184,14 +187,14 @@
 
                                             %>
                                         </td>
-                                        <td><input type="submit" value="Verwijderen" style="background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/> </td>
+                                        <td><input type="submit" value="Verwijderen" /> </td>
                                         </form>
 
                                     <form action="festival_aanpassen.jsp" method="GET">
                                         <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
 
                                         <td>
-                                            <input name="annuleren" type="submit" value="Annuleren" style=" background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/></td>
+                                            <input name="annuleren" type="submit" value="Annuleren"</td>
                                     </form>
                                     <td></td>
 
@@ -211,8 +214,8 @@
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
-            <jsp:include page="footer.jsp" />
+            <jsp:include page="voettekst.jsp" />
         </div>
-        <a href="#top"><div id="TopPage"> Begin Pagina </div></a>
+        <a href="#top"><div id="pagina_boven"> Begin Pagina </div></a>
     </body>
 </html>
