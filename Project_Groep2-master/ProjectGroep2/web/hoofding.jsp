@@ -89,14 +89,14 @@
                       while(rsInhoudFestivals.next())
                       {
                             String naamFestival = rsInhoudFestivals.getString("fest_naam");%>
-                            <option value="<%=naamFestival%>">Festival</option>
+                            <option value="<%=naamFestival%>"><%=naamFestival%> (Festival)</option>
                             <%=lijstFestivals.add(naamFestival)%>
                       <%}
 
                       while(rsInhoudBands.next())
                       {
                             String naamBand = rsInhoudBands.getString("band_naam");%>
-                            <option value="<%=naamBand%>">Band</option>
+                            <option value="<%=naamBand%>"><%=naamBand%> (Band)</option>
                             <%=lijstBands.add(naamBand)%>
                       <%}
                   %>
