@@ -43,7 +43,8 @@
             #overons {
             display: table-cell;
             width: 260px;
-            padding: 5px;
+            padding: 10px;
+            text-wrap: none;
             }
         </style>
     </head>
@@ -139,10 +140,13 @@
                     </article>
                     </div>
                     <div id="overons" style='border: 1px solid white;'>
-                        <p>
-                            Deze webapplicatie geeft een overzicht van alle festivals wereldwijd.
-                            U kan zoeken tussen de festivals maar ook tussen de groepen. Ook kan u detailinformatie over elk festival opvragen , alsook over elke groep.
-                        </p>
+                        <h2>Over de website</h2>
+                        <p>Op onze website krijgt u meer informatie over festivals wereldwijd.</p>
+                        <p>Indien u meer informatie opvraagt over een festival, heeft u de keuze om details over groepen op te vragen en vica versa.</p>
+                        <h2>Over Groep 2</h2>
+                        <p>Groep 2 is een groep studenten van de richting Toegepaste Informatica op de PHL</p>
+                        <p>Steven Verheyen, Robbie Vercammen, Anke Appeltans, Jeroen Vanlessen en Wouter Peeters zijn er zeker van dat deze site u zal bevallen.</p>
+                        <p>Groep 2 wenst u een informatieve surfervaring!</p>
                     </div>
                 </section>
                 </div>
