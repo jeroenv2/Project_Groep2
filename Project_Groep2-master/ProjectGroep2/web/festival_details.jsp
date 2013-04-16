@@ -19,6 +19,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
+            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
             Connectie_Databank connectie = new Connectie_Databank();
 
             connectie.maakConnectie();
@@ -147,6 +148,7 @@
                                     <td style="padding-right: 25px;">Capaciteit camping:</td>
                                     <td><%= cap %></td>
                                 </tr>
+                                <% if (gebruiker != null) { %>
                                 <tr>
                                     <td colspan="2">
                                         <form action="festival_details_aanpassen.jsp" method="POST">
@@ -156,6 +158,7 @@
                                         </form>
                                     </td>
                                 </tr>
+                                <% } %>
                             </tbody>
                         </table>
                     </article>
