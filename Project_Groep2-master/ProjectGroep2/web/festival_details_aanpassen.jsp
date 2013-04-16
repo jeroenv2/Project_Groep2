@@ -352,18 +352,18 @@
                                             strCId = strCampId;
                                             count++;
                                         }
-                                    String strAdres = rsCampPFest.getString("camp_adres");
-                                    String strAdresKort = strAdres.substring(0, strAdres.indexOf('-')-1).trim();
+                                        String strAdres = rsCampPFest.getString("camp_adres");
+                                        String strAdresKort = strAdres.substring(0, strAdres.indexOf('-')-1).trim();
                                 %>
                                 <option value="<%= strCampId %>">
                                     <%= strAdresKort %>
                                 </option>
-                                <% }
+                                <%  }
                                 } %>
                                 </select></p>
                                 <!-- Hidden veld camp_id wordt opgevuld door javascript (select onchange) -->
                                 <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
-                                <input type="hidden" id="camp_id" name="band_id" value="<%= strCId %>" />
+                                <input type="hidden" id="camp_id" name="camp_id" value="<%= strCId %>" />
                                 <input type="hidden" name="fest_naam" value="<%= strNaam %>" />
                                 <input type="submit" id="toev_camping" name="submit" value="Toevoegen"
                                        style="margin-top: 5px; width: 100px;"/>
