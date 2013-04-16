@@ -66,6 +66,10 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detail_pagina.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="js/vendor/jquery.collapse.js"></script>
+        <script src="js/vendor/jquery.collapse_storage.js"></script>
+        <script src="js/vendor/jquery.collapse_cookie_storage.js"></script>
     </head>
     <body>
         <div id="pagina_omslag">
@@ -107,7 +111,7 @@
                             <h2>Overzicht</h2>
                         </header>
                         <div id="lijsten" data-collapse="persist">
-                            <p class="open">Festivals</p>
+                            <p class="open menu">Festivals</p>
                             <ul  >
                             <% for (int j = 0; j < i; j++) {%>
                             <li >&nbsp;&nbsp;<a href="http://<% out.println(lijstFestivalUrls.get(j));%>"> <%out.println(lijstFestivalNamen.get(j));%> </a></li>
