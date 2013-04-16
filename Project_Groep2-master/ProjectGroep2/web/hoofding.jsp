@@ -70,7 +70,7 @@
             
             <!-- Zoekgedeelte -->
             <form method="POST" id="frmZoeken" onsubmit="controleLijstenZoeken();">
-                <input type="search" list="lijstGegevens" id="naam" name="naam" placeholder="Zoeken" size="30" required pattern="[a-zA-Z]{1,}" title="Beginnen met een letter"/>
+                <input type="text" list="lijstGegevens" id="naam" name="naam" placeholder="Zoeken" size="30" required pattern="[a-zA-Z]{1,}" title="Beginnen met een letter"/>
                 <datalist id="lijstGegevens">
                   <%
                       Connectie_Databank connectie = new Connectie_Databank();
@@ -89,14 +89,14 @@
                       while(rsInhoudFestivals.next())
                       {
                             String naamFestival = rsInhoudFestivals.getString("fest_naam");%>
-                            <option value="<%=naamFestival%>">
+                            <option value="<%=naamFestival%>">Festival</option>
                             <%=lijstFestivals.add(naamFestival)%>
                       <%}
 
                       while(rsInhoudBands.next())
                       {
                             String naamBand = rsInhoudBands.getString("band_naam");%>
-                            <option value="<%=naamBand%>">
+                            <option value="<%=naamBand%>">Band</option>
                             <%=lijstBands.add(naamBand)%>
                       <%}
                   %>
