@@ -35,6 +35,14 @@
                 return false;
             }
             
+            function vervangTekst()
+            {
+                if(document.getElementById("naam").value === "Onbestaande naam")
+                {
+                    document.getElementById("naam").value = "";
+                }
+            }
+            
             function controleLijstenZoeken()
             {         
                 var invoerZoekveld = document.getElementById('naam').value;
@@ -58,7 +66,7 @@
                 }
                 else
                 {
-                    alert("U heeft een onbestaande festival of band ingegeven...");
+                    document.getElementById("naam").value = "Onbestaande naam";
                     return false;
                 }
             }
@@ -69,8 +77,8 @@
         <div align="right">
             
             <!-- Zoekgedeelte -->
-            <form method="POST" id="frmZoeken" onsubmit="controleLijstenZoeken();">
-                <input type="text" list="lijstGegevens" id="naam" name="naam" placeholder="Zoeken" size="30" required pattern="[a-zA-Z]{1,}" title="Beginnen met een letter"/>
+            <form method="POST" id="frmZoeken" onsubmit="return controleLijstenZoeken();">
+                <input type="text" list="lijstGegevens" id="naam" name="naam" placeholder="Zoeken" onfocus="vervangTekst();" size="30" required title="Gelieve een naam in te geven"/>
                 <datalist id="lijstGegevens">
                   <%
                       Connectie_Databank connectie = new Connectie_Databank();
@@ -100,7 +108,8 @@
                             <%=lijstBands.add(naamBand)%>
                       <%}
                   %>
-                </datalist>&nbsp;<input type="image" src="img/header/zoeken.png" alt="Logo" width="24" style="float: right;" />
+                </datalist>
+                &nbsp;<input type="image" src="img/header/zoeken.png" alt="Logo" width="24" style="float: right;" />
 
                 <%
                       for(String festivals : lijstFestivals)
