@@ -130,7 +130,7 @@
                         </header>
                         <div id="lijsten" data-collapse="persist">
                             <p class="open menu">Festivals</p>
-                            <ul  >
+                            <ul class="enkel_kolom">
                             <% if (rsFestPBand.next()) {
                                   do {%>
                                 <li><form action="festival_details.jsp" method="post">

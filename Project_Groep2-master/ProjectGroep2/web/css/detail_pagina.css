@@ -136,6 +136,11 @@ li:nth-child(even) {
     padding-left: -40px;
     border-bottom: 1px solid white;
 }
+.enkel_kolom li:nth-child(odd) {
+    border-bottom: 1px solid white;
+    margin-left: -40px;
+    padding-left: 5px;
+}
 li:last-child {
     border-bottom: none;
 }
