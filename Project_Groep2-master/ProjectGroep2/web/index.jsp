@@ -30,21 +30,15 @@
         <link rel="stylesheet" href="css/ie_uitzonderingen.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <style>
-            #webpagina {
-            display: table;
+            #links {
+                float: left;
+                width: 40%;
+                padding: 10px;
             }
 
-            #laatstefestivals {
-            display: table-cell;
-            padding-right: 25px;
-            
-            }
-
-            #overons {
-            display: table-cell;
-            width: 260px;
-            padding: 10px;
-            text-wrap: none;
+            #rechts {
+                margin-left: 45%;
+                padding: 10px;
             }
         </style>
     </head>
@@ -53,12 +47,22 @@
             <jsp:include page="hoofding.jsp" />
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
-                <div id="webpagina">
                 <section id="inhoud">
-                    <div id="laatstefestivals" style='padding-top: 25px; padding-bottom: 10px;'>
+                    
+                     <div id="links">
+                        <h2>Over de website</h2>
+                        <p>Op onze website krijgt u meer informatie over festivals wereldwijd.</p>
+                        <p>Indien u meer informatie opvraagt over een festival, heeft u de keuze om details over groepen op te vragen en vica versa.</p>
+                        <h2>Over Groep 2</h2>
+                        <p>Groep 2 is een groep studenten van de richting Toegepaste Informatica op de PHL</p>
+                        <p>Steven Verheyen, Robbie Vercammen, Anke Appeltans, Jeroen Vanlessen en Wouter Peeters zijn er zeker van dat deze site u zal bevallen.</p>
+                        <p>Groep 2 wenst u een informatieve surfervaring!</p>
+                    </div>
+                    
+                    <div id="rechts">
                     <article>
                         <header>
-                            <h2>Eerstvolgende festivals</h2>
+                            <h2>Komende festivals</h2>
                         </header>
                         
                        <!-- Informatie eerstvolgende festivals (max 5) -->
@@ -83,42 +87,27 @@
                         res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                         while (res.next()) {
                             String naam = res.getString("fest_naam");
-                            String beginDatum = res.getString("fest_datum");
                             String locatie = res.getString("fest_locatie");
                         %>
-                        <table width='600px' style='border: 1px solid white;'>
+                        <table width="100%" style='border: 1px solid white;'>
                             <tbody align="left" style='padding: 10px;'>
                             <form action="festival_details.jsp" method="POST">
                                 <tr>
-                                    <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
+                                    <td width='150px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
                                 <input type="hidden" name="naam" value="<%=naam%>">
-                                <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
+                                <td style='padding-left: 10px; padding-top: 10px;'>Locatie: <%=locatie%> </td>
                                 </tr>
-                                <tr>
-                                    <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
-                                    <!-- Datums berekenen -->
+                                
                                     <%
-                                        DateFormat formaatDatum = new SimpleDateFormat("yyyy-MM-dd");   //Formaat van datum bepalen
-
-                                        Date begindatum = formaatDatum.parse(beginDatum);
-
-                                        //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
-                                        Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
-                                        cal.setTime(begindatum);                //De begindatum in cal steken
-                                        cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
-
-                                        Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
-                                        String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
                                         String url = res.getString("fest_url");
                                     %>
-                                    <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                </tr>
+                                    
                                 <tr>
                                     <%
                                     //Als de URL-waarde leeg (null) is, geen URL maar boodschap weergeven
                                     if (url == null) {
                                     %>
-                                    <td style='padding-left: 10px; padding-bottom: 10px;'>Geen site beschikbaar</td>
+                                    <td style='padding-left: 10px; padding-bottom: 10px;'></td>
                                     <%
                                     } else {
                                     %>
@@ -139,21 +128,11 @@
                         %>
                     </article>
                     </div>
-                    <div id="overons" style='border: 1px solid white;'>
-                        <h2>Over de website</h2>
-                        <p>Op onze website krijgt u meer informatie over festivals wereldwijd.</p>
-                        <p>Indien u meer informatie opvraagt over een festival, heeft u de keuze om details over groepen op te vragen en vica versa.</p>
-                        <h2>Over Groep 2</h2>
-                        <p>Groep 2 is een groep studenten van de richting Toegepaste Informatica op de PHL</p>
-                        <p>Steven Verheyen, Robbie Vercammen, Anke Appeltans, Jeroen Vanlessen en Wouter Peeters zijn er zeker van dat deze site u zal bevallen.</p>
-                        <p>Groep 2 wenst u een informatieve surfervaring!</p>
-                    </div>
                 </section>
                 </div>
-            </div>
             
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
-        </div>
+            </div>
     </body>
 </html>
