@@ -39,6 +39,7 @@
                     <div align="center">
 
                         <%
+                         beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                             groepen.clear();
 
                             boolean Verwijder_knop = false;
@@ -51,6 +52,7 @@
                                 }
 
                             }
+                            if(gebruiker!=null){
                             try {
                                 ArrayList<String> lijstGenres = new ArrayList<String>();
 
@@ -90,7 +92,7 @@
                         %>                  <a id="<%= id%>"></a>
                         <table width='500px' style='border: 1px solid white;<%= styleTable%>'>
                             <tbody align="left" style='padding: 10px;'>
-                            <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST">
+                          
                                 <tr>
                                     <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
                                 </tr>
@@ -114,11 +116,14 @@
                                     %>
                                     <td></td>
                                     <%}%>
-
+                                <form action="band_details_aanpassen.jsp" method="POST" >
+                                             <input name="naam" type="hidden" value="<%=naam%>"/>
                                     <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
                                         <input type="submit" name="Details" value=" Details " />
                                     </td>
+                                </form>
                                 </tr>
+                                  <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST">
                                 <tr><td>
                                         <%
                                             String knop;
@@ -198,7 +203,13 @@
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
                                 }
-                            %>
+                                                             }else{
+                                %>
+                                
+                                
+                                U bent niet ingelogd
+                                
+                                <%}%>
                     </div>
                 </section>
             </div>

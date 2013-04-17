@@ -48,6 +48,7 @@
                     <div align="center">
 
                         <%
+                             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                             fest.clear();
 
                             boolean Verwijder_knop = false;
@@ -59,6 +60,7 @@
                                     }
                                 }
                             }
+                            if(gebruiker!=null){
                             try {
                                 Connectie_Databank connectie = new Connectie_Databank();
 
@@ -209,7 +211,13 @@
                                     } catch (Exception e) {
                                         out.println(e.getMessage());
                                     }
+                                  }else{
                                 %>
+                                
+                                
+                                U bent niet ingelogd
+                                
+                                <%}%>
                         </div>
                 </section>
             </div>
