@@ -14,22 +14,22 @@
     <body>
         <nav id="navigatie_omslag">
             <%
-                String pageName = extractPageNameFromURLString(request.getRequestURI()).toString();
+                String strPaginaNaam = leidPaginaNaamAfVanUrl(request.getRequestURI()).toString();
                 beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                 
-                if (pageName.equals("index") || pageName.equals("") || pageName.equals("inlog") || pageName.equals("uitgelogd")) { %>
+                if (strPaginaNaam.equals("index") || strPaginaNaam.equals("") || strPaginaNaam.equals("inlog") || strPaginaNaam.equals("uitgelogd")) { %>
                     <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                <% } else if (pageName.equals("festivals") || pageName.equals("festivals_filter")) { %>
+                    <% } else if (strPaginaNaam.contains("festival")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("groepen") || pageName.equals("groepen_filter") || pageName.equals("groepen_details")) { %>
+                    <%} else if (strPaginaNaam.contains("groep")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
-                <%} else if (pageName.equals("profiel") || pageName.equals("profiel_verwerking")) { %>
+                    <%} else if (strPaginaNaam.contains("profiel")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
@@ -37,19 +37,19 @@
                     %>
                             <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
                 <%} }
-                if(gebruiker != null && !pageName.equals("profiel") && !pageName.equals("profiel_verwerking")) 
+                if(gebruiker != null && !strPaginaNaam.contains("profiel")) 
                 {%>
                     <a href="#"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
                 <%}%>
         </nav>
         <%!
-            public static String extractPageNameFromURLString(String urlString) {
-                if (urlString == null) {
+            public static String leidPaginaNaamAfVanUrl(String strUrl) {
+                if (strUrl == null) {
                     return null;
                 }
-                int lastSlash = urlString.lastIndexOf("/");
+                int lastSlash = strUrl.lastIndexOf("/");
                 //if (lastSlash==-1) lastSlash = 0;
-                String pageAndExtensions = urlString.substring(lastSlash + 1);
+                String pageAndExtensions = strUrl.substring(lastSlash + 1);
                 int lastQuestion = pageAndExtensions.indexOf(".");
                 if (lastQuestion == -1) {
                     lastQuestion = pageAndExtensions.length();
