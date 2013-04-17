@@ -53,23 +53,22 @@
                     <div id="elementen_centreren">
                         <%
                             try {
-                                ArrayList<String> lijstGenres = new ArrayList<String>();
+                                ArrayList<String> alGenres = new ArrayList<String>();
 
                                 Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
-                                List<String> lijstParams = new ArrayList<String>();
+                                List<String> alParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT b.*, bf.*, f.fest_naam FROM bands b, bandsperfestival bf, festivals f WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id", lijstParams);
+                                connectie.voerQueryUit("SELECT b.*, bf.*, f.fest_naam"
+                                + " FROM bands b, bandsperfestival bf, festivals f"
+                                + " WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id"
+                                + " GROUP BY b.band_naam", alParams);
                                 ResultSet rsInhoudGroepen = connectie.haalResultSetOp();
 
-                                rsInhoudGroepen.last();
-                                int lengteResultSet = rsInhoudGroepen.getRow();
-
-                                rsInhoudGroepen.first();
-                                rsInhoudGroepen.previous();
-
-                                if (lengteResultSet > 0) {
+                                rsInhoudGroepen.beforeFirst();
+                                    
+                                if (rsInhoudGroepen.next()) {
                         %>
                         <div data-collapse id="opmaak_openklapper">
                             <h2 id="geavanceerd_zoeken_filter">+ Geavanceerd Zoeken </h2>
@@ -82,18 +81,18 @@
                                         <%while (rsInhoudGroepen.next()) {
                                                 String genre = rsInhoudGroepen.getString("band_soortMuziek");
 
-                                                if (!lijstGenres.contains(genre)) {
-                                                    lijstGenres.add(genre);
+                                                if (!alGenres.contains(genre)) {
+                                                    alGenres.add(genre);
                                                 }
                                             }
                                             rsInhoudGroepen.first();
                                             rsInhoudGroepen.previous();
                                             
                                             //De ArrayList alfabetisch ordenen
-                                            java.util.Collections.sort(lijstGenres);
-                                            for (String genre : lijstGenres) {
+                                            java.util.Collections.sort(alGenres);
+                                            for (String strGenre : alGenres) {
                                         %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkGenre' value='<%= genre%>' /> <%= genre%><br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkGenre' value='<%= strGenre %>' /> <%= strGenre %><br />
                                 <%
                                     }
                                 %>
@@ -101,17 +100,17 @@
                                 <td>
                                 <div class="tekst_onderlijning">Festival:</div>
                                 <%
-                                      List<String> lijstFestivals = new ArrayList<String>();
+                                      List<String> alFestivals = new ArrayList<String>();
                                       while (rsInhoudGroepen.next()) {
                                                 String festival = rsInhoudGroepen.getString("fest_naam");
 
-                                                if (!lijstFestivals.contains(festival)) {
-                                                    lijstFestivals.add(festival);
+                                                if (!alFestivals.contains(festival)) {
+                                                    alFestivals.add(festival);
                                                 }
                                             }
                                       //De ArrayList alfabetisch ordenen
-                                            java.util.Collections.sort(lijstFestivals);
-                                            for (String festival : lijstFestivals) {
+                                            java.util.Collections.sort(alFestivals);
+                                            for (String festival : alFestivals) {
                                         %>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='radFestival' value='<%=festival%>' /> <%=festival%><br />
                                 <%
@@ -137,27 +136,27 @@
                                 rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                 rsInhoudGroepen.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                 while (rsInhoudGroepen.next()) {
-                                    String naam = rsInhoudGroepen.getString("band_naam");
-                                    String genre = rsInhoudGroepen.getString("band_soortMuziek");
-                                    String afbeelding = rsInhoudGroepen.getString("band_afbeelding");
+                                    String strNaam = rsInhoudGroepen.getString("band_naam");
+                                    String strGenre = rsInhoudGroepen.getString("band_soortMuziek");
+                                    String strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
                             %>
                             <form action="groepen_details.jsp" method="POST">
                             <table id="tabel_breedte_600px_omrand">
                                 <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                     <tr>
                                         <td rowspan="4" style="width: 120px;">
-                                            <img id="opmaak_afbeelding" src="<%=afbeelding%>" alt="Afbeelding Band" />
+                                            <img id="opmaak_afbeelding" src="img/bands/<%= strFoto %>.jpg" alt="Afbeelding Band" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven" style="border-top: 1px solid white;"><b>
-                                                <div class="tekst_vet"> <%= naam%> </div>
-                                                <input type="hidden" name="naam" value="<%=naam%>">
+                                                <div class="tekst_vet"> <%= strNaam %> </div>
+                                                <input type="hidden" name="naam" value="<%= strNaam %>">
                                         </td>
                                         <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven">Genre: <%=genre%></td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Genre: <%= strGenre %></td>
                                         <td></td>
                                     </tr>
                                     <tr>
