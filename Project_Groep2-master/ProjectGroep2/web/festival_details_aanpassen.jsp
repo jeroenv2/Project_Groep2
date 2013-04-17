@@ -157,40 +157,45 @@
                         <table>
                             <tbody>
                                 <tr>
+                                    <td>Naam:</td>
+                                    <td><input type="text" id="txtNaam" name="fest_naam" value="<%= strNaam %>" 
+                                               required title="Geef een festivalnaam." /></td>
+                                </tr>
+                                <tr>
                                     <td>Land:</td>
-                                    <td><input type="text" id="land" name="land" value="<%= strLand %>" 
+                                    <td><input type="text" id="txtland" name="land" value="<%= strLand %>" 
                                                required title="Vul een land in." /></td>
                                 </tr>
                                 <tr>
                                     <td>Locatie:</td>
-                                    <td><input type="text" id="gemeente" name="gemeente" value="<%= strGemeente %>"
+                                    <td><input type="text" id="txtgemeente" name="gemeente" value="<%= strGemeente %>"
                                                required title="Vul en gemeente in." /></td>
                                 </tr>
                                 <tr>
                                     <td>Startdatum:</td>
-                                    <td><input type="date" id="bdatum" name="fest_datum" value="<%= rsFest.getString("fest_datum") %>"
+                                    <td><input type="date" id="dtBDatum" name="fest_datum" value="<%= rsFest.getString("fest_datum") %>"
                                                required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
                                 <tr>
                                     <td>Einddatum:</td>
-                                    <td><input type="date" id="edatum" name="fest_einddatum" value="<%= rsFest.getString("fest_einddatum") %>"
+                                    <td><input type="date" id="dtEDatum" name="fest_einddatum" value="<%= rsFest.getString("fest_einddatum") %>"
                                                required pattern="\d{4}-\d{2}-\d{2}" title="jjjj-mm-dd" /></td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
                                     <%  String website = rsFest.getString("fest_url");
                                     if (website != null) {%>
-                                    <td><input type="text" id="murl" name="website" value="<%= website %>"
+                                    <td><input type="text" id="txtMUrl" name="fest_url" value="<%= website %>"
                                                pattern="(http:\/\/|https:\/\/)?www\.?([a-zA-Z0-9_%]*)\.[a-zA-Z]{1}[a-zA-Z]+"
                                                title="http:// of https:// + A-Z + .A-Z"/></td>
                                     <%} else {%>
-                                    <td><input type="url" id="zurl" name="website" value="" /></td>
+                                    <td><input type="url" id="txtZUrl" name="fest_url" value="" /></td>
                                     <%}%>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
                                         <input type="hidden" name="fest_id" value="<%= rsFest.getString("fest_id") %>" />
-                                        <input type="hidden" name="fest_naam" value="<%= strNaam %>" />
+                                        <input type="hidden" name="orig_fest_naam" value="<%= strNaam %>" />
                                         <input type="submit" id="festsave" name="festsave" value="Gegevens opslaan"
                                                style="width: 435px; margin-top: 10px;"/>
                                     </td>

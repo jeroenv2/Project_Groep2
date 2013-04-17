@@ -4,6 +4,9 @@
     Author     : robbie
 --%>
 
+<%@page import="java.net.URI"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.io.File"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -43,11 +46,33 @@
             alParams.add(strId);
             
             try {
+                // Simpele update om de wijzigingen door te voeren
                 connectie.voerVeranderingUit("UPDATE bands"
                 + " SET band_naam = ?, band_soortMuziek = ?, band_url = ?"
                 + " WHERE band_id = ?", alParams);
+                
+                // Dit laatste deel dient om de afbeeldingsnaam voor de band ter veranderen
+                // zodat de afbeelding dynamisch kan worden ingeladen.
+                
+                // Eerst het pad ophalen waarin de server draait
+                // (in localhost is dit in /build/web/... zodra gepubliceerd hoeft de replace("build/", "") niet meer!
+                ServletContext info = session.getServletContext();
+                String strAbsoluutPad = info.getRealPath("/").replace("build/", "") + "img/bands/";
+                    
+                // Vervolgens maken we een string met het absoluut pad naar de huidige afbeelding.
+                String strAfbeelding = strAbsoluutPad 
+                        + request.getParameter("orig_band_naam").toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
+                // Dan een string met het absoluut pad naar waar de afbeelding komt te staan (in ons geval, zelfde map - andere naam)
+                String strNieuwAfbeelding = strAbsoluutPad
+                        + strNaam.toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
+                            
+                //Nu maken we twee File instantie aan (zelfde principe als de twee string strAfbeelding en strNieuwAfbeelding)
+                File bestandAfbeelding = new File(strAfbeelding);
+                File nieuwBestandAfbeelding = new File(strNieuwAfbeelding);
+                // File.renameTo(File) is een functie die een bestand vervangd door een ander (gewoon hernoemen dus)
+                boolean gelukt = bestandAfbeelding.renameTo(nieuwBestandAfbeelding);
             } catch(IllegalArgumentException ia) {
-                strFouten = "[ARGUMENTEN]: Eén van de ingevoerde gegevens kloppen niet::<br />"
+                strFouten = "[ARGUMENTEN]: Eén van de ingevoerde gegevens kloppen niet:<br />"
                 + ia.getMessage();
             } catch(SQLException se) {
                 strFouten = "[SQL]: Fout bij het uitvoeren van de query:<br />"
@@ -55,6 +80,7 @@
             } catch(Exception e) {
                 strFouten = "[ONBEKEND]: Gegevens konden niet worden opgehaald:<br />"
                 + e.getMessage();
+                e.printStackTrace();
             }
             
         %>

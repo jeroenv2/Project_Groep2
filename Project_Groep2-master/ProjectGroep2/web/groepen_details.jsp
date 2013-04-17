@@ -113,7 +113,7 @@
                                 <% if (gebruiker != null) { %>
                                 <tr>
                                     <td colspan="2">
-                                        <form action="band_details_aanpassen.jsp" method="POST">
+                                        <form action="groep_details_aanpassen.jsp" method="POST">
                                             <input type="hidden" name="naam" value="<%= strBandNaam %>">
                                             <input type="submit" name="bandedit" value="Band aanpassen"
                                                    style="width: 435px; margin-top: 10px;"/>

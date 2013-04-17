@@ -4,6 +4,7 @@
     Author     : robbie
 --%>
 
+<%@page import="java.io.File"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Calendar"%>
@@ -48,7 +49,8 @@
             } catch (ParseException pa) {
                 strFouten += "<p id=\"error\">De ingegeven datum(s) "+ strDateFout + " zijn/is niet correct</p>\n";
             }
-            String strUrl = request.getParameter("website");
+                
+            String strUrl = request.getParameter("fest_url");
             String strLocatie = strGemeente + " - " + strLand;
             String strId = request.getParameter("fest_id");
                 
@@ -73,6 +75,27 @@
             } else {
                 strFouten += "<p id=\"error\">De duur van het festival kon niet worden berekend.</p>\n";
             }
+            
+                // Dit laatste deel dient om de afbeeldingsnaam voor het festival ter veranderen
+                // zodat de afbeelding dynamisch kan worden ingeladen.
+                
+                // Eerst het pad ophalen waarin de server draait
+                // (in localhost is dit in /build/web/... zodra gepubliceerd hoeft de replace("build/", "") niet meer!
+                ServletContext info = session.getServletContext();
+                String strAbsoluutPad = info.getRealPath("/").replace("build/", "") + "img/festivals/";
+                    
+                // Vervolgens maken we een string met het absoluut pad naar de huidige afbeelding.
+                String strAfbeelding = strAbsoluutPad 
+                        + request.getParameter("orig_fest_naam").toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
+                // Dan een string met het absoluut pad naar waar de afbeelding komt te staan (in ons geval, zelfde map - andere naam)
+                String strNieuwAfbeelding = strAbsoluutPad
+                        + strNaam.toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
+                            
+                //Nu maken we twee File instantie aan (zelfde principe als de twee string strAfbeelding en strNieuwAfbeelding)
+                File bestandAfbeelding = new File(strAfbeelding);
+                File nieuwBestandAfbeelding = new File(strNieuwAfbeelding);
+                // File.renameTo(File) is een functie die een bestand vervangd door een ander (gewoon hernoemen dus)
+                boolean gelukt = bestandAfbeelding.renameTo(nieuwBestandAfbeelding);
         %>
         <% if (strFouten.equals("")) { %>
         <title><%= strNaam %> aangepast</title>

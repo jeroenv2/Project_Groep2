@@ -59,7 +59,6 @@
                 strGenre = rsBand.getString("band_soortMuziek");
                 strUrl = rsBand.getString("band_url");
                 strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
-                System.out.println("Resultaat ok");
             } catch(SQLException se){
                 strFouten = "[SQL]: Fout bij het uitvoeren van de query:<br />"
                 + se.getMessage();
@@ -101,7 +100,7 @@
                         <!--
                             In principe het zelfde formulier als bij banddetails, maar met invoervelden met de actuele gegevens in.
                         -->
-                        <form action="band_details_aanpassen_resultaat.jsp" method="post">
+                        <form action="groep_details_aanpassen_resultaat.jsp" method="post">
                         <table >
                             <tbody>
                                 <tr>
@@ -127,6 +126,7 @@
                                 <% if (gebruiker != null) { %>
                                 <tr>
                                     <td colspan="2">
+                                        <input type="hidden" name="orig_band_naam" value="<%= strNaam %>" />
                                         <input type="hidden" name="band_id" value="<%= strId %>">
                                         <input type="submit" name="bandedit" value="Gegevens opslaan"
                                                style="width: 435px; margin-top: 10px;"/>
