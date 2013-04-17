@@ -35,11 +35,11 @@
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                     <%if(gebruiker != null){ //Voor het geval een gebruiker naar een pagina wil gaan zonder ingelogd te zijn (inlog vereist)
                     %>
-                            <a href="#"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
+                            <a href="profiel.jsp"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
                 <%} }
                 if(gebruiker != null && !strPaginaNaam.contains("profiel")) 
                 {%>
-                    <a href="#"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
+                    <a href="profiel.jsp"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
                 <%}%>
         </nav>
         <%!

@@ -140,7 +140,7 @@
                                     String strGenre = rsInhoudGroepen.getString("band_soortMuziek");
                                     String strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
                             %>
-                            <form action="groepen_details.jsp" method="POST">
+                            <form action="groep_details.jsp" method="POST">
                             <table id="tabel_breedte_600px_omrand">
                                 <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                     <tr>

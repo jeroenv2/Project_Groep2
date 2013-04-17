@@ -168,7 +168,7 @@
                             <ul>
                                 <% if (rsBandPFest.next()) {
                                 do { %>
-                                <li><form action="groepen_details.jsp" method="post">
+                                <li><form action="groep_details.jsp" method="post">
                                     <input type="hidden" name="naam" value="<%= rsBandPFest.getString("band_naam") %>" />
                                     <a href="javascript:;" onclick="parentNode.submit();"><%= rsBandPFest.getString("band_naam") %></a>
                                     </form></li>

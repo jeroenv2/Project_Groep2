@@ -38,45 +38,41 @@
                 <section id="inhoud">
                     <div id="elementen_centreren">
                         <%
+                            Connectie_Databank connectie = null;
                             try {
-                                Connectie_Databank connectie = new Connectie_Databank();
+                                connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
-                                List<String> lijstParams = new ArrayList<String>();
-                                String query = "SELECT b.* FROM bands b, festivals f, bandsperfestival bf WHERE  b.band_id = bf.band_id AND bf.fest_id = f.fest_id";
+                                List<String> alParams = new ArrayList<String>();
+                                String strQuery= "SELECT b.* FROM bands b, festivals f, bandsperfestival bf WHERE  b.band_id = bf.band_id AND bf.fest_id = f.fest_id";
                                 //WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id
 
                                 if (request.getParameter("chkGenre") != null) {
-                                    query += " AND (b.band_soortMuziek = ?"; //Beginletters geselecteerd
-                                    String[] genres = request.getParameterValues("chkGenre");
+                                    strQuery+= " AND (b.band_soortMuziek = ?"; //Beginletters geselecteerd
+                                    String[] strGenres = request.getParameterValues("chkGenre");
                                     //Vormen van query
-                                    for (int i = 0; i < genres.length - 1; i++) //ervoor zorgen dat de query juist eindigt
+                                    for (int i = 0; i < strGenres.length - 1; i++) //ervoor zorgen dat de strQueryjuist eindigt
                                     {                                     //Begin 0: Array letters begin ook vanaf 0
-                                        query += " OR b.band_soortMuziek = ?";
+                                        strQuery+= " OR b.band_soortMuziek = ?";
                                     }
-                                    query += ")";
+                                    strQuery+= ")";
 
-                                    //Vormen van lijstParams
-                                    for (int i = 0; i < genres.length; i++) {
-                                        lijstParams.add(genres[i]);
+                                    //Vormen van alParams
+                                    for (int i = 0; i < strGenres.length; i++) {
+                                        alParams.add(strGenres[i]);
                                     }
                                 }
 
                                 if (request.getParameter("radFestival") != null) {
-                                    query += " AND f.fest_naam = ?";
-                                    lijstParams.add(request.getParameter("radFestival"));
+                                    strQuery+= " AND f.fest_naam = ?";
+                                    alParams.add(request.getParameter("radFestival"));
                                 }
 
-                                connectie.voerQueryUit(query, lijstParams);
+                                connectie.voerQueryUit(strQuery, alParams);
                                 ResultSet rsInhoudGroepen = connectie.haalResultSetOp();
 
-                                rsInhoudGroepen.last();
-                                int lengteResultSet = rsInhoudGroepen.getRow();
-
-                                rsInhoudGroepen.first();
-                                rsInhoudGroepen.previous();
-
-                                if (lengteResultSet > 0) {
+                                rsInhoudGroepen.beforeFirst();
+                                if (rsInhoudGroepen.next()) {
                         %>
                         <div class="tekst_centreren">
                             <h1>Gefilterd Resultaat</h1>
@@ -88,37 +84,37 @@
                                 rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                                 rsInhoudGroepen.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                                 while (rsInhoudGroepen.next()) {
-                                    String naam = rsInhoudGroepen.getString("band_naam");
-                                    String genre = rsInhoudGroepen.getString("band_soortMuziek");
-                                    String afbeelding = rsInhoudGroepen.getString("band_afbeelding");
+                                    String strNaam = rsInhoudGroepen.getString("band_naam");
+                                    String strGenre = rsInhoudGroepen.getString("band_soortMuziek");
+                                    String strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
                             %>
-                            <form action="groepen_details.jsp" method="POST">
+                            <form action="groep_details.jsp" method="POST">
                             <table id="tabel_breedte_600px_omrand">
                                 <tbody class="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                     <tr>
                                         <td rowspan="4" style="width: 120px;">
-                                            <img id="opmaak_afbeelding" src="<%=afbeelding%>" alt="Afbeelding Band" />
+                                            <img id="opmaak_afbeelding" src="img/bands/<%= strFoto %>.jpg" alt="Afbeelding <%= strNaam %>" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven" style="border-top: 1px solid white;"><b>
-                                                <div class="tekst_vet"> <%= naam%> </div>
-                                                <input type="hidden" name="naam" value="<%=naam%>">
+                                                <div class="tekst_vet"> <%= strNaam %> </div>
+                                                <input type="hidden" name="naam" value="<%=strNaam %>">
                                         </td>
                                         <td style="border-top: 1px solid white;"></td>
                                     </tr>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven">Genre: <%=genre%></td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Genre: <%= strGenre %></td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <%
                                             if (rsInhoudGroepen.getString("band_url") != null) {
-                                                String url = rsInhoudGroepen.getString("band_url");
-                                                url = url.replace(" ", "%20"); //Spatie vervangen door %20 in url
+                                                String strUrl = rsInhoudGroepen.getString("band_url");
+                                                strUrl = strUrl.replace(" ", "%20"); //Spatie vervangen door %20 in url
                                         %>
                                                 <td class="inhoud_tabel_spatie_links_onder">
-                                                    <a href="http://<%=url%>" target="_blank">Site</a>
+                                                    <a href="http://<%= strUrl %>" target="_blank">Site</a>
                                                 </td>
                                         <% } else { %>
                                                 <td></td>
@@ -139,9 +135,10 @@
                                 Klik <a href="groepen.jsp">hier</a> om terug te keren
                             </div>
                             <%}
-                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
+                                } finally {
+                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 }
                             %>
                         </div>

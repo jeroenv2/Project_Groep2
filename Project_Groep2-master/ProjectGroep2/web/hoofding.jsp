@@ -61,7 +61,7 @@
                     var frmZoekenJS = document.getElementById('frmZoeken');
                     frmZoekenJS.naam.value = invoerZoekveld; //Waarde van 'naam' veranderen
 
-                    frmZoekenJS.action = "groepen_details.jsp"; //url veranderen van frmZoeken
+                    frmZoekenJS.action = "groep_details.jsp"; //url veranderen van frmZoeken
                     frmZoekenJS.submit();
                 }
                 else
