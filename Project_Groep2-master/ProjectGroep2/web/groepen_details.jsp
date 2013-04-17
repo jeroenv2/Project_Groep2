@@ -54,6 +54,7 @@
                 + " JOIN bandsperfestival bf ON f.fest_id = bf.fest_id"
                 + " WHERE bf.band_id = ?", alParams);
                 rsFestPBand = connectie.haalResultSetOp();
+                    
             } catch (IllegalArgumentException ia) {
                 strFouten = "[ARGUMENTEN]: Een van de opgegeven argumenten waren niet correct:<br />"
                 + ia.getMessage();

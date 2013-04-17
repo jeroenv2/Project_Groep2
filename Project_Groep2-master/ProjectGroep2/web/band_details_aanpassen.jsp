@@ -21,7 +21,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
             ResultSet rsBand = null, rsFestPBand = null;
-            String strFouten = "", strNaam = "", strFoto="", strSiteGroep="";
+            String strFouten = "", strNaam = request.getParameter("naam"), strFoto = "",
+                    strSiteGroep="", strGenre = "", strUrl = "", strId = "";
             Connectie_Databank connectie = null;
             
             // Bean voor gebruikergegevens
@@ -33,14 +34,20 @@
                 connectie.maakConnectie();
                 List<String> alParams = new ArrayList<String>();
                 List<String> alLeeg = new ArrayList<String>();
-                alParams.add(request.getParameter("naam"));
+                alParams.add(strNaam);
 
                 //ResultSet aanmaken voor de gekozen band
                 connectie.voerQueryUit("SELECT band_id, band_soortMuziek, band_url"
                 + " FROM bands"
                 + " WHERE band_naam = ?", alParams);
                 rsBand = connectie.haalResultSetOp();
-
+                rsBand.first();
+                
+                // Bandnaam niet meer nodig, verwijderen en vervangen door band_id
+                alParams.remove(0);
+                strId = rsBand.getString("band_id");
+                alParams.add(strId);
+                    
                 connectie.voerQueryUit("SELECT f.fest_naam"
                 + " FROM festivals f"
                 + " JOIN bandsperfestival bf ON f.fest_id = bf.fest_id"
@@ -48,10 +55,11 @@
                 rsFestPBand = connectie.haalResultSetOp();
                     
                 //Hergebruikte Strings
-                strNaam = rsBand.getString("band_naam");
                 strSiteGroep = rsBand.getString("band_url");
-                strFoto = rsBand.getString("band_naam").toLowerCase().replace(" ", "_").replace("'", "");
-                
+                strGenre = rsBand.getString("band_soortMuziek");
+                strUrl = rsBand.getString("band_url");
+                strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
+                System.out.println("Resultaat ok");
             } catch(SQLException se){
                 strFouten = "[SQL]: Fout bij het uitvoeren van de query:<br />"
                 + se.getMessage();
@@ -79,10 +87,9 @@
                 <section id="inhoud">
                     <% if (strFouten.equals("")) { %>
                     <article id="foto">
-                        <img src="img/festivals/<%= strFoto %>.jpg"
+                        <img src="img/bands/<%= strFoto %>.jpg"
                              alt="<%= strFoto %>" width="95%"
                              draggable="true"
-                             style="margin-top: 35px; margin-bottom: 20px;"
                         />
                     </article>
                     <article id="details">
@@ -94,31 +101,35 @@
                         <!--
                             In principe het zelfde formulier als bij banddetails, maar met invoervelden met de actuele gegevens in.
                         -->
-                        <form action="festival_details_aanpassen_resultaat.jsp" method="post">
+                        <form action="band_details_aanpassen_resultaat.jsp" method="post">
                         <table >
                             <tbody>
                                 <tr>
                                     <td >Naam:</td>
-                                    <td><%= strNaam %> </td>
-                                </tr>
-                                <tr style="padding-bottom: 20px;">
-                                    <td>Genre:</td>
                                     <td><input type="text" id="txtBandNaam" name="band_naam" value="<%= strNaam %>" 
                                                required title="Geef de bandnaam" /></td>
                                 </tr>
+                                <tr style="padding-bottom: 20px;">
+                                    <td>Genre:</td>
+                                    <td><input type="text" id="txtBandGenre" name="band_soortMuziek" value="<%= strGenre %>" 
+                                               required title="Geef het genre" /></td>
+                                </tr>
                                 <tr>
-                                    <td colspan="2" style="padding-top: 15px !important;">
-                                        <a href="http://<%= strSiteGroep %>" target="_blank">Site Groep</a>
-                                    </td>
+                                    <td>Website:</td>
+                                    <% if (strUrl != null) {%>
+                                    <td><input type="text" id="murl" name="band_url" value="<%= strUrl %>"
+                                               pattern="(http:\/\/|https:\/\/)?www\.?([a-zA-Z0-9_%]*)\.[a-zA-Z]{1}[a-zA-Z]+"
+                                               title="http:// of https:// + A-Z + .A-Z"/></td>
+                                    <%} else {%>
+                                    <td><input type="url" id="zurl" name="band_url" value="" /></td>
+                                    <%}%>
                                 </tr>
                                 <% if (gebruiker != null) { %>
                                 <tr>
                                     <td colspan="2">
-                                        <form action="band_details_aanpassen.jsp" method="POST">
-                                            <input type="hidden" name="naam" value="<%= strNaam %>">
-                                            <input type="submit" name="bandedit" value="Band aanpassen"
-                                                   style="width: 435px; margin-top: 10px;"/>
-                                        </form>
+                                        <input type="hidden" name="band_id" value="<%= strId %>">
+                                        <input type="submit" name="bandedit" value="Gegevens opslaan"
+                                               style="width: 435px; margin-top: 10px;"/>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -133,7 +144,7 @@
                         <div id="lijsten" data-collapse="persist">
                             <!--
                                Overzicht festivals 
-                            -->
+                            -->        <jsp:useBean id="date" scope="page" class="beans.datumBean" />
                            <div id="lijsten" data-collapse="persist">
                            <p class="open menu">Festivals</p>
                             <ul  >

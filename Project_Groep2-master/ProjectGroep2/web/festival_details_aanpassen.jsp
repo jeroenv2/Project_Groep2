@@ -133,7 +133,6 @@
                         <img src="img/festivals/<%= strFoto %>.jpg"
                              alt="<%= strFoto %>" width="95%"
                              draggable="true"
-                             style="margin-top: 35px; margin-bottom: 20px;"
                         />
                     </article>
                     <article id="details">
