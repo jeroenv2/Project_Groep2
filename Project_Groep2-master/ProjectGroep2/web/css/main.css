@@ -137,15 +137,6 @@ body {
 /* ----------------------------
              INHOUD 
    ----------------------------*/
-
-/* ----------- Home -------------*/
-li:nth-child(even) {
-    margin-left: 5px;
-    padding-left: 5px;
-    border-bottom: 1px solid white;
-}
-
-/* ----------- Algemeen ---------- */
 #inhoud_omslag { /*Witte rand*/
     margin: 35px 30px 15px 30px;
     width: 900px;
@@ -384,6 +375,19 @@ h2 a:link, h2 a:visited
 }
 
 h2 a:hover
+{
+    color: beige;
+    text-decoration: none;
+}
+
+
+p a:link, p a:visited
+{
+    color: white;
+    text-decoration: none;
+}
+
+p a:hover
 {
     color: beige;
     text-decoration: none;

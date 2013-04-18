@@ -118,7 +118,7 @@
                 <section id="inhoud">
                     <article>
                         <header>
-                            <h1 align="center">
+                            <h1>
                             <% if (strFouten.equals("")) { %>
                                 Gegevens opgeslagen
                             <% } else { %>
@@ -127,12 +127,12 @@
                             </h1>
                         </header>
                         <% if (strFouten.equals("")) { %>
-                        <p align="center">De gegevens zijn succesvol weggeschreven.</p>
+                        <p>De gegevens zijn succesvol weggeschreven.</p>
                         <% } else { %>
-                        <p align="center">De gegevens konden niet worden weggeschreven</p>
-                        <p align="center"><%= strFouten %></p>
+                        <p>De gegevens konden niet worden weggeschreven</p>
+                        <p><%= strFouten %></p>
                         <% } %>
-                        <p align="center">Klik <a href="./festivals.jsp">hier</a> om terug te keren naar het overzicht.</p>
+                        <p>Klik <a href="./festivals.jsp">hier</a> om terug te keren naar het overzicht.</p>
                     </article>
                 </section>
             </div>

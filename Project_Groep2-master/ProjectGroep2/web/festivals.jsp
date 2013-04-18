@@ -238,12 +238,13 @@
                         } catch (Exception e) {
                             out.println(e.getMessage());
                         }%>
-                        </div> 
-                </section>
+                    </div>
             </div>
+        </section>
+        </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
         </div>
-     <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>   
+        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
     </body>
 </html>

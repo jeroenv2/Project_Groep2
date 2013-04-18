@@ -129,7 +129,7 @@
                             <h2>Overzicht</h2>
                         </header>
                         <div id="lijsten" data-collapse="persist">
-                            <h2 class="open menu">Festivals</h2>
+                            <p class="open menu">Festivals</p>
                             <ul class="enkel_kolom">
                             <% if (rsFestPBand.next()) {
                                   do {%>
