@@ -65,76 +65,77 @@
                                 + " WHERE b.band_id = bf.band_id AND bf.fest_id = f.fest_id"
                                 + " GROUP BY b.band_naam", alParams);
                                 ResultSet rsInhoudGroepen = connectie.haalResultSetOp();
-
-                                rsInhoudGroepen.beforeFirst();
                                     
                                 if (rsInhoudGroepen.next()) {
                         %>
                         <div data-collapse id="opmaak_openklapper">
                             <h2 id="geavanceerd_zoeken_filter">+ Geavanceerd Zoeken </h2>
-                        <div>
-                        <form id="form_filter" action='groepen_filter.jsp' method='POST'>
-                            <table id="tabel_filter">
-                                <tbody class="inhoud_tabel_links_uitlijning">
-                                    <tr>
-                                        <td><div class="tekst_onderlijning">Genre:</div>
-                                        <%while (rsInhoudGroepen.next()) {
-                                                String genre = rsInhoudGroepen.getString("band_soortMuziek");
+                                <div>
+                                <form id="form_filter" action='groepen_filter.jsp' method='POST'>
+                                    <table id="tabel_filter">
+                                        <tbody class="inhoud_tabel_links_uitlijning">
+                                            <tr>
+                                                <td><div class="tekst_onderlijning">Genre:</div>
+                                                <%while (rsInhoudGroepen.next()) {
+                                                        String genre = rsInhoudGroepen.getString("band_soortMuziek");
 
-                                                if (!alGenres.contains(genre)) {
-                                                    alGenres.add(genre);
-                                                }
-                                            }
-                                            rsInhoudGroepen.first();
-                                            rsInhoudGroepen.previous();
-                                            
-                                            //De ArrayList alfabetisch ordenen
-                                            java.util.Collections.sort(alGenres);
-                                            for (String strGenre : alGenres) {
-                                        %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkGenre' value='<%= strGenre %>' /> <%= strGenre %><br />
-                                <%
-                                    }
-                                %>
-                                </td>
-                                <td>
-                                <div class="tekst_onderlijning">Festival:</div>
-                                <%
-                                      List<String> alFestivals = new ArrayList<String>();
-                                      while (rsInhoudGroepen.next()) {
-                                                String festival = rsInhoudGroepen.getString("fest_naam");
+                                                        if (!alGenres.contains(genre)) {
+                                                            alGenres.add(genre);
+                                                        }
+                                                    }
+                                                    rsInhoudGroepen.first();
+                                                    rsInhoudGroepen.previous();
 
-                                                if (!alFestivals.contains(festival)) {
-                                                    alFestivals.add(festival);
-                                                }
+                                                    //De ArrayList alfabetisch ordenen
+                                                    java.util.Collections.sort(alGenres);
+                                                    for (String strGenre : alGenres) {
+                                                %>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='chkGenre' value='<%= strGenre %>' /> <%= strGenre %><br />
+                                        <%
                                             }
-                                      //De ArrayList alfabetisch ordenen
-                                            java.util.Collections.sort(alFestivals);
-                                            for (String festival : alFestivals) {
                                         %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='radFestival' value='<%=festival%>' /> <%=festival%><br />
-                                <%
-                                    }
-                                %>
-                                </td>
-                                </tr>
-                                <tr>
-                                    <td class="inhoud_tabel_spatie_links_boven_onder">
-                                        <input type='submit' name='btnZoekFilter' value=' Zoeken ' /> 
-                                        <input type='reset' name='btnLeegFilter' value=' Wissen ' /></td>
-                                    <td></td>
-                                </tr>
-                                </tbody >
-                            </table>
-                        </form>
-                        </div>
+                                        </td>
+                                        <td>
+                                        <div class="tekst_onderlijning">Festival:</div>
+                                        <%
+                                              List<String> alFestivals = new ArrayList<String>();
+                                              while (rsInhoudGroepen.next()) {
+                                                        String festival = rsInhoudGroepen.getString("fest_naam");
+
+                                                        if (!alFestivals.contains(festival)) {
+                                                            alFestivals.add(festival);
+                                                        }
+                                                    }
+                                              //De ArrayList alfabetisch ordenen
+                                                    java.util.Collections.sort(alFestivals);
+                                                    for (String festival : alFestivals) {
+                                                %>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' name='radFestival' value='<%=festival%>' /> <%=festival%><br />
+                                        <%
+                                            }
+                                        %>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="inhoud_tabel_spatie_links_boven_onder">
+                                                <input type='submit' name='btnZoekFilter' value=' Zoeken ' /> 
+                                                <input type='reset' name='btnLeegFilter' value=' Wissen ' /></td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody >
+                                    </table>
+                                </form>
+                            </div>
                         </div>
                                 
-                        <div id="WitruimteTabelFilter">
+                        <div id="witruimte_tabel_filter">
                             <!-- Informatie groepen -->
                             <%
-                                rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                rsInhoudGroepen.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                connectie.voerQueryUit("SELECT * FROM bands", alParams);
+                                
+                                rsInhoudGroepen = connectie.haalResultSetOp();
+                                rsInhoudGroepen.beforeFirst();
+                                
                                 while (rsInhoudGroepen.next()) {
                                     String strNaam = rsInhoudGroepen.getString("band_naam");
                                     String strGenre = rsInhoudGroepen.getString("band_soortMuziek");
@@ -182,20 +183,22 @@
                                 }
                             } else {
                             %>
-                            <h3>Helaas! Er zijn geen groepen gevonden...</h3>
+                                <div class="tekst_centreren">
+                                        <h3>Helaas! Er zijn geen groepen gevonden</h3>
+                                        Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
+                                </div>
                             <%}
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
                                 }
                             %>
-                        </div>
-                    </div>
+                        </div> 
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
         </div>
-        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
+     <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>   
     </body>
 </html>

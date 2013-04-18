@@ -29,7 +29,7 @@
                     alert('Bevestigd paswoord komt niet overeen met het nieuwe paswoord!');
                     document.getElementById("Nieuw").style.border = '2px solid red';
                     document.getElementById("Hertype").style.border = '2px solid red';
-                    
+
                     return false;
                 } else {
                     return true;
@@ -50,6 +50,14 @@
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'inline';
             }
+            function klikFestival() 
+            {
+
+            }
+            function klikAdmins()
+            {
+
+            }
         </script>
     </head>
     <body>
@@ -59,48 +67,50 @@
             <div id="inhoud_omslag">
                 <section id="inhoud">
                     <%
-                            try {
-                                beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+                        try {
+                            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
 
-                                //Conversies adres
-                                //Adres opsplitsen d.m.v. regex
-                                String adres = gebruiker.getAdres();
-                                String[] adresOpgesplitst = adres.split("\\s+|,+|/"); //'+' voor meerdere spaties of komma's achter elkaar te verwijderen
+                            //Conversies adres
+                            //Adres opsplitsen d.m.v. regex
+                            String adres = gebruiker.getAdres();
+                            String[] adresOpgesplitst = adres.split("\\s+|,+|/"); //'+' voor meerdere spaties of komma's achter elkaar te verwijderen
 
-                                String huisnmr = "";
-                                String straatnaam = "";
-                                String bus = "";
-                                String postcode = "";
-                                String gemeente = "";
-                                String land = "";
+                            String huisnmr = "";
+                            String straatnaam = "";
+                            String bus = "";
+                            String postcode = "";
+                            String gemeente = "";
+                            String land = "";
 
-                                if (adresOpgesplitst.length == 7) {
-                                    huisnmr = adresOpgesplitst[0];
-                                    straatnaam = adresOpgesplitst[1];
-                                    //adresOpgesplitst[2] -> ','
-                                    postcode = adresOpgesplitst[3];
-                                    gemeente = adresOpgesplitst[4];
-                                    //adresOpgesplitst[5] -> '-'
-                                    land = adresOpgesplitst[6];
-                                } else if (adresOpgesplitst.length == 8) //Wanneer er een bus bij een huisnummer is
-                                {
-                                    huisnmr = adresOpgesplitst[0];
-                                    bus = adresOpgesplitst[1];
-                                    straatnaam = adresOpgesplitst[2];
-                                    //adresOpgesplitst[3] -> ','
-                                    postcode = adresOpgesplitst[4];
-                                    gemeente = adresOpgesplitst[5];
-                                    //adresOpgesplitst[6] -> '-'
-                                    land = adresOpgesplitst[7];
-                                }
-                                //!!!Extra controle nodig voor landen en straten met spaties!!!
+                            if (adresOpgesplitst.length == 7) {
+                                huisnmr = adresOpgesplitst[0];
+                                straatnaam = adresOpgesplitst[1];
+                                //adresOpgesplitst[2] -> ','
+                                postcode = adresOpgesplitst[3];
+                                gemeente = adresOpgesplitst[4];
+                                //adresOpgesplitst[5] -> '-'
+                                land = adresOpgesplitst[6];
+                            } else if (adresOpgesplitst.length == 8) //Wanneer er een bus bij een huisnummer is
+                            {
+                                huisnmr = adresOpgesplitst[0];
+                                bus = adresOpgesplitst[1];
+                                straatnaam = adresOpgesplitst[2];
+                                //adresOpgesplitst[3] -> ','
+                                postcode = adresOpgesplitst[4];
+                                gemeente = adresOpgesplitst[5];
+                                //adresOpgesplitst[6] -> '-'
+                                land = adresOpgesplitst[7];
+                            }
+                            //!!!Extra controle nodig voor landen en straten met spaties!!!
 
-                                //Conversies geboortedatum
-                                String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
-                        %>
+                            //Conversies geboortedatum
+                            String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
+                    %>
                     <div id="profiel_navigatie">
-                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px;" onClick="klikAlgemeen();" /><br />
-                        <input type="button" id="btnPaswoord" value=" Paswoord " onClick="klikPaswoord();" />
+                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px; width:90px;" onClick="klikAlgemeen();" /><br />
+                        <input type="button" id="btnPaswoord" value=" Paswoord " style="margin-bottom: 2px; width:90px;" onClick="klikPaswoord();" /><br/>
+                        <input type="button" id="btnTicketsPerFestival" value="Tickets" style="margin-bottom: 2px; width:90px;" onClick="klikFestival;" /><br/>
+                        <input type="button" id="btnAdminGegevens" value="Admins" style="margin-bottom: 2px; width:90px;" onClick="klikAdmins;" />
                     </div>
                     <div id="elementen_centreren">
                         <!-- Formulier om algemene gegevens aan te passen -->
@@ -172,7 +182,7 @@
                                 </tbody>
                             </table>
                         </form>
-                            
+
                         <!-- Formulier om paswoorden te veranderen -->
                         <form method="POST" action="profiel_verwerking.jsp" id="frmPaswoorden" hidden onsubmit="return controlePaswoorden();">
                             <table>
@@ -225,17 +235,17 @@
                                 </tbody>
                             </table>
                         </form>
-                     </div>
-                     <%} catch (Exception e) {%>
-                        <div class="tekst_centreren">
-                            <h3>U dient eerst ingelogd te zien alvorens u uw profiel kan wijzigen</h3>
-                            Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
-                        </div>
+                    </div>
+                    <%} catch (Exception e) {%>
+                    <div class="tekst_centreren">
+                        <h3>U dient eerst ingelogd te zien alvorens u uw profiel kan wijzigen</h3>
+                        Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
+                    </div>
                     <%}%>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
-         </div>
+        </div>
     </body>
 </html>

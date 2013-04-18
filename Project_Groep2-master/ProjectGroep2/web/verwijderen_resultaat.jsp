@@ -28,6 +28,8 @@
                     <div align="center">
 
                         <%
+                            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+                            if (gebruiker != null) {
                             Connectie_Databank connectie = new Connectie_Databank();
                             String doel = "";
                             String foutenBericht = "";
@@ -46,7 +48,7 @@
                                 tabellen_festivals.add("bandsperfestival");
                                 tabellen_festivals.add("festivals");
 
-
+                                 
                                 try {
                                     connectie.maakConnectie();
                                     for (String tabel : tabellen_festivals) {
@@ -114,7 +116,11 @@
                         <% } else {%> 
 
                         <strong><a href="festival_aanpassen.jsp">Terug</a></strong>
-                        <%}%>
+                        <%}} else {
+                            %>
+                            <p>U bent niet ingelogd</p>
+                            <a href="index.jsp">Klik hier</a> om naar de hoofdpagina te gaan
+                            <%}%>
                     </div>
                 </section>
             </div>
