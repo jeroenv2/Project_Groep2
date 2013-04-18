@@ -25,7 +25,7 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
         <script>
-            <%!List<String> groepen = new ArrayList();%>          
+            <%!List<String> groepen = new ArrayList();%>
         </script>
 
     </head>
@@ -39,7 +39,7 @@
                     <div align="center">
 
                         <%
-                         beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+                            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                             groepen.clear();
 
                             boolean Verwijder_knop = false;
@@ -52,25 +52,25 @@
                                 }
 
                             }
-                            if(gebruiker!=null){
-                            try {
-                                ArrayList<String> lijstGenres = new ArrayList<String>();
+                            if (gebruiker != null) {
+                                try {
+                                    ArrayList<String> lijstGenres = new ArrayList<String>();
 
-                                Connectie_Databank connectie = new Connectie_Databank();
+                                    Connectie_Databank connectie = new Connectie_Databank();
 
-                                connectie.maakConnectie();
-                                List<String> lijstParams = new ArrayList<String>();
+                                    connectie.maakConnectie();
+                                    List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM bands ", lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();
+                                    connectie.voerQueryUit("SELECT * FROM bands ", lijstParams);
+                                    ResultSet res = connectie.haalResultSetOp();
 
-                                res.last();
-                                int lengteResultSet = res.getRow();
+                                    res.last();
+                                    int lengteResultSet = res.getRow();
 
-                                res.first();
-                                res.previous();
+                                    res.first();
+                                    res.previous();
 
-                                if (lengteResultSet > 0) {
+                                    if (lengteResultSet > 0) {
                         %>
 
                         <%! String id = "";%>
@@ -92,39 +92,41 @@
                         %>                  <a id="<%= id%>"></a>
                         <table width='500px' style='border: 1px solid white;<%= styleTable%>'>
                             <tbody align="left" style='padding: 10px;'>
-                          
+
                                 <tr>
                                     <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
                                 </tr>
                                 <tr>
                                     <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b></td>
-                                <input type="hidden" name="naam" value="<%=naam%>">
-                                <td  style="border-top: 1px solid white;"></td>
-                                </tr>
-                                <tr>
-                                    <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <%
-                                        if (res.getString("band_url") != null) {
-                                            String url = res.getString("band_url");
-                                    %>
-                                    <td style='padding-left: 10px; padding-bottom: 6px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
-                                    <%
-                                    } else {
-                                    %>
-                                    <td></td>
-                                    <%}%>
-                                <form action="band_details_aanpassen.jsp" method="POST" >
-                                             <input name="naam" type="hidden" value="<%=naam%>"/>
-                                    <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
+                            <input type="hidden" name="naam" value="<%=naam%>">
+                            <td  style="border-top: 1px solid white;"></td>
+                            </tr>
+                            <tr>
+                                <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
+                                <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
+
+                                    <form action="band_details_aanpassen.jsp" method="POST" >
+                                        <input name="naam" type="hidden" value="<%=naam%>"/>
                                         <input type="submit" name="Details" value=" Details " />
-                                    </td>
-                                </form>
-                                </tr>
-                                  <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST">
-                                <tr><td>
+                                    </form>
+
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <%
+                                    if (res.getString("band_url") != null) {
+                                        String url = res.getString("band_url");
+                                %>
+                                <td style='padding-left: 10px; padding-bottom: 6px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
+                                <%
+                                } else {
+                                %>
+                                <td></td>
+                                <%}%>
+
+                                <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
+                                    <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST">
                                         <%
                                             String knop;
                                             if (!groepen.contains(id)) {
@@ -137,40 +139,37 @@
                                                 Verwijder_knop = true;
 
                                             }
-                                        %>
-
-                                    </td>
-                                    <td> <%
-
-
-                                        for (String element : groepen) {
-                                            if (!element.equals(id)) {
-
-
-
+                                            for (String element : groepen) {
+                                                if (!element.equals(id)) {
                                         %>
                                         <input name="elementen" type="hidden" value="<%=element%>"/>
 
-                                        <%}
-
+                                        <%
+                                                }
                                             }
-                                        %></td>
-                                    <td align='right' style='padding-right: 10px;padding-bottom: 10px;' >
+                                        %>
+
                                         <input type="submit" value="<%=knop%>" />
-                                    </td>
-                                </tr>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
                             </form>
                             </tbody>
                         </table><br />
                         <%
-                                }%>
-                                <form action="verwijderen_resultaat.jsp" method="POST">
+                        }%>
+                        <form action="verwijderen_resultaat.jsp" method="POST">
                             <table>
                                 <tr>
                                     <td>
                                         <%
 
-                                                for (String element : groepen) {%>
+                                        for (String element : groepen) {%>
                                         <input name="groepenVerwijderen" type="hidden" value="<%=element%>"/>
 
                                         <%}
@@ -180,14 +179,14 @@
                                             }
                                         %>
                                     </td>
-                                    <td><input type="submit" value="Verwijderen"/> </td>
+                                    <td style='padding-right: 10px; padding-bottom: 6px;'><input type="submit" value="Verwijderen"style="<%= status%>"/> </td>
                                     </form>
-
+                                <td style='padding-right: 10px; padding-bottom: 6px;'>
                                 <form action="groepen_aanpassen.jsp" method="GET">
                                     <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
 
-                                    <td>
-                                        <input name="annuleren" type="submit" value="Annuleren" style=" background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/></td>
+                                    
+                                        <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/></td>
                                 </form>
                                 <td></td>
 
@@ -203,13 +202,11 @@
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
                                 }
-                                                             }else{
-                                %>
-                                
-                                
+                            } else {
+                            %>
                                 U bent niet ingelogd
-                                
-                                <%}%>
+
+                            <%}%>
                     </div>
                 </section>
             </div>
