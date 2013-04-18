@@ -164,7 +164,7 @@
                             <h2>Overzicht</h2>
                         </header>
                         <div id="lijsten" data-collapse="persist">
-                            <h2 class="open menu">Groepen</h2>
+                            <p class="open menu">Groepen</hp>
                             <ul>
                                 <% if (rsBandPFest.next()) {
                                 do { %>
@@ -178,7 +178,7 @@
                                 <li>Nog geen groepen</li>
                                 <% }%>
                             </ul>
-                            <h2 class="menu">Campings</h2>
+                            <p class="menu">Campings</p>
                             <ul>
                                 <% if (rsCampPFest.next()) {
                                 do { %>
@@ -189,7 +189,7 @@
                                 <li>Nog geen campings</li>
                                 <% } %>
                             </ul>
-                            <h2 class="menu">Tickets</h2>
+                            <p class="menu">Tickets</hp>
                             <ul>
                                 <% if (tickets.next()) {
                                 do { %>
