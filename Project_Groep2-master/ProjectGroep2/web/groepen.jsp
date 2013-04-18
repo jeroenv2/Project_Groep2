@@ -128,7 +128,7 @@
                             </div>
                         </div>
                                 
-                        <div id="WitruimteTabelFilter">
+                        <div id="witruimte_tabel_filter">
                             <!-- Informatie groepen -->
                             <%
                                 connectie.voerQueryUit("SELECT * FROM bands", alParams);
