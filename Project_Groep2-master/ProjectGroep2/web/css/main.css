@@ -380,6 +380,19 @@ h2 a:hover
     text-decoration: none;
 }
 
+
+p a:link, p a:visited
+{
+    color: white;
+    text-decoration: none;
+}
+
+p a:hover
+{
+    color: beige;
+    text-decoration: none;
+}
+
 /* ---- Opmaak profiel.jsp ---- */
 #profiel_navigatie
 {
