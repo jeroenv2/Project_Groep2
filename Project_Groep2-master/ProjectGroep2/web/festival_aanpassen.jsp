@@ -189,14 +189,14 @@
 
                                             %>
                                         </td>
-                                        <td><input type="submit" value="Verwijderen" /> </td>
+                                        <td><input type="submit" value="Verwijderen" style="<%= status%>;"/> </td>
                                         </form>
 
-                                    <form action="festival_aanpassen.jsp" method="GET">
-                                        <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
+                                    <form action="festival_aanpassen.jsp" method="POST">
+                                        <input id="annuleren_hidden" name="annuleren" type="hidden" value="false" />
 
                                         <td>
-                                            <input name="annuleren" type="submit" value="Annuleren"</td>
+                                            <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>;"/></td>
                                     </form>
                                     <td></td>
 

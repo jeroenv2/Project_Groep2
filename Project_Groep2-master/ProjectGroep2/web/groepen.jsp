@@ -85,8 +85,8 @@
                                                     alGenres.add(genre);
                                                 }
                                             }
-                                            rsInhoudGroepen.first();
-                                            rsInhoudGroepen.previous();
+                                            
+                                            rsInhoudGroepen.beforeFirst();
                                             
                                             //De ArrayList alfabetisch ordenen
                                             java.util.Collections.sort(alGenres);
@@ -133,8 +133,10 @@
                         <div id="WitruimteTabelFilter">
                             <!-- Informatie groepen -->
                             <%
-                                rsInhoudGroepen.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                rsInhoudGroepen.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                connectie.voerQueryUit("SELECT * FROM bands ORDER BY band_naam", alParams);
+                                    
+                                rsInhoudGroepen = connectie.haalResultSetOp();
+                                    
                                 while (rsInhoudGroepen.next()) {
                                     String strNaam = rsInhoudGroepen.getString("band_naam");
                                     String strGenre = rsInhoudGroepen.getString("band_soortMuziek");
@@ -182,20 +184,22 @@
                                 }
                             } else {
                             %>
-                            <h3>Helaas! Er zijn geen groepen gevonden...</h3>
+                            <div class="tekst_centreren">
+                                        <h3>Helaas! Er zijn geen bands gevonden</h3>
+                                        Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
+                                  </div>
                             <%}
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
                                 }
                             %>
-                        </div>
-                    </div>
+                        </div> 
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
         </div>
-        <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>
+     <a href="#boven"><div id="pagina_boven">Begin Pagina</div></a>   
     </body>
 </html>

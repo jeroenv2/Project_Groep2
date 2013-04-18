@@ -144,7 +144,7 @@
                         <div id="lijsten" data-collapse="persist">
                             <!--
                                Overzicht festivals 
-                            -->
+                            -->        <jsp:useBean id="date" scope="page" class="beans.datumBean" />
                            <div id="lijsten" data-collapse="persist">
                            <p class="open menu">Festivals</p>
                             <ul class="enkel_kolom">
