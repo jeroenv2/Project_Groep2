@@ -25,7 +25,7 @@
         <%
             // Bean voor gebruikergegevens
             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
-                
+
             String strFouten = "", strBandNaam = "";
             ResultSet rsBand = null, rsFestPBand = null;
             try {
@@ -34,39 +34,39 @@
                 connectie.maakConnectie();
                 List<String> alParams = new ArrayList<String>();
                 alParams.add(strBandNaam);
-                    
+
                 connectie.voerQueryUit("SELECT band_id, band_soortMuziek, band_url"
-                + " FROM bands"
-                + " WHERE band_naam = ?", alParams);
+                        + " FROM bands"
+                        + " WHERE band_naam = ?", alParams);
                 rsBand = connectie.haalResultSetOp();
                 rsBand.beforeFirst();
-                
+
                 if (rsBand.next()) {
                     MuziekSoort = rsBand.getString("band_soortMuziek");
                     SiteGroep = rsBand.getString("band_url");
                     alParams.remove(0);
                     alParams.add(rsBand.getString("band_id"));
                 }
-                
+
                 // Bandnaam niet meer nodig, vervangen door band_id                    
                 connectie.voerQueryUit("SELECT f.fest_naam"
-                + " FROM festivals f"
-                + " JOIN bandsperfestival bf ON f.fest_id = bf.fest_id"
-                + " WHERE bf.band_id = ?", alParams);
+                        + " FROM festivals f"
+                        + " JOIN bandsperfestival bf ON f.fest_id = bf.fest_id"
+                        + " WHERE bf.band_id = ?", alParams);
                 rsFestPBand = connectie.haalResultSetOp();
-                    
+
             } catch (IllegalArgumentException ia) {
                 strFouten = "[ARGUMENTEN]: Een van de opgegeven argumenten waren niet correct:<br />"
-                + ia.getMessage();
-            } catch(SQLException se){
+                        + ia.getMessage();
+            } catch (SQLException se) {
                 strFouten = "[SQL]: Fout bij het uitvoeren van een query:<br />"
-                + se.getMessage();
-            } catch(Exception e) {
+                        + se.getMessage();
+            } catch (Exception e) {
                 strFouten = "[ONBEKEND]: Gegevens konden niet worden opgehaald:<br />"
-                + e.getMessage();
-            } %>
-       
-        <title><%= strBandNaam %> - Details</title>
+                        + e.getMessage();
+            }%>
+
+        <title><%= strBandNaam%> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detail_pagina.css">
@@ -82,45 +82,46 @@
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
                 <section id="inhoud">
-                    <% if (strFouten.equals("")) { %>
+                    <% try {%>
+                    <%
+                        String foto = strBandNaam.toLowerCase().replace(" ", "_").replace("'", "");
+                    %>
                     <article id="foto">
-                        <% 
-                            String foto = strBandNaam.toLowerCase().replace(" ", "_").replace("'", "");
-                        %>
-                        <img src="img/bands/<%= foto %>.jpg"
-                             alt="<%= foto %>" width="95%"
+
+                        <img src="img/bands/<%= foto%>.jpg"
+                             alt="<%= foto%>" width="95%"
                              draggable="true" />
                     </article>
                     <article id="details">
                         <header>
-                            <h2> <%= strBandNaam %></h2>
+                            <h2> <%= strBandNaam%></h2>
                         </header>
                         <table >
                             <tbody>
                                 <tr>
                                     <td >Naam:</td>
-                                    <td><%= strBandNaam %> </td>
+                                    <td><%= strBandNaam%> </td>
                                 </tr>
                                 <tr style="padding-bottom: 20px;">
                                     <td>Genre:</td>
-                                    <td><%= MuziekSoort %></td>
+                                    <td><%= MuziekSoort%></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="padding-top: 15px !important;">
-                                        <a href="http://<%= SiteGroep %>" target="_blank">Site Groep</a>
+                                        <a href="http://<%= SiteGroep%>" target="_blank">Site Groep</a>
                                     </td>
                                 </tr>
-                                <% if (gebruiker != null) { %>
+                                <% if (gebruiker != null) {%>
                                 <tr>
                                     <td colspan="2">
                                         <form action="groep_details_aanpassen.jsp" method="POST">
-                                            <input type="hidden" name="naam" value="<%= strBandNaam %>">
+                                            <input type="hidden" name="naam" value="<%= strBandNaam%>">
                                             <input type="submit" name="bandedit" value="Band aanpassen"
                                                    style="width: 435px; margin-top: 10px;"/>
                                         </form>
                                     </td>
                                 </tr>
-                                <% } %>
+                                <% }%>
                             </tbody>
                         </table>
                     </article>
@@ -129,28 +130,36 @@
                             <h2>Overzicht</h2>
                         </header>
                         <div id="lijsten" data-collapse="persist">
+<<<<<<< HEAD
                             <p class="open menu">Festivals</hp>
+=======
+                            <p class="open menu">Festivals</p>
+>>>>>>> adc5b5f3b44c88bfdf133c64bd38e2fb65313b6f
                             <ul class="enkel_kolom">
-                            <% if (rsFestPBand.next()) {
-                                  do {%>
+                                <% if (rsFestPBand.next()) {
+                                    do {%>
                                 <li><form action="festival_details.jsp" method="post">
-                                    <input type="hidden" name="naam" value="<%= rsFestPBand.getString("fest_naam") %>" />
-                                    <a href="javascript:;" onclick="parentNode.submit();"><%= rsFestPBand.getString("fest_naam") %></a>
+                                        <input type="hidden" name="naam" value="<%= rsFestPBand.getString("fest_naam")%>" />
+                                        <a href="javascript:;" onclick="parentNode.submit();"><%= rsFestPBand.getString("fest_naam")%></a>
                                     </form></li>
-                               <% } while(rsFestPBand.next());
-                                } else {%>
+                                    <% } while (rsFestPBand.next());
+                               } else {%>
                                 <li>Nog geen festivals</li>
-                            <% } %>
+                                    <% }%>
                             </ul>
                         </div>
                     </article>
-                    <% } else { %>
-                    <article style="max-width: 900px;">
-                        <p style="max-width: 900px;">
-                        <%= strFouten %>
-                        </p>
+
+                    <% } catch (Exception e) {%>
+
+                    <article id="overzicht">
+                        <div align="center" style="width: 900px;">
+                            <p align="center" > Er is een fout gebeurd.</p></br
+                            <p align="center" ><a href='index.jsp'>Klik hier</a> om naar de hoofdpagina te gaan</p>
+                        </div>
                     </article>
-                    <% } %>
+
+                    <% }%>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
