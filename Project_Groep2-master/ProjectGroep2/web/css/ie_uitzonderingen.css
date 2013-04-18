@@ -1,0 +1,4 @@
+/*--- Dit css bestand wordt gebruikt om uitzonderlijke css toe te passen ---*/ 
+#page_wrapper {
+    min-width: 1000px; /*minimumbreedte instellen zorgt voor juiste breedte in IE*/
+}
