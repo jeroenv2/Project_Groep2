@@ -183,11 +183,11 @@
                                             }
                                         %>
                                     </td>
-                                    <td><input type="submit" value="Verwijderen"/> </td>
+                                    <td><input type="submit" value="Verwijderen" style="<%= status%>"/> </td>
                                     </form>
 
                                 <form action="groepen_aanpassen.jsp" method="GET">
-                                    <input id="annuleren_hidden" name="annuleren" type="hidden" value="false" style="<%= status%>"/>
+                                    <input id="annuleren_hidden" name="annuleren" type="hidden" value="false" />
 
                                     <td>
                                         <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/></td>
