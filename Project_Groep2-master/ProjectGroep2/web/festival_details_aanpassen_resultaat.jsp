@@ -131,7 +131,7 @@
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
                 <section id="inhoud">
-                    <article>
+                    <article class="fout">
                         <header>
                             <h1>
                             <% if (strFouten.equals("")) { %>

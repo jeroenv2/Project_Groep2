@@ -395,7 +395,7 @@
                                         <%= rsTickFest.getString("typ_omschr") %>
                                     </form>
                                 </li>
-                                <li><%= rsTickFest.getString("typ_prijs") %></li>
+                                <li><%= rsTickFest.getString("typ_prijs") %> €</li>
                                 <%  } while (rsTickFest.next());
                                 } else { %> 
                                 <li>Nog geen tickets</li>
@@ -436,7 +436,7 @@
                     </article>
                 </section>
                 <% } else { %>
-                <section id="fout">
+                <section class="fout">
                     <h2>Helaas</h2>
                     <p>Een fout belet u om deze pagina te bezoeken.</p>
                     <%= strFouten %>
