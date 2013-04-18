@@ -184,6 +184,14 @@ body {
     flex-flex: 1;
 }
 
+/* ----------- Home -------------*/
+li:nth-child(even)
+{
+    margin-left: 5px;
+    padding-left: 5px;
+    border-bottom: 1px solid white;
+}
+
 #pagina_omslag input[type="text"] {
     padding-left: 2px;
 }
@@ -377,6 +385,12 @@ h2 a:link, h2 a:visited
 h2 a:hover
 {
     color: beige;
+    text-decoration: none;
+}
+
+p a:link, p a:visited, p a:hover
+{
+    color: white;
     text-decoration: none;
 }
 
