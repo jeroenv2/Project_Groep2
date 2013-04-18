@@ -105,7 +105,7 @@
                                 <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
                                 <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
 
-                                    <form action="band_details_aanpassen.jsp" method="POST" >
+                                    <form action="groep_details_aanpassen.jsp" method="POST" >
                                         <input name="naam" type="hidden" value="<%=naam%>"/>
                                         <input type="submit" name="Details" value=" Details " />
                                     </form>

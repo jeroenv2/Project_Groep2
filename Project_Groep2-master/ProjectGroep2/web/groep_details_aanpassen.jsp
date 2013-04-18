@@ -23,6 +23,7 @@
             ResultSet rsBand = null, rsFestPBand = null;
             String strFouten = "", strNaam = request.getParameter("naam"), strFoto = "",
                     strSiteGroep="", strGenre = "", strUrl = "", strId = "";
+            String browser = request.getHeader("User-Agent");
             Connectie_Databank connectie = null;
             
             // Bean voor gebruikergegevens
@@ -70,7 +71,11 @@
         <title><%= strNaam %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <% if (browser.contains("mie")) { %>
+        <link rel="stylesheet" href="css/ie_uitzonderingen.css">
+        <% } else { %>
         <link rel="stylesheet" href="css/detail_pagina.css">
+        <% } %>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="js/vendor/jquery.collapse.js"></script>
