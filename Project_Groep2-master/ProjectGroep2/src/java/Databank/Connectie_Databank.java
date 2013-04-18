@@ -48,7 +48,7 @@ public class Connectie_Databank
             Class.forName("com.mysql.jdbc.Driver");
             connectie = DriverManager.getConnection(connectieString, gebruikersnaam, wachtwoord);
         } catch (SQLException se) {
-            System.err.println("VERBINDING MAKEN [SQL]:");
+            System.err.println("VERBINDING MAKEN [SQL]: ");
             throw se;
         } catch(Exception e) {
             System.err.println("VERBINDING MAKEN [ONBEKEND]: " + e.getMessage());
@@ -83,15 +83,15 @@ public class Connectie_Databank
                 inhoudQuery = statement.executeQuery(query);
             }
         } catch(IllegalArgumentException ia) {
-            System.err.println("CONNECTIEKLASSE [ARGUMENTEN]:");
+            System.err.println("CONNECTIEKLASSE [ARGUMENTEN]: ");
             ia.printStackTrace();
             throw ia;
         } catch(SQLException se) {
-            System.err.println("CONNECTIEKLASSE [SQL]:");
+            System.err.println("CONNECTIEKLASSE [SQL]: ");
             se.printStackTrace();
             throw se;
         } catch(Exception e) {
-            System.err.println("CONNECTIEKLASSE [ONBEKEND]:");
+            System.err.println("CONNECTIEKLASSE [ONBEKEND]: ");
             e.printStackTrace();
             throw e;
         }
@@ -119,15 +119,15 @@ public class Connectie_Databank
                 statement.executeUpdate(query);
             }
         } catch(IllegalArgumentException ia) {
-            System.err.println("VERANDERQUERY [ARGUMENTEN]:");
+            System.err.println("VERANDERQUERY [ARGUMENTEN]: ");
             ia.printStackTrace();
             throw ia;
         } catch(SQLException se) {
-            System.err.println("VERANDERQUERY [SQL]:");
+            System.err.println("VERANDERQUERY [SQL]: ");
             se.printStackTrace();
             throw se;
         } catch(Exception e) {
-            System.err.println("VERANDERQUERY [ONBEKEND]:");
+            System.err.println("VERANDERQUERY [ONBEKEND]: ");
             e.printStackTrace();
             throw e;
         }

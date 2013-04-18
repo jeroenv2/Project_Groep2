@@ -26,18 +26,27 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:useBean id="date" scope="page" class="beans.datumBean" />
         <%
+            // Als de methode van het geposte formulier niet POST is, heeft de gebruiker het
+            // formulier in festival_details_aanpassen.jsp niet gepost.
+            if (request.getMethod().equalsIgnoreCase("POST") == false) {
+                response.sendRedirect("./");
+                return;
+            }
+                
+            String strFouten = "", strNaam = "", strLand = "", strGemeente = "", strBeginDatum = "", strEindDatum = "",
+                   strDateFout = "", strDuur = "", strAbsoluutPad ="", strAfbeelding = "", strNieuwAfbeelding = "";
+            
             Connectie_Databank connectie = new Connectie_Databank();
 
             connectie.maakConnectie();
                 
-            String strFouten = "";
-            String strNaam = request.getParameter("fest_naam");
-            String strLand = request.getParameter("land");
-            String strGemeente = request.getParameter("gemeente");
-            String strBeginDatum = request.getParameter("fest_datum");
-            String strEindDatum = request.getParameter("fest_einddatum");
-            String strDateFout = "";
-            String strDuur = "";
+            strNaam = request.getParameter("fest_naam");
+            strLand = request.getParameter("land");
+            strGemeente = request.getParameter("gemeente");
+            strBeginDatum = request.getParameter("fest_datum");
+            strEindDatum = request.getParameter("fest_einddatum");
+            strDateFout = strBeginDatum + " en " + strEindDatum;
+                
             //Verschil tussen begin en einddatum bereken (voor de duur vh festival) met bean datumBean
             try { %>
                 <jsp:setProperty name="date" property="strBegin" value="<%= strBeginDatum %>" />
@@ -69,33 +78,39 @@
                     connectie.voerVeranderingUit("UPDATE festivals"
                     + " SET fest_naam = ?, fest_locatie = ?, fest_datum = ?, fest_duur = ?, fest_einddatum = ?, fest_url = ?"
                     + " WHERE fest_id = ?", alParams);
+                } catch (IllegalArgumentException ia) {
+                    strFouten += "<p id=\"error\">[ARGUMENTEN]: Niet alle gegevens zijn correct, melding:<br />" + ia.getMessage() + "</p>\n";
+                } catch (NullPointerException np) {
+                    strFouten += "<p id=\"error\">De ingegeven datum(s) "+ strDateFout + " zijn/is niet correct</p>\n";
                 } catch (Exception e) {
-                    strFouten += "<p id=\"error\">Niet alle gegevens zijn correct, melding:<br />" + e.getMessage() + "</p>\n";
+                    strFouten += "<p id=\"error\">[ONBEKEND]: Niet alle gegevens zijn correct, melding:<br />" + e.getMessage() + "</p>\n";
                 }
             } else {
                 strFouten += "<p id=\"error\">De duur van het festival kon niet worden berekend.</p>\n";
             }
-            
-                // Dit laatste deel dient om de afbeeldingsnaam voor het festival ter veranderen
-                // zodat de afbeelding dynamisch kan worden ingeladen.
+
+
+            // Dit laatste deel dient om de afbeeldingsnaam voor het festival ter veranderen
+            // zodat de afbeelding dynamisch kan worden ingeladen.
+
+            // Eerst het pad ophalen waarin de server draait
+            // (in localhost is dit in /build/web/... zodra gepubliceerd hoeft de replace("build/", "") niet meer!
+            ServletContext info = session.getServletContext();
+            strAbsoluutPad = info.getRealPath("/").replace("build/", "") + "img/festivals/";
+
+            // Vervolgens maken we een string met het absoluut pad naar de huidige afbeelding.
+            strAfbeelding = strAbsoluutPad 
+                    + request.getParameter("orig_fest_naam").toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
+            // Dan een string met het absoluut pad naar waar de afbeelding komt te staan (in ons geval, zelfde map - andere naam)
+            strNieuwAfbeelding = strAbsoluutPad
+                    + strNaam.toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
                 
-                // Eerst het pad ophalen waarin de server draait
-                // (in localhost is dit in /build/web/... zodra gepubliceerd hoeft de replace("build/", "") niet meer!
-                ServletContext info = session.getServletContext();
-                String strAbsoluutPad = info.getRealPath("/").replace("build/", "") + "img/festivals/";
-                    
-                // Vervolgens maken we een string met het absoluut pad naar de huidige afbeelding.
-                String strAfbeelding = strAbsoluutPad 
-                        + request.getParameter("orig_fest_naam").toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
-                // Dan een string met het absoluut pad naar waar de afbeelding komt te staan (in ons geval, zelfde map - andere naam)
-                String strNieuwAfbeelding = strAbsoluutPad
-                        + strNaam.toLowerCase().replace(" ", "_").replace("'", "") + ".jpg";
-                            
-                //Nu maken we twee File instantie aan (zelfde principe als de twee string strAfbeelding en strNieuwAfbeelding)
-                File bestandAfbeelding = new File(strAfbeelding);
-                File nieuwBestandAfbeelding = new File(strNieuwAfbeelding);
-                // File.renameTo(File) is een functie die een bestand vervangd door een ander (gewoon hernoemen dus)
-                boolean gelukt = bestandAfbeelding.renameTo(nieuwBestandAfbeelding);
+            //Nu maken we twee File instantie aan (zelfde principe als de twee string strAfbeelding en strNieuwAfbeelding)
+            File bestandAfbeelding = new File(strAfbeelding);
+            File nieuwBestandAfbeelding = new File(strNieuwAfbeelding);
+            // File.renameTo(File) is een functie die een bestand vervangd door een ander (gewoon hernoemen dus)
+            boolean gelukt = bestandAfbeelding.renameTo(nieuwBestandAfbeelding);
+
         %>
         <% if (strFouten.equals("")) { %>
         <title><%= strNaam %> aangepast</title>

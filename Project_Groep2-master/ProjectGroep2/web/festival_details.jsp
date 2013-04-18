@@ -19,6 +19,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
+            // Als de methode van het geposte formulier niet POST is, heeft de gebruiker het
+            // formulier in festival_details_aanpassen.jsp niet gepost.
+            if (request.getMethod().equalsIgnoreCase("POST") == false) {
+                response.sendRedirect("./");
+                return;
+            }
+                
             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
             Connectie_Databank connectie = new Connectie_Databank();
 
