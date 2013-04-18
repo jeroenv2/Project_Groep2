@@ -192,7 +192,7 @@
                                         <td><input type="submit" value="Verwijderen" style="<%= status%>;"/> </td>
                                         </form>
 
-                                    <form action="festival_aanpassen.jsp" method="GET">
+                                    <form action="festival_aanpassen.jsp" method="POST">
                                         <input id="annuleren_hidden" name="annuleren" type="hidden" value="false" />
 
                                         <td>
