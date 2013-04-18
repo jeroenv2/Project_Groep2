@@ -19,20 +19,40 @@
                 
                 if (strPaginaNaam.equals("index") || strPaginaNaam.equals("") || strPaginaNaam.equals("inlog") || strPaginaNaam.equals("uitgelogd")) { %>
                     <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
+                    <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                    <% } else if (strPaginaNaam.contains("festival")) { %>
+                    <%} else {%>
+                    <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen_aanpassen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
+                    <% } %>
+               <% } else if (strPaginaNaam.contains("festival") || strPaginaNaam.contains("verwijderen_resultaat")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
-                    <%} else if (strPaginaNaam.contains("groep")) { %>
+                    <%} else {%>
+                    <a href="festival_aanpassen.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen_aanpassen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
+                    <% } %>
+              <%} else if (strPaginaNaam.contains("groep")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
-                    <%} else if (strPaginaNaam.contains("profiel")) { %>
+                    <%} else {%>
+                    <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen_aanpassen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
+                    <% } %>                   
+              <%} else if (strPaginaNaam.contains("profiel")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
+                    <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
+                    <%} else {%>
+                    <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
+                    <a href="groepen_aanpassen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
+                    <% } %>       
                     <%if(gebruiker != null){ //Voor het geval een gebruiker naar een pagina wil gaan zonder ingelogd te zijn (inlog vereist)
                     %>
                             <a href="profiel.jsp"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
