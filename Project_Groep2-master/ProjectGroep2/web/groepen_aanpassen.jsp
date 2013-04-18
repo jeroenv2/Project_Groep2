@@ -119,7 +119,7 @@
                                     %>
                                     <td></td>
                                     <%}%>
-                                <form action="band_details_aanpassen.jsp" method="POST" >
+                                <form action="groep_details_aanpassen.jsp" method="POST" >
                                              <input name="naam" type="hidden" value="<%=naam%>"/>
                                     <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
                                         <input type="submit" name="Details" value=" Details " />
