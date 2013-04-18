@@ -82,19 +82,22 @@
                                 id = res.getString("band_id");
                                 String naam = res.getString("band_naam");
                                 String genre = res.getString("band_soortMuziek");
-                                String afbeelding = res.getString("band_afbeelding");
+                                    
+                                String strFoto = naam.toLowerCase().replace(" ", "_").replace("'", "");
+                                    
                                 String styleTable;
                                 if (groepen.contains(id)) {
                                     styleTable = " background-color: red;";
                                 } else {
                                     styleTable = "";
                                 }
-                        %>                  <a id="<%= id%>"></a>
+                        %>                  
+                        <a id="<%= id%>"></a>
                         <table width='500px' style='border: 1px solid white;<%= styleTable%>'>
                             <tbody align="left" style='padding: 10px;'>
                           
                                 <tr>
-                                    <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
+                                    <td rowspan="4" style="width: 120px; padding: 5px;"><img src="img/bands/<%=strFoto%>.jpg" width="120px" height="80px" alt="Afbeelding Band" /></td>
                                 </tr>
                                 <tr>
                                     <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b></td>
@@ -184,10 +187,10 @@
                                     </form>
 
                                 <form action="groepen_aanpassen.jsp" method="GET">
-                                    <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
+                                    <input id="annuleren_hidden" name="annuleren" type="hidden" value="false" style="<%= status%>"/>
 
                                     <td>
-                                        <input name="annuleren" type="submit" value="Annuleren" style=" background: #14742a;padding: 2px 1px;color: #fff;border-color: #14742a;<%= status%>"/></td>
+                                        <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/></td>
                                 </form>
                                 <td></td>
 

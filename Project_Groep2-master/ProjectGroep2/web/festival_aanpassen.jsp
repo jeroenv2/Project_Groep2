@@ -193,10 +193,10 @@
                                         </form>
 
                                     <form action="festival_aanpassen.jsp" method="GET">
-                                        <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
+                                        <input id="annuleren_hidden" name="annuleren" type="hidden" value="false" style="<%= status%>;"/>
 
                                         <td>
-                                            <input name="annuleren" type="submit" value="Annuleren"</td>
+                                            <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>;"/></td>
                                     </form>
                                     <td></td>
 
