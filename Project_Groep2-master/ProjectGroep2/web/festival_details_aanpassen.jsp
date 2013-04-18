@@ -15,7 +15,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -101,10 +101,6 @@
             + " FROM campings", alLeeg);
             ResultSet rsCampPFest = connectie.haalResultSetOp();
                 
-            //Naam van pagina opslaan
-            
-                
-                
             //Hergebruikte Strings
             String strNaam = rsFest.getString("fest_naam");
             String val;
@@ -116,6 +112,9 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/detail_pagina.css">
+        <!--[if gt IE 6]> 
+            <link rel="stylesheet" href="css/ie_uitzonderingen.css"> 
+        <![endif]-->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="js/vendor/jquery.collapse.js"></script>
@@ -131,7 +130,7 @@
                 <section id="inhoud">
                     <article id="foto">
                         <img src="img/festivals/<%= strFoto %>.jpg"
-                             alt="<%= strFoto %>" width="95%"
+                             alt="<%= strFoto %>" width="200px"
                              draggable="true"
                         />
                     </article>
