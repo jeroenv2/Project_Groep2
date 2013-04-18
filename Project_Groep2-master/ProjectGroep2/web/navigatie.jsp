@@ -26,7 +26,7 @@
                     <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen_aanpassen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                     <% } %>
-                    <% } else if (strPaginaNaam.contains("festival")) { %>
+               <% } else if (strPaginaNaam.contains("festival") || strPaginaNaam.contains("verwijderen_resultaat")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
@@ -35,7 +35,7 @@
                     <a href="festival_aanpassen.jsp"><img src="img/header/festivals_selected.png" alt="Festivals" height="33" /></a>
                     <a href="groepen_aanpassen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>
                     <% } %>
-                    <%} else if (strPaginaNaam.contains("groep")) { %>
+              <%} else if (strPaginaNaam.contains("groep")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
@@ -44,7 +44,7 @@
                     <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen_aanpassen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
                     <% } %>                   
-                    <%} else if (strPaginaNaam.contains("profiel")) { %>
+              <%} else if (strPaginaNaam.contains("profiel")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>

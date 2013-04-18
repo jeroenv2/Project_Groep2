@@ -130,13 +130,13 @@
                                 </tr>
                                 <tr>
                                     <td>Duur:</td>
-                                    <td><%= fest.getInt("fest_duur") %></td>
+                                    <td><%= fest.getInt("fest_duur") %> dagen</td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
                                     <%  String website = fest.getString("fest_url");
                                     if (website != null) {%>
-                                    <td><%= website %></td>
+                                    <td><a href="http://<%= website %>" target="_blank"><%= website %></a></td>
                                     <%} else {%>
                                     <td>Niet beschikbaar</td>
                                     <%}%>
@@ -194,7 +194,7 @@
                                 <% if (tickets.next()) {
                                 do { %>
                                 <li><%= tickets.getString("typ_omschr") %></li>
-                                <li><%= tickets.getString("typ_prijs") %></li>
+                                <li><%= tickets.getString("typ_prijs") %> euros</li>
                                 <%  } while (tickets.next());
                                 } else { %>
                                 <li>Nog geen tickets</li>
