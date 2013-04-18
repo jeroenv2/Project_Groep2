@@ -102,24 +102,25 @@
             <jsp:include page="hoofding.jsp" />
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
-                <section id="inhoud">
+                <% boolean blFouten = !strFouten.equals(""); %>
+                <section <% if (blFouten) { %>class="fout" <% } %> style="text-align: center;" id="inhoud">
                     <article>
                         <header>
                             <h1>
-                            <% if (strFouten.equals("")) { %>
+                            <% if (!blFouten) { %>
                                 Gegevens opgeslagen
                             <% } else { %>
                                 Er heeft zich een fout voorgedaan.
                             <% } %>
                             </h1>
                         </header>
-                        <% if (strFouten.equals("")) { %>
+                        <% if (!blFouten) { %>
                         <p>De gegevens zijn succesvol weggeschreven.</p>
                         <% } else { %>
                         <p>De gegevens konden niet worden weggeschreven</p>
                         <p><%= strFouten %></p>
                         <% } %>
-                        <p>Klik <a href="./groepen.jsp">hier</a> om terug te keren naar het overzicht.</p>
+                        <p>Klik <a style="color: palegreen;" href="./groepen.jsp">hier</a> om terug te keren naar het overzicht.</p>
                     </article>
                 </section>
             </div>
