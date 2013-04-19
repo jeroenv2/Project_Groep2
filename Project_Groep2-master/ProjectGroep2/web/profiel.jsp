@@ -73,7 +73,7 @@
                             //Conversies adres
                             //Adres opsplitsen d.m.v. regex
                             String adres = gebruiker.getAdres();
-                            String[] adresOpgesplitst = adres.split("\\s+|,+|/"); //'+' voor meerdere spaties of komma's achter elkaar te verwijderen
+                            String[] adresOpgesplitst = adres.split("-");
 
                             String huisnmr = "";
                             String straatnaam = "";
@@ -82,26 +82,21 @@
                             String gemeente = "";
                             String land = "";
 
-                            if (adresOpgesplitst.length == 7) {
+                            if (adresOpgesplitst.length == 5) {
                                 huisnmr = adresOpgesplitst[0];
                                 straatnaam = adresOpgesplitst[1];
-                                //adresOpgesplitst[2] -> ','
-                                postcode = adresOpgesplitst[3];
-                                gemeente = adresOpgesplitst[4];
-                                //adresOpgesplitst[5] -> '-'
-                                land = adresOpgesplitst[6];
-                            } else if (adresOpgesplitst.length == 8) //Wanneer er een bus bij een huisnummer is
+                                postcode = adresOpgesplitst[2];
+                                gemeente = adresOpgesplitst[3];
+                                land = adresOpgesplitst[4];
+                            } else if (adresOpgesplitst.length == 6) //Wanneer er een bus bij een huisnummer is
                             {
                                 huisnmr = adresOpgesplitst[0];
                                 bus = adresOpgesplitst[1];
                                 straatnaam = adresOpgesplitst[2];
-                                //adresOpgesplitst[3] -> ','
-                                postcode = adresOpgesplitst[4];
-                                gemeente = adresOpgesplitst[5];
-                                //adresOpgesplitst[6] -> '-'
-                                land = adresOpgesplitst[7];
+                                postcode = adresOpgesplitst[3];
+                                gemeente = adresOpgesplitst[4];
+                                land = adresOpgesplitst[5];
                             }
-                            //!!!Extra controle nodig voor landen en straten met spaties!!!
 
                             //Conversies geboortedatum
                             String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());

@@ -50,11 +50,11 @@
                                     String adres = "";
                                     if(!request.getParameter("txtBus").equals(""))
                                     {
-                                        adres = request.getParameter("txtHuisnummer") + "/" + request.getParameter("txtBus") + " " + request.getParameter("txtStraatnaam") + ", " + request.getParameter("txtPostcode") + " " + request.getParameter("txtGemeente") + " - " + request.getParameter("txtLand");
+                                        adres = request.getParameter("txtHuisnummer") + "-" + request.getParameter("txtBus") + "-" + request.getParameter("txtStraatnaam") + "-" + request.getParameter("txtPostcode") + "-" + request.getParameter("txtGemeente") + "-" + request.getParameter("txtLand");
                                     }
                                     else
                                     {
-                                        adres = request.getParameter("txtHuisnummer") + " " + request.getParameter("txtStraatnaam") + ", " + request.getParameter("txtPostcode") + " " + request.getParameter("txtGemeente") + " - " + request.getParameter("txtLand");
+                                        adres = request.getParameter("txtHuisnummer") + "-" + request.getParameter("txtStraatnaam") + "-" + request.getParameter("txtPostcode") + "-" + request.getParameter("txtGemeente") + "-" + request.getParameter("txtLand");
                                     }                                
 
                                     lijstParams.add(adres);
