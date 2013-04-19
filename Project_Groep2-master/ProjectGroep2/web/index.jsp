@@ -20,7 +20,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -49,6 +49,33 @@
             <div id="inhoud_omslag">
                 <section id="inhoud">
 
+                    
+                    
+                    <%
+                        Connectie_Databank connectie_ipLogging = new Connectie_Databank();
+
+                        connectie_ipLogging.maakConnectie();
+                        List<String> lijstParams_ipLogging = new ArrayList<String>();
+
+                        //Huidige tijd en datum opvragen
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
+                        Calendar cal = Calendar.getInstance();
+                        
+                        //Controle voor als de gebruiker achter een proxy zit of niet
+                        String strIpAdres = request.getHeader("HTTP_X_FORWARDED_FOR"); //Proxy
+                        if(strIpAdres == null)
+                        {
+                            strIpAdres = request.getRemoteAddr(); //Geen proxy
+                        }
+                        
+                        lijstParams_ipLogging.add(dateFormat.format(cal.getTime()) + "");
+                        lijstParams_ipLogging.add(strIpAdres);
+
+                        connectie_ipLogging.veranderQuery("INSERT INTO iplogging (ip_datum, ip_adres) VALUES(?, ?)", lijstParams_ipLogging);
+                    %>
+        
+        
+        
                     <div id="links">
                         <h2>Over de website</h2>
                         <p>Op onze website krijgt u meer informatie over festivals wereldwijd.</p>

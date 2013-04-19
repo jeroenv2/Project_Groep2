@@ -75,7 +75,6 @@
                                 List<String> lijstParams = new ArrayList<String>();
 
                                 connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
-                                //connectie.voerQueryUit("SELECT * FROM festivals WHERE fest_naam ='x'", lijstParams);
                                 ResultSet rsInhoudfestivals = connectie.haalResultSetOp();
 
                                 rsInhoudfestivals.last();
