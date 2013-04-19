@@ -131,7 +131,8 @@
         %>
         <div id="opmaak_ingelogd">
                 <div class="tekst_vet">Hallo <%=gebruikersnaam%></div>
-                <a href="profiel.jsp">Profiel Aanpassen</a> | <a href="uitgelogd.jsp">Uitloggen</a>
+                <a href="profiel.jsp">Profiel Aanpassen</a> | <a href="uitgelogd.jsp">Uitloggen</a><br/>
+                <p>Bezocht:&nbsp;&nbsp;<img src="http://www.easycounter.com/counter.php?stevenve" border="0" alt="Aantal Keren" style="float: right;"></p>
         </div>
         <%  }
             else
