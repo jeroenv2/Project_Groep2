@@ -5,6 +5,11 @@
 --%>
 
 <%@page import="beans.gegevensGebruiker"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Databank.Connectie_Databank"%>
@@ -135,16 +140,62 @@
                 <p>Bezocht:&nbsp;&nbsp;<img src="http://www.easycounter.com/counter.php?stevenve" border="0" alt="Aantal Keren" style="float: right;"></p>
         </div>
         <%  }
-            else
+            else //Wanneer de gebruiker niet is ingelogd
             {
         %>
-                <form id="login" method="post" action="inlog.jsp">
+                <form id="login" method="post">
                     <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
                     <br/>
                     <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />
-                    <br/>
+                    <div style="color: red;" id="Foutmelding" hidden>U heeft verkeerde inloggegevens ingevoerd</div>
                     <input type="submit" value="Log In" id="loginButton"/>
                 </form>
-        <%  }%>
+        <%  
+                String gebruikersnaam = request.getParameter("gebruikersnaam");
+                String paswoord = request.getParameter("paswoord");
+                
+                if(gebruikersnaam != null && paswoord != null) //Controleren of geprobeerd wordt om in te loggen
+                {
+                    Databank.Connectie_Databank connectieInlog = new Databank.Connectie_Databank();
+                    connectieInlog.maakConnectie();
+
+                    String query = "SELECT * FROM geregistreerdegebruikers WHERE lower(gebr_naam) = ? AND gebr_wachtwoord = PASSWORD(?)";
+                    List<String> lijstParamsInlog = new ArrayList<String>();
+                    lijstParamsInlog.add(gebruikersnaam.toLowerCase());
+                    lijstParamsInlog.add(paswoord);
+
+                    connectie.voerQueryUit(query, lijstParamsInlog);
+                    ResultSet res = connectie.haalResultSetOp();
+
+                    res.last();
+                    int lengteResultSet = res.getRow();  
+                    if(lengteResultSet == 0)
+                    {%>
+                        <script>
+                            document.getElementById("Foutmelding").style.display = "inline";
+                        </script>
+                    <% }
+                    else
+                    {
+                        gegevensGebruiker gebruikerInlog = new gegevensGebruiker();
+                        
+                        String gebruikersnaamInlog = res.getString("gebr_naam");
+                        String paswoordInlog = res.getString("gebr_wachtwoord");
+                        String adresInlog = res.getString("gebr_adres");        
+                        Date geboortedatumInlog = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(res.getString("gebr_gebDat")); //Geboortedatum omzetten naar Date (controles nodig later in de webapp)
+
+                        //In beans steken
+                        gebruikerInlog.setGebruikersnaam(gebruikersnaamInlog);
+                        gebruikerInlog.setPaswoord(paswoordInlog);
+                        gebruikerInlog.setAdres(adresInlog);
+                        gebruikerInlog.setGeboorteDatum(geboortedatumInlog);
+
+                        session.setAttribute("gegevensGebruiker", gebruikerInlog);
+                        %>
+                        <script>location.reload();</script>      
+                <% }
+                }
+            }
+        %>
     </header>
 </html>

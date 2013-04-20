@@ -66,7 +66,7 @@
                         <p>Indien u meer informatie opvraagt over een festival, heeft u de keuze om details over groepen op te vragen en vica versa.</p>
                         <h2>Over Groep 2</h2>
                         <p>Groep 2 is een groep studenten van de richting Toegepaste Informatica op de PHL</p>
-                        <p>De groepsleden zijn Anke Appeltans, Wouter Peeters, Jeroen Vanlessen, Robbie Vercammen en Steven Verheyen</p>
+                        <p>De groepsleden zijn Anke Appeltans, Wouter Peeters, Jeroen Vanlessen, Robbie Vercammen en Steven Verheyen.</p>
                         <p>Groep 2 wenst u een informatieve surfervaring!</p>
                     </div>
 
