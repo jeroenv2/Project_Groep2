@@ -73,40 +73,42 @@
                                     if (lengteResultSet > 0) {
                         %>
 
-                        <%! String id = "";%>
+                        <%! String strID = "";%>
                         <!-- Informatie groepen -->
                         <%
                             res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
                             res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
                             while (res.next()) {
-                                id = res.getString("band_id");
-                                String naam = res.getString("band_naam");
-                                String genre = res.getString("band_soortMuziek");
-                                String afbeelding = res.getString("band_afbeelding");
+                                strID = res.getString("band_id");
+                                String strNaam = res.getString("band_naam");
+                                String strGenre = res.getString("band_soortMuziek");
+                                String strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
                                 String styleTable;
-                                if (groepen.contains(id)) {
+                                if (groepen.contains(strID)) {
                                     styleTable = " background-color: red;";
                                 } else {
                                     styleTable = "";
                                 }
-                        %>                  <a id="<%= id%>"></a>
+                        %>                  <a id="<%= strID%>"></a>
                         <table width='500px' style='border: 1px solid white;<%= styleTable%>'>
                             <tbody align="left" style='padding: 10px;'>
 
                                 <tr>
-                                    <td rowspan="4" style="width: 120px; padding: 5px;"><img src="<%=afbeelding%>" width="120px" height="80px" alt="Afbeelding Band" /></td>
+                                    <td rowspan="4" style="width: 120px; padding: 5px;">
+                                        <img id="opmaak_afbeelding" src="img/bands/<%= strFoto %>.jpg" alt="Afbeelding Band" />
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= naam%></b></td>
-                            <input type="hidden" name="naam" value="<%=naam%>">
+                                    <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= strNaam%></b></td>
+                            <input type="hidden" name="naam" value="<%=strNaam%>">
                             <td  style="border-top: 1px solid white;"></td>
                             </tr>
                             <tr>
-                                <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=genre%></td>
+                                <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=strGenre%></td>
                                 <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
 
                                     <form action="groep_details_aanpassen.jsp" method="POST" >
-                                        <input name="naam" type="hidden" value="<%=naam%>"/>
+                                        <input name="naam" type="hidden" value="<%=strNaam%>"/>
                                         <input type="submit" name="Details" value=" Details " />
                                     </form>
 
@@ -126,21 +128,21 @@
                                 <%}%>
 
                                 <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
-                                    <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST">
+                                    <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(strID) - 1%>" method="POST">
                                         <%
                                             String knop;
-                                            if (!groepen.contains(id)) {
+                                            if (!groepen.contains(strID)) {
                                                 knop = "Verwijderen";
                                         %>
 
-                                        <input name="elementen" type="hidden" value="<%=id%>"/>
+                                        <input name="elementen" type="hidden" value="<%=strID%>"/>
                                         <%} else {
                                                 knop = "Annuleren";
                                                 Verwijder_knop = true;
 
                                             }
                                             for (String element : groepen) {
-                                                if (!element.equals(id)) {
+                                                if (!element.equals(strID)) {
                                         %>
                                         <input name="elementen" type="hidden" value="<%=element%>"/>
 
