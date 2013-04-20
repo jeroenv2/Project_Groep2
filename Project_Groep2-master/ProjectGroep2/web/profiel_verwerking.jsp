@@ -80,7 +80,7 @@
                                     
                                     if(gebruiker.getPaswoord().equals(request.getParameter("passHuidigPaswoord")))
                                     {
-                                        aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=? WHERE gebr_naam=?", lijstParams);
+                                        aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=PASSWORD(?) WHERE gebr_naam=?", lijstParams);
                                 
                                         if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                         {

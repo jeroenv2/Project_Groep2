@@ -18,7 +18,7 @@
                 beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                 
                 if (strPaginaNaam.equals("index") || strPaginaNaam.equals("") || strPaginaNaam.equals("inlog") || strPaginaNaam.equals("uitgelogd")) { %>
-                    <a href="/"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
+                    <a href="index.jsp"><img src="img/header/home_selected.png" alt="Home" height="33" /></a> 
                     <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen.jsp"><img src="img/header/groepen.png" alt="Groepen" height="33" /></a>

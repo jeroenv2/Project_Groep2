@@ -405,6 +405,19 @@ p a:hover
     width: 200px;
 }
 
+/*---- Opmaak index.jsp ----*/
+#links {
+    float: left;
+    width: 40%;
+    padding: 10px;
+    text-align: left;
+}
+
+#rechts {
+    margin-left: 45%;
+    padding: 10px;
+}
+
 /* ----------------------------
              HEADER 
    ----------------------------*/

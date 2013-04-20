@@ -29,18 +29,6 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/ie_uitzonderingen.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <style>
-            #links {
-                float: left;
-                width: 40%;
-                padding: 10px;
-            }
-
-            #rechts {
-                margin-left: 45%;
-                padding: 10px;
-            }
-        </style>
     </head>
     <body>
         <div id="pagina_omslag">
@@ -48,9 +36,7 @@
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
                 <section id="inhoud">
-
-                    
-                    
+ 
                     <%
                         Connectie_Databank connectie_ipLogging = new Connectie_Databank();
 
@@ -74,22 +60,13 @@
                         connectie_ipLogging.veranderQuery("INSERT INTO iplogging (ip_datum, ip_adres) VALUES(?, ?)", lijstParams_ipLogging);
                     %>
         
-        
-        
                     <div id="links">
                         <h2>Over de website</h2>
                         <p>Op onze website krijgt u meer informatie over festivals wereldwijd.</p>
                         <p>Indien u meer informatie opvraagt over een festival, heeft u de keuze om details over groepen op te vragen en vica versa.</p>
                         <h2>Over Groep 2</h2>
                         <p>Groep 2 is een groep studenten van de richting Toegepaste Informatica op de PHL</p>
-                        <p>Deze groep bestaat uit de volgende studenten:</p>
-                        <ul>
-                            <li>Steven Verheyen</li>
-                            <li>Robbie Vercammen</li>
-                            <li>Wouter Peeters</li>
-                            <li>Jeroen Vanlessen</li>
-                            <li>Anke Appeltans</li>
-                        </ul>
+                        <p>De groepsleden zijn Anke Appeltans, Wouter Peeters, Jeroen Vanlessen, Robbie Vercammen en Steven Verheyen</p>
                         <p>Groep 2 wenst u een informatieve surfervaring!</p>
                     </div>
 
