@@ -259,7 +259,8 @@
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM iplogging ORDER BY ip_datum desc LIMIT 5", lijstParams);
+                                //Laatste 10 IP adressen opzoeken
+                                connectie.voerQueryUit("SELECT * FROM iplogging ORDER BY ip_datum desc LIMIT 10", lijstParams);
                                 ResultSet rsInhoudIpLogging = connectie.haalResultSetOp();
 
                                 rsInhoudIpLogging.last();
