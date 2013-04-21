@@ -80,8 +80,7 @@
                                 rsInhoudfestivals.last();
                                 int lengteRsInhoudfestivals = rsInhoudfestivals.getRow();
 
-                                rsInhoudfestivals.first();
-                                rsInhoudfestivals.previous();
+                                rsInhoudfestivals.beforeFirst();
 
                                 if (lengteRsInhoudfestivals > 0)
                                 {

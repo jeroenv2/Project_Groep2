@@ -4,11 +4,15 @@
     Author     : Steven Verheyen
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Databank.Connectie_Databank"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -39,16 +43,28 @@
             {
                 var algemeen = document.getElementById("frmAlgemeen");
                 var paswoorden = document.getElementById("frmPaswoorden");
-                algemeen.style.display = 'inline';
+                var ipLogging = document.getElementById("ipLogging");
                 paswoorden.style.display = 'none';
-                document.getElementById("Algemeen").style.backgroundColor = 'white;';
+                ipLogging.style.display = 'none';
+                algemeen.style.display = 'inline';
             }
             function klikPaswoord()
             {
                 var algemeen = document.getElementById("frmAlgemeen");
                 var paswoorden = document.getElementById("frmPaswoorden");
+                var ipLogging = document.getElementById("ipLogging");
                 algemeen.style.display = 'none';
+                ipLogging.style.display = 'none';
                 paswoorden.style.display = 'inline';
+            }
+            function klikIpLogging()
+            {
+                var algemeen = document.getElementById("frmAlgemeen");
+                var paswoorden = document.getElementById("frmPaswoorden");
+                var ipLogging = document.getElementById("ipLogging");
+                algemeen.style.display = 'none';
+                paswoorden.style.display = 'none';
+                ipLogging.style.display = 'inline';
             }
             function klikFestival() 
             {
@@ -104,6 +120,7 @@
                     <div id="profiel_navigatie">
                         <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px; width:90px;" onClick="klikAlgemeen();" /><br />
                         <input type="button" id="btnPaswoord" value=" Paswoord " style="margin-bottom: 2px; width:90px;" onClick="klikPaswoord();" /><br/>
+                        <input type="button" id="btnIpLogging" value=" IP Logging " style="margin-bottom: 2px; width:90px;" onClick="klikIpLogging();" /><br/>
                         <input type="button" id="btnTicketsPerFestival" value="Tickets" style="margin-bottom: 2px; width:90px;" onClick="klikFestival;" /><br/>
                         <input type="button" id="btnAdminGegevens" value="Admins" style="margin-bottom: 2px; width:90px;" onClick="klikAdmins;" />
                     </div>
@@ -230,7 +247,48 @@
                                 </tbody>
                             </table>
                         </form>
+                                        
+                                        
+                        <!-- IP adressen te tonen -->
+                        <div id="ipLogging" hidden>
+                            <h2>IP Logging</h2>
+                            
+                            <%
+                                Connectie_Databank connectie = new Connectie_Databank();
+
+                                connectie.maakConnectie();
+                                List<String> lijstParams = new ArrayList<String>();
+
+                                connectie.voerQueryUit("SELECT * FROM iplogging ORDER BY ip_datum desc LIMIT 5", lijstParams);
+                                ResultSet rsInhoudIpLogging = connectie.haalResultSetOp();
+
+                                rsInhoudIpLogging.last();
+                                int lengteRsInhoudfestivals = rsInhoudIpLogging.getRow();
+
+                                rsInhoudIpLogging.beforeFirst();
+
+                                if (lengteRsInhoudfestivals > 0)
+                                {
+                                    while(rsInhoudIpLogging.next())
+                                    {
+                                        String strIpAdres = rsInhoudIpLogging.getString("ip_adres");
+                                        if(strIpAdres.equals("0:0:0:0:0:0:0:1")) //Controle voor het geval de IP adres localhost is
+                                        {
+                                            strIpAdres = "127.0.0.1 (localhost)";
+                                        }
+                            %>
+                                        <p>
+                                            IP adres: <%= strIpAdres %><br/>
+                                            Datum: <%= rsInhoudIpLogging.getString("ip_datum") %><br/>
+                                        </p>
+                                 <% }
+                               }else
+                                {%>
+                                    Helaas! Er zijn nog geen IP adressen gelogd...
+                                <% } %>
+                        </div>
                     </div>
+                    <div style="clear: both;"></div>
                     <%} catch (Exception e) {%>
                     <div class="tekst_centreren">
                         <h3>U dient eerst ingelogd te zien alvorens u uw profiel kan wijzigen</h3>

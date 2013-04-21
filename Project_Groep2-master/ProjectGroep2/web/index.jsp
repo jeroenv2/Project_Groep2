@@ -1,7 +1,7 @@
 <%-- 
     Document   : layout
     Created on : 28-mrt-2013, 9:04:18
-    Author     : robbie, jeroen
+    Author     : robbie, jeroen, steven
 --%>
 
 <%@page import="java.util.List"%>
@@ -38,26 +38,49 @@
                 <section id="inhoud">
  
                     <%
-                        Connectie_Databank connectie_ipLogging = new Connectie_Databank();
-
-                        connectie_ipLogging.maakConnectie();
-                        List<String> lijstParams_ipLogging = new ArrayList<String>();
-
-                        //Huidige tijd en datum opvragen
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
-                        Calendar cal = Calendar.getInstance();
-                        
-                        //Controle voor als de gebruiker achter een proxy zit of niet
-                        String strIpAdres = request.getHeader("HTTP_X_FORWARDED_FOR"); //Proxy
-                        if(strIpAdres == null)
+                        try
                         {
-                            strIpAdres = request.getRemoteAddr(); //Geen proxy
-                        }
-                        
-                        lijstParams_ipLogging.add(dateFormat.format(cal.getTime()) + "");
-                        lijstParams_ipLogging.add(strIpAdres);
+                            //Huidige tijd en datum opvragen
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
+                            Calendar calNu = Calendar.getInstance();
 
-                        connectie_ipLogging.veranderQuery("INSERT INTO iplogging (ip_datum, ip_adres) VALUES(?, ?)", lijstParams_ipLogging);
+                            //Controle voor als de gebruiker achter een proxy zit of niet
+                            String strIpAdres = request.getHeader("HTTP_X_FORWARDED_FOR"); //Proxy
+                            if(strIpAdres == null)
+                            {
+                                strIpAdres = request.getRemoteAddr(); //Geen proxy
+                            }
+
+                            //Controle om te kijken of het IP adres al eens gelogd is binnen 30 minuten
+                            Connectie_Databank connectie_InhoudIpLogging = new Connectie_Databank();
+
+                            connectie_InhoudIpLogging.maakConnectie();
+                            List<String> lijstParams_ControleIpLogging = new ArrayList<String>();
+
+                            lijstParams_ControleIpLogging.add(strIpAdres);
+
+                            connectie_InhoudIpLogging.voerQueryUit("SELECT * FROM iplogging WHERE DATE_SUB(CURDATE(), INTERVAL 30 MINUTE) AND ip_adres = ?", lijstParams_ControleIpLogging);
+                            ResultSet rsInhoudIpLogging = connectie_InhoudIpLogging.haalResultSetOp();
+
+                            rsInhoudIpLogging.last();
+                            int lengteRsInhoudIpLogging = rsInhoudIpLogging.getRow();
+
+                            if(lengteRsInhoudIpLogging == 0) //IP is nog niet gelogd in 30 minuten
+                            {
+                                //Wegschrijven van IP Logging                        
+                                Connectie_Databank connectie_ipLogging = new Connectie_Databank();
+
+                                connectie_ipLogging.maakConnectie();
+                                List<String> lijstParams_ipLogging = new ArrayList<String>();
+
+                                lijstParams_ipLogging.add(dateFormat.format(calNu.getTime()) + "");
+                                lijstParams_ipLogging.add(strIpAdres);
+
+                                connectie_ipLogging.veranderQuery("INSERT INTO iplogging (ip_datum, ip_adres) VALUES(?, ?)", lijstParams_ipLogging);
+                            }
+                        }catch(Exception e){
+                            out.println("Ergens een fout: " + e.getMessage());
+                        }
                     %>
         
                     <div id="links">
