@@ -143,7 +143,7 @@
             else //Wanneer de gebruiker niet is ingelogd
             {
         %>
-                <form id="login" method="post">
+                <form id="login" method="post" action="index.jsp">
                     <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
                     <br/>
                     <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />

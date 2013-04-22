@@ -160,7 +160,7 @@
                                 </tr>
                                 <tr>
                                     <td>Duur:</td>
-                                    <td><%= rsFest.getInt("fest_duur") %></td>
+                                    <td><%= rsFest.getInt("fest_duur") %> dagen</td>
                                 </tr>
                                 <tr>
                                     <td>Website:</td>
