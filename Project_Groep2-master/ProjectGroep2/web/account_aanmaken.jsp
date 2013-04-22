@@ -33,38 +33,70 @@
                 <section id="inhoud">
                     <div class="tekst_centreren">
                          <%
-                            Connectie_Databank connectieAanmakenGebruiker = new Connectie_Databank();
+                             try
+                             {
+                                String aanmakenGebruikersnaam = request.getParameter("txtAanmakenGebruikersnaam");
 
-                            connectieAanmakenGebruiker.maakConnectie();
-                            List<String> lijstParams = new ArrayList<String>();
+                                Connectie_Databank connectie = new Connectie_Databank();
+
+                                connectie.maakConnectie();
+                                List<String> lijstParamsControle = new ArrayList<String>();
+                                lijstParamsControle.add(aanmakenGebruikersnaam);
+
+                                connectie.voerQueryUit("SELECT * FROM geregistreerdegebruikers WHERE gebr_naam = ?", lijstParamsControle);
+                                ResultSet rsInhoudfestivals = connectie.haalResultSetOp();
+
+                                rsInhoudfestivals.last();
                                 
-                            String aanmakenAdres = "";
-                            if(!request.getParameter("txtAanmakenBus").equals(""))
-                            {
-                                aanmakenAdres = request.getParameter("txtAanmakenHuisnummer") + "-" + request.getParameter("txtAanmakenBus") + "-" + request.getParameter("txtAanmakenStraatnaam") + "-" + request.getParameter("txtAanmakenPostcode") + "-" + request.getParameter("txtAanmakenGemeente") + "-" + request.getParameter("txtAanmakenLand");
-                            }
-                            else
-                            {
-                                aanmakenAdres = request.getParameter("txtAanmakenHuisnummer") + "-" + request.getParameter("txtAanmakenStraatnaam") + "-" + request.getParameter("txtAanmakenPostcode") + "-" + request.getParameter("txtAanmakenGemeente") + "-" + request.getParameter("txtAanmakenLand");
-                            } 
-                                    
-                            lijstParams.add(request.getParameter("txtAanmakenGebruikersnaam"));
-                            lijstParams.add(aanmakenAdres);
-                            lijstParams.add(request.getParameter("txtAanmakenPaswoord"));
-                            lijstParams.add(request.getParameter("dtAanmakenGebDat"));
-                            
-                            int aantalToegevoegd = connectieAanmakenGebruiker.veranderQuery("INSERT INTO geregistreerdegebruikers (gebr_naam, gebr_adres, gebr_wachtwoord, gebr_gebDat) VALUES (?, ?, PASSWORD(?), ?)", lijstParams);
+                                if(rsInhoudfestivals.getRow() > 0)
+                                {%>
+                                <div class="tekst_centreren">
+                                    <h3>Gebruikersnaam bestaat al</h3>
+                                    De gebruikersnaam die u wilt gebruiken bestaat al...<br/>
+                                    Klik <a href="administrator.jsp">hier</a> om terug te keren naar de administratorpagina
+                                </div>
+                                <%}
+                                else
+                                {
 
-                            if (aantalToegevoegd > 0) //Gebruiker is aangemaakt
-                            {%>
-                                <h3>Administrator is aangemaakt!</h3>
-                                Deze Administrator kan nu inloggen met ingevoerde gegevens
-                            <%}
-                            else
-                            {%>
-                                <h3>Oeps!</h3>
-                                Er is iets mis gegaan. Controleer de databank en probeer later nog eens...
-                            <%}%>
+                                    Connectie_Databank connectieAanmakenGebruiker = new Connectie_Databank();
+
+                                    connectieAanmakenGebruiker.maakConnectie();
+                                    List<String> lijstParams = new ArrayList<String>();
+
+                                    String aanmakenAdres = "";
+                                    if(!request.getParameter("txtAanmakenBus").equals(""))
+                                    {
+                                        aanmakenAdres = request.getParameter("txtAanmakenHuisnummer") + "-" + request.getParameter("txtAanmakenBus") + "-" + request.getParameter("txtAanmakenStraatnaam") + "-" + request.getParameter("txtAanmakenPostcode") + "-" + request.getParameter("txtAanmakenGemeente") + "-" + request.getParameter("txtAanmakenLand");
+                                    }
+                                    else
+                                    {
+                                        aanmakenAdres = request.getParameter("txtAanmakenHuisnummer") + "-" + request.getParameter("txtAanmakenStraatnaam") + "-" + request.getParameter("txtAanmakenPostcode") + "-" + request.getParameter("txtAanmakenGemeente") + "-" + request.getParameter("txtAanmakenLand");
+                                    } 
+
+                                    lijstParams.add(aanmakenGebruikersnaam);
+                                    lijstParams.add(aanmakenAdres);
+                                    lijstParams.add(request.getParameter("txtAanmakenPaswoord"));
+                                    lijstParams.add(request.getParameter("dtAanmakenGebDat"));
+
+                                    int aantalToegevoegd = connectieAanmakenGebruiker.veranderQuery("INSERT INTO geregistreerdegebruikers (gebr_naam, gebr_adres, gebr_wachtwoord, gebr_gebDat) VALUES (?, ?, PASSWORD(?), ?)", lijstParams);
+
+                                    if (aantalToegevoegd > 0) //Gebruiker is aangemaakt
+                                    {%>
+                                        <h3>Administrator is aangemaakt!</h3>
+                                        Deze Administrator kan nu inloggen met ingevoerde gegevens
+                                    <%}
+                                    else
+                                    {%>
+                                        <h3>Oeps!</h3>
+                                        Er is iets mis gegaan. Controleer de databank en probeer later nog eens...
+                                    <%}
+                                }
+                         }
+                         catch(Exception e)
+                         {
+                            out.println(e.getMessage());
+                         }%>
                     </div>
                 </section>
             </div>

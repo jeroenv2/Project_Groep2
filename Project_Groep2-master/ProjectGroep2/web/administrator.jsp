@@ -277,8 +277,7 @@
                                 </tbody>
                             </table>
                         </form>
-                                        
-                                        
+
                         <!-- IP adressen te tonen -->
                         <div id="ipLogging" hidden>
                             <h2>IP Logging</h2>
@@ -318,7 +317,6 @@
                                     Helaas! Er zijn nog geen IP adressen gelogd...
                                 <% } %>
                         </div>
-                        
                         
                         <form method="POST" action="account_aanmaken.jsp" id="frmAccountMaken" hidden onsubmit="return controlePaswoordenAanmakenAccount();">
                             <table>
@@ -370,7 +368,7 @@
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Geboortedatum: </td>
-                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" id="txtGebruikersnaam" name="dtAanmakenGebDat" required placeholder="yyyy/MM/dd" value="1990-01-01" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="Formaat: yyyy-MM-dd"/></td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Paswoord: </td>

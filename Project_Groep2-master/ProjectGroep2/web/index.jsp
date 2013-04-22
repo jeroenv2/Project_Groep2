@@ -59,7 +59,7 @@
 
                             lijstParams_ControleIpLogging.add(strIpAdres);
 
-                            connectie_InhoudIpLogging.voerQueryUit("SELECT * FROM iplogging WHERE DATE_SUB(CURDATE(), INTERVAL 30 MINUTE) AND ip_adres = ?", lijstParams_ControleIpLogging);
+                            connectie_InhoudIpLogging.voerQueryUit("SELECT * FROM iplogging WHERE DATE_SUB(CURDATE(), INTERVAL 30 MINUTE) <= DATE_SUB(ip_datum, INTERVAL 30 MINUTE) AND ip_adres = ?", lijstParams_ControleIpLogging);
                             ResultSet rsInhoudIpLogging = connectie_InhoudIpLogging.haalResultSetOp();
 
                             rsInhoudIpLogging.last();
