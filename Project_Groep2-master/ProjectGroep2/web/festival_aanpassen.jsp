@@ -68,13 +68,13 @@
                                 List<String> lijstParams = new ArrayList<String>();
 
                                 connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
-                                ResultSet res = connectie.haalResultSetOp();
+                                ResultSet rs = connectie.haalResultSetOp();
 
-                                res.last();
-                                int lengteResultSet = res.getRow();
+                                rs.last();
+                                int lengteResultSet = rs.getRow();
 
-                                res.first();
-                                res.previous();
+                                rs.first();
+                                rs.previous();
 
                                 if (lengteResultSet > 0) {
 
@@ -84,13 +84,13 @@
                             <%! String id = "";%>
                             <!-- Informatie Festivals -->
                             <%
-                                res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                                res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                                while (res.next()) {
-                                    id = res.getString("fest_id");
-                                    String naam = res.getString("fest_naam");
-                                    String beginDatum = res.getString("fest_datum");
-                                    String locatie = res.getString("fest_locatie");
+                                rs.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                                rs.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                                while (rs.next()) {
+                                    id = rs.getString("fest_id");
+                                    String naam = rs.getString("fest_naam");
+                                    String beginDatum = rs.getString("fest_datum");
+                                    String locatie = rs.getString("fest_locatie");
                                     String styleTable;
                                     if (fest.contains(id)) {
                                         styleTable = " background-color: red;";
@@ -119,7 +119,7 @@
                                             //Calendar gebruiken om dagen (duur) op te tellen bij de begindatum
                                             Calendar cal = Calendar.getInstance();  //Huidige datum in cal steken
                                             cal.setTime(begindatum);                //De begindatum in cal steken
-                                            cal.add(cal.DATE, Integer.parseInt(res.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
+                                            cal.add(cal.DATE, Integer.parseInt(rs.getString("fest_duur")));    //Dagen (duur) optellen bij de begindatum
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
@@ -133,8 +133,8 @@
                                     </tr>
                                     <tr>
                                         <%
-                                            if (res.getString("fest_url") != null) {
-                                                String url = res.getString("fest_url");
+                                            if (rs.getString("fest_url") != null) {
+                                                String url = rs.getString("fest_url");
                                         %>
                                         <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
                                         <%

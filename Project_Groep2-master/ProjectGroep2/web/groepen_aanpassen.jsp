@@ -36,7 +36,7 @@
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
                 <section id="inhoud">
-                    <div align="center">
+                    <div id="elementen_centreren">
 
                         <%
                             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
@@ -62,13 +62,13 @@
                                     List<String> lijstParams = new ArrayList<String>();
 
                                     connectie.voerQueryUit("SELECT * FROM bands ", lijstParams);
-                                    ResultSet res = connectie.haalResultSetOp();
+                                    ResultSet rs = connectie.haalResultSetOp();
 
-                                    res.last();
-                                    int lengteResultSet = res.getRow();
+                                    rs.last();
+                                    int lengteResultSet = rs.getRow();
 
-                                    res.first();
-                                    res.previous();
+                                    rs.first();
+                                    rs.previous();
 
                                     if (lengteResultSet > 0) {
                         %>
@@ -76,12 +76,12 @@
                         <%! String strID = "";%>
                         <!-- Informatie groepen -->
                         <%
-                            res.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
-                            res.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
-                            while (res.next()) {
-                                strID = res.getString("band_id");
-                                String strNaam = res.getString("band_naam");
-                                String strGenre = res.getString("band_soortMuziek");
+                            rs.first();    //Zorgen dat de cursor op de 1ste rij van de ResultSet staat
+                            rs.previous(); //Zorgen dat de cursor op rij 0 komt te staan (anders wordt de 1ste rij niet meegenomen!!!)
+                            while (rs.next()) {
+                                strID = rs.getString("band_id");
+                                String strNaam = rs.getString("band_naam");
+                                String strGenre = rs.getString("band_soortMuziek");
                                 String strFoto = strNaam.toLowerCase().replace(" ", "_").replace("'", "");
                                 String styleTable;
                                 if (groepen.contains(strID)) {
@@ -117,8 +117,8 @@
                             </tr>
                             <tr>
                                 <%
-                                    if (res.getString("band_url") != null) {
-                                        String url = res.getString("band_url");
+                                    if (rs.getString("band_url") != null) {
+                                        String url = rs.getString("band_url");
                                 %>
                                 <td style='padding-left: 10px; padding-bottom: 6px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
                                 <%
