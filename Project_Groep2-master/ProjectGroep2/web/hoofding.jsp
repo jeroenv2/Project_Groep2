@@ -147,9 +147,10 @@
                     <input type="text" id="username" name="gebruikersnaam" placeholder="Gebruikersnaam" required />
                     <br/>
                     <input type="password" id="password" name="paswoord" placeholder="Paswoord" required />
-                    <div style="color: red;" id="Foutmelding" hidden>U heeft verkeerde inloggegevens ingevoerd</div>
-                    <input type="submit" value="Log In" id="loginButton"/>
+                    <div style="color: red; float: right;" id="Foutmelding" hidden>U hebt verkeerde inloggegevens ingevoerd</div>
+                    <input type="submit" value="Log In" id="loginButton" style="float: right;"/>
                 </form>
+                <div style="clear: both;"></div>
         <%  
                 String gebruikersnaam = request.getParameter("gebruikersnaam");
                 String paswoord = request.getParameter("paswoord");
