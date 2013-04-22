@@ -23,6 +23,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
+                        if (!"POST".equalsIgnoreCase(request.getMethod())) {
+                response.sendRedirect("./");
+                return;
+            }
             // Bean voor gebruikergegevens
             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                 
