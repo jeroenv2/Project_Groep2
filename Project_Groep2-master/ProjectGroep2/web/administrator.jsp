@@ -39,13 +39,27 @@
                     return true;
                 }
             }
+            function controlePaswoordenAanmakenAccount() {
+                if (document.getElementById("txtPaswoord").value !== document.getElementById("txtBevestigPaswoord").value) {
+                    alert('Bevestigd paswoord komt niet overeen met het nieuwe paswoord!');
+                    document.getElementById("txtPaswoord").style.border = '2px solid red';
+                    document.getElementById("txtBevestigPaswoord").style.border = '2px solid red';
+
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            
             function klikAlgemeen()
             {
                 var algemeen = document.getElementById("frmAlgemeen");
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
+                var accountMaken = document.getElementById("frmAccountMaken");
                 paswoorden.style.display = 'none';
                 ipLogging.style.display = 'none';
+                accountMaken.style.display = 'none';
                 algemeen.style.display = 'inline';
             }
             function klikPaswoord()
@@ -53,8 +67,10 @@
                 var algemeen = document.getElementById("frmAlgemeen");
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
+                var accountMaken = document.getElementById("frmAccountMaken");
                 algemeen.style.display = 'none';
                 ipLogging.style.display = 'none';
+                accountMaken.style.display = 'none';
                 paswoorden.style.display = 'inline';
             }
             function klikIpLogging()
@@ -62,9 +78,22 @@
                 var algemeen = document.getElementById("frmAlgemeen");
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
+                var accountMaken = document.getElementById("frmAccountMaken");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'none';
+                accountMaken.style.display = 'none';
                 ipLogging.style.display = 'inline';
+            }
+            function klikAccountMaken()
+            {
+                var algemeen = document.getElementById("frmAlgemeen");
+                var paswoorden = document.getElementById("frmPaswoorden");
+                var ipLogging = document.getElementById("ipLogging");
+                var accountMaken = document.getElementById("frmAccountMaken");
+                algemeen.style.display = 'none';
+                paswoorden.style.display = 'none';
+                ipLogging.style.display = 'none';
+                accountMaken.style.display = 'inline';
             }
             function klikFestival() 
             {
@@ -118,11 +147,12 @@
                             String strGebDatum = new SimpleDateFormat("yyyy-MM-dd").format(gebruiker.getGeboorteDatum());
                     %>
                     <div id="profiel_navigatie">
-                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px; width:90px;" onClick="klikAlgemeen();" /><br />
-                        <input type="button" id="btnPaswoord" value=" Paswoord " style="margin-bottom: 2px; width:90px;" onClick="klikPaswoord();" /><br/>
-                        <input type="button" id="btnIpLogging" value=" IP Logging " style="margin-bottom: 2px; width:90px;" onClick="klikIpLogging();" /><br/>
-                        <input type="button" id="btnTicketsPerFestival" value="Tickets" style="margin-bottom: 2px; width:90px;" onClick="klikFestival;" /><br/>
-                        <input type="button" id="btnAdminGegevens" value="Admins" style="margin-bottom: 2px; width:90px;" onClick="klikAdmins;" />
+                        <input type="button" id="btnAlgemeen" value=" Algemeen " style="margin-bottom: 2px; width:125px;" onClick="klikAlgemeen();" /><br />
+                        <input type="button" id="btnPaswoord" value=" Paswoord " style="margin-bottom: 2px; width:125px;" onClick="klikPaswoord();" /><br/>
+                        <input type="button" id="btnAccountMaken" value=" Account Maken " style="margin-bottom: 2px; width:125px;" onClick="klikAccountMaken();" /><br/>
+                        <input type="button" id="btnIpLogging" value=" IP Logging " style="margin-bottom: 2px; width:125px;" onClick="klikIpLogging();" /><br/>
+                        <input type="button" id="btnTicketsPerFestival" value="Tickets" style="margin-bottom: 2px; width:125px;" onClick="klikFestival();" /><br/>
+                        <input type="button" id="btnAdminGegevens" value="Admins" style="margin-bottom: 2px; width:125px;" onClick="klikAdmins();" />
                     </div>
                     <div id="elementen_centreren">
                         <!-- Formulier om algemene gegevens aan te passen -->
@@ -288,6 +318,76 @@
                                     Helaas! Er zijn nog geen IP adressen gelogd...
                                 <% } %>
                         </div>
+                        
+                        
+                        <form method="POST" action="account_aanmaken.jsp" id="frmAccountMaken" hidden onsubmit="return controlePaswoordenAanmakenAccount();">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h2>Account Aanmaken</h2>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">Gebruikersnaam: </td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="text" id="txtAanmakenGebruikersnaam" name="txtAanmakenGebruikersnaam" placeholder="Gebruikersnaam" required pattern="[a-zA-Z0-9]{4,200}" title="minimum 4 en maximum 200 cijfers/letters"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            Huisnummer/bus*:
+                                        </td>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            <input type="text" name="txtAanmakenHuisnummer" placeholder="Nmr" size="1" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> / 
+                                            <input type="text" name="txtAanmakenBus" placeholder="Bus" size="1" pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" /> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            Straat*:
+                                        </td>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            <input type="text" name="txtAanmakenStraatnaam" placeholder="Straatnaam" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            Postcode/Gemeente*:
+                                        </td>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            <input type="text" name="txtAanmakenPostcode" placeholder="Postcode" size="6" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                            <input type="text" name="txtAanmakenGemeente"  placeholder="Gemeente" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            Land*:
+                                        </td>
+                                        <td class="inhoud_tabel_spatie_links_boven">
+                                            <input type="text" name="txtAanmakenLand" placeholder="Land" required pattern="[a-zA-Z0-9]{1,}" title="1 of meer letters/getallen zonder spaties" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">Geboortedatum: </td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" id="txtGebruikersnaam" name="dtAanmakenGebDat" required placeholder="yyyy/MM/dd" value="1990-01-01" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="Formaat: yyyy-MM-dd"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">Paswoord: </td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="password" id="txtPaswoord" name="txtAanmakenPaswoord" placeholder="Paswoord" required pattern="[a-zA-Z0-9]{4,12}" title="Minimum 4 en maximum 12 cijfers/letters ingeven"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven">Bevestig paswoord:</td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="password" id="txtBevestigPaswoord" placeholder="Bevestig Paswoord" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inhoud_tabel_spatie_links_boven" colspan="2">
+                                            <input type="submit" name="btnVerzend" value=" Maak aan "/> <input type="reset" name="btnReset" value=" Wis "/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                     <div style="clear: both;"></div>
                     <%} catch (Exception e) {%>

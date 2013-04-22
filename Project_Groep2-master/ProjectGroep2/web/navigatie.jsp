@@ -44,7 +44,7 @@
                     <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen_aanpassen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
                     <% } %>                   
-              <%} else if (strPaginaNaam.contains("administrator")) { %>
+              <%} else if (strPaginaNaam.contains("administrator") || strPaginaNaam.contains("account_aanmaken")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
@@ -57,7 +57,7 @@
                     %>
                             <a href="administrator.jsp"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
                 <%} }
-                if(gebruiker != null && !strPaginaNaam.contains("administrator")) 
+                if(gebruiker != null && !strPaginaNaam.contains("administrator") && !strPaginaNaam.contains("account_aanmaken")) 
                 {%>
                     <a href="administrator.jsp"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
                 <%}%>
