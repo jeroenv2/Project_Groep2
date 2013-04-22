@@ -44,7 +44,7 @@
                     <a href="festival_aanpassen.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
                     <a href="groepen_aanpassen.jsp"><img src="img/header/groepen_selected.png" alt="Groepen" height="33" /></a>
                     <% } %>                   
-              <%} else if (strPaginaNaam.contains("profiel")) { %>
+              <%} else if (strPaginaNaam.contains("administrator")) { %>
                     <a href="index.jsp"><img src="img/header/home.png" alt="Home" height="33" /></a> 
                     <% if(gebruiker == null){%>
                     <a href="festivals.jsp"><img src="img/header/festivals.png" alt="Festivals" height="33" /></a>
@@ -55,11 +55,11 @@
                     <% } %>       
                     <%if(gebruiker != null){ //Voor het geval een gebruiker naar een pagina wil gaan zonder ingelogd te zijn (inlog vereist)
                     %>
-                            <a href="profiel.jsp"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
+                            <a href="administrator.jsp"><img src="img/header/admin_Selected.png" alt="Admin" height="33" /></a>
                 <%} }
-                if(gebruiker != null && !strPaginaNaam.contains("profiel")) 
+                if(gebruiker != null && !strPaginaNaam.contains("administrator")) 
                 {%>
-                    <a href="profiel.jsp"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
+                    <a href="administrator.jsp"><img src="img/header/admin.png" alt="Admin" height="33" /></a>
                 <%}%>
         </nav>
         <%!

@@ -45,7 +45,7 @@
             <jsp:include page="navigatie.jsp" />
             <div id="inhoud_omslag">
                 <section id="inhoud">
-                    <div align="center">
+                    <div id="elementen_centreren">
 
                         <%
                              beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");

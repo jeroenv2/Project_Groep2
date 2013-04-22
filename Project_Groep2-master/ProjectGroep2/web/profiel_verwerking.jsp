@@ -101,7 +101,7 @@
                                 else {%>
                                     <h3>Er is iets mis gegaan. Probeer later uw profiel aan te passen</h3>
                         <%      }%>
-                        klik <a href="profiel.jsp">hier</a> om terug naar de profielpagina te gaan... 
+                        klik <a href="administrator.jsp">hier</a> om terug naar de adminstratorpagina te gaan... 
                         </div>
                     </div>
                 </section>
