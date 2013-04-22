@@ -50,7 +50,6 @@
                             {
                                 strIpAdres = request.getRemoteAddr(); //Geen proxy
                             }
-
                             //Controle om te kijken of het IP adres al eens gelogd is binnen 30 minuten
                             Connectie_Databank connectie_InhoudIpLogging = new Connectie_Databank();
 
@@ -59,7 +58,7 @@
 
                             lijstParams_ControleIpLogging.add(strIpAdres);
 
-                            connectie_InhoudIpLogging.voerQueryUit("SELECT * FROM iplogging WHERE DATE_SUB(CURDATE(), INTERVAL 30 MINUTE) <= DATE_SUB(ip_datum, INTERVAL 30 MINUTE) AND ip_adres = ?", lijstParams_ControleIpLogging);
+                            connectie_InhoudIpLogging.voerQueryUit("SELECT * FROM iplogging WHERE MINUTE(TIMEDIFF(NOW(), ip_datum)) < 10 AND ip_adres = ?", lijstParams_ControleIpLogging);
                             ResultSet rsInhoudIpLogging = connectie_InhoudIpLogging.haalResultSetOp();
 
                             rsInhoudIpLogging.last();
@@ -67,6 +66,7 @@
 
                             if(lengteRsInhoudIpLogging == 0) //IP is nog niet gelogd in 30 minuten
                             {
+                                out.println("IP Gelogd");
                                 //Wegschrijven van IP Logging                        
                                 Connectie_Databank connectie_ipLogging = new Connectie_Databank();
 
