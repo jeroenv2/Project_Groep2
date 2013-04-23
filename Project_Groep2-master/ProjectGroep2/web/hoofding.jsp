@@ -86,6 +86,8 @@
                 <input type="text" list="lijstGegevens" id="naam" name="naam" placeholder="Zoeken" onfocus="vervangTekst();" size="30" required title="Gelieve een naam in te geven"/>
                 <datalist id="lijstGegevens">
                   <%
+                      String browser = request.getHeader("User-Agent");
+                      
                       Connectie_Databank connectie = new Connectie_Databank();
                       List<String> lijstBands = new ArrayList<String>();
                       List<String> lijstFestivals = new ArrayList<String>();
@@ -197,6 +199,13 @@
                 <% }
                 }
             }
-        %>
+            if (browser.contains("mie")) { %>
+            <div id="ie_fout">
+                <p>Uw browser wordt niet ondersteund<br />Indien de website niet goed functioneert:<br />
+                <a href="http://www.google.com/chromeframe/?redirect=true">
+                   Installeer Google Chrome Frame add-on</a> en probeer het opnieuw.
+                </p>
+            </div>
+            <% } %>
     </header>
 </html>

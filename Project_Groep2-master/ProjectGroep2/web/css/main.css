@@ -429,6 +429,14 @@ p a:hover
     float: left;
 }
 
+#ie_fout {
+    text-align: center;
+    margin-top: 5px;
+    border: 1px solid black;
+    color: #4a4842;
+    background: #e8c048;
+}
+
 /* ----------------------------
               LOGIN 
    ----------------------------*/
