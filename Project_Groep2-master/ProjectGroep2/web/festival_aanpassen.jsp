@@ -3,8 +3,6 @@
     Created on : Apr 9, 2013, 9:20:39 AM
     Author     : tar-aldaron
 --%>
-
-<%@page import="javax.swing.JOptionPane"%>
 <%@page import="sun.font.Script"%>
 <%@page import="java.util.List"%>
 <%@page import="java.text.DateFormat"%>
@@ -22,7 +20,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
 
     <head>
@@ -34,7 +32,7 @@
         <script>
             <%!List<String> fest = new ArrayList();
 
-            %>          
+            %>
         </script>
     </head>
     <body>
@@ -48,7 +46,7 @@
                     <div id="elementen_centreren">
 
                         <%
-                             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
+                            beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
                             fest.clear();
 
                             boolean Verwijder_knop = false;
@@ -60,23 +58,23 @@
                                     }
                                 }
                             }
-                            if(gebruiker!=null){
-                            try {
-                                Connectie_Databank connectie = new Connectie_Databank();
+                            if (gebruiker != null) {
+                                try {
+                                    Connectie_Databank connectie = new Connectie_Databank();
 
-                                connectie.maakConnectie();
-                                List<String> lijstParams = new ArrayList<String>();
+                                    connectie.maakConnectie();
+                                    List<String> lijstParams = new ArrayList<String>();
 
-                                connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
-                                ResultSet rs = connectie.haalResultSetOp();
+                                    connectie.voerQueryUit("SELECT * FROM festivals", lijstParams);
+                                    ResultSet rs = connectie.haalResultSetOp();
 
-                                rs.last();
-                                int lengteResultSet = rs.getRow();
+                                    rs.last();
+                                    int lengteResultSet = rs.getRow();
 
-                                rs.first();
-                                rs.previous();
+                                    rs.first();
+                                    rs.previous();
 
-                                if (lengteResultSet > 0) {
+                                    if (lengteResultSet > 0) {
 
                         %>   
 
@@ -99,14 +97,15 @@
                                     }
                             %>
                             <a id="<%= id%>"></a>
-                            <table width='600px' style='border: 1px solid white;<%= styleTable%> '>
+                            <table id="tabel_breedte_600px_omrand" style='<%= styleTable%> '>
                                 <tbody style='padding: 10px;'>
-                                
+
                                     <tr>
-                                        <td width='300px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
-                                    <input type="hidden" name="naam" value="<%=naam%>">
-                                    <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
-                                    <td></td>
+                                        <td class="inhoud_tabel_breedte_300px"><b> <%= naam%> </b></td>
+
+                                        <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
+                                        <td><input type="hidden" name="naam" value="<%=naam%>"></td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td style='padding-left: 10px; padding-top: 10px; padding-bottom: 10px'>Locatie: <%=locatie%></td>
@@ -123,14 +122,17 @@
 
                                             Date einddatum = cal.getTime(); //Nieuwe Date-obj maken als einddatum met de inhoud van cal
                                             String strEinddatum = formaatDatum.format(einddatum); //Einddatum omzetten naar juiste formaat
-%>
+                                        %>
                                         <td style='padding-left: 10px; padding-top: 10px;'>Einddatum: <%=strEinddatum%></td>
-                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                        <td></td>
+                                        <td  class="inhoud_tabel_spatie_rechts_onder">
                                             <form action="festival_details_aanpassen.jsp" method="POST" >
-                                             <input name="naam" type="hidden" value="<%=naam%>"/>
-                                            <input type="submit" name="Details" value=" Details " />
-                                            </form><form action="festival_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST" >
+                                                <input  name="naam" type="hidden" value="<%=naam%>"/>
+                                                <input type="submit" name="Details" value=" Details " />
+                                            </form></td>
+                                        
                                     </tr>
+
                                     <tr>
                                         <%
                                             if (rs.getString("fest_url") != null) {
@@ -138,44 +140,46 @@
                                         %>
                                         <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
                                         <%
-                                        } else {
-                                        %>
+                                        } else {%>
                                         <td></td>
-                                        <%}
-                                            String knop;
-                                            if (!fest.contains(id)) {
-                                                knop = "Verwijderen";
-                                        %>
-                                    <input name="elementen" type="hidden" value="<%=id%>"/>
-                                    <%} else {
-                                            knop = "Annuleren";
-                                            Verwijder_knop = true;
+                                        <% }%>
+                                    <td></td><td></td>
+                                        <td class="inhoud_tabel_spatie_rechts_onder" >
+                                            <form action="festival_aanpassen.jsp#<%=Integer.parseInt(id) - 1%>" method="POST" >
+                                                <%                                            String knop;
+                                                    if (!fest.contains(id)) {
+                                                        knop = "Verwijderen";
+                                                %>
+                                                <input name="elementen" type="hidden" value="<%=id%>"/>
+                                                <%} else {
+                                                        knop = "Annuleren";
+                                                        Verwijder_knop = true;
 
-                                        }
-                                        for (String element : fest) {
-                                            if (!element.equals(id)) {
+                                                    }
+                                                    for (String element : fest) {
+                                                        if (!element.equals(id)) {
 
 
-                                    %>
-                                    <input name="elementen" type="hidden" value="<%=element%>"/>
-                                    <%}
-                                        }
-                                    %>
-                                    <td></td>
-                                    <td align="right" style='padding-right: 10px;padding-bottom: 10px;' >
-                                        <input type="submit" value="<%=knop%>"/>
-
-                                    </td>
+                                                %>
+                                                <input name="elementen" type="hidden" value="<%=element%>"/>
+                                                <%}
+                                                    }
+                                                %>
+                                                <input type="submit" value="<%=knop%>"/>
+                                            </form>
+                                        </td>
                                     </tr>
-                                </form>
+
                                 </tbody>
                             </table><br />
                             <%
                                 }%>
-                            <form action="verwijderen_resultaat.jsp" method="POST">
-                                <table>
-                                    <tr>
-                                        <td>
+
+                            <table>
+                                <tr>
+                                    <td></td>
+                                    <td style='padding-right: 10px; padding-bottom: 6px;'>
+                                        <form action="verwijderen_resultaat.jsp" method="POST">
                                             <%
 
                                                 for (String element : fest) {%>
@@ -186,41 +190,41 @@
                                                 if (!Verwijder_knop) {
                                                     status = "visibility: hidden;";
                                                 }
-
                                             %>
-                                        </td>
-                                        <td style='padding-right: 10px; padding-bottom: 6px;'>
+
                                             <input type="submit" value="Verwijderen" style="<%= status%>"/> 
-                                        </td>
                                         </form>
+                                    </td> 
+                                    <td style='padding-right: 10px; padding-bottom: 6px;'>
+                                        <form action="festival_aanpassen.jsp" method="GET">
+                                            <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
+                                            <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/>
+                                        </form>
+                                    </td>
 
-                                    <form action="festival_aanpassen.jsp" method="GET">
-                                        <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
-
-                                        <td style='padding-right: 10px; padding-bottom: 6px;'>
-                                            <input name="annuleren" type="submit" value="Annuleren"style="<%= status%>"/></td>
-                                    </form>
                                     <td></td>
 
-                                    </tr>
-                                </table>
+                                </tr>
+                            </table>
 
-                                <%} else {
-                                %>
-                                <h3>Helaas! Er zijn geen records gevonden...</h3>
-                                <%}
-                                        connectie.sluitConnectie(); //Connectie met de databank sluiten
-                                    } catch (Exception e) {
-                                        out.println(e.getMessage());
-                                    }
-                                  }else{
-                                %>
-                                
-                                
-                                U bent niet ingelogd
-                                
-                                <%}%>
+                            <%} else {
+                            %>
+                            <h3>Helaas! Er zijn geen records gevonden...</h3>
+                            <%}
+                                    connectie.sluitConnectie(); //Connectie met de databank sluiten
+                                } catch (Exception e) {
+                                    out.println(e.getMessage());
+                                }
+                            } else {
+                            %>
+
+
+                            U bent niet ingelogd
+
+                            <%}%>
+
                         </div>
+                    </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

@@ -15,7 +15,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html>
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -90,22 +90,28 @@
                                     styleTable = "";
                                 }
                         %>                  <a id="<%= strID%>"></a>
-                        <table width='500px' style='border: 1px solid white;<%= styleTable%>'>
-                            <tbody align="left" style='padding: 10px;'>
+                        <table id="tabel_breedte_600px_omrand" style='<%= styleTable%>'>
+                            <tbody  style='padding: 10px;'>
 
                                 <tr>
                                     <td rowspan="4" style="width: 120px; padding: 5px;">
                                         <img id="opmaak_afbeelding" src="img/bands/<%= strFoto %>.jpg" alt="Afbeelding Band" />
                                     </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= strNaam%></b></td>
-                            <input type="hidden" name="naam" value="<%=strNaam%>">
-                            <td  style="border-top: 1px solid white;"></td>
+                                    <td style='padding-left: 10px; padding-top: 10px;'><b><%= strNaam%></b></td>
+                            
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
                             </tr>
                             <tr>
                                 <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=strGenre%></td>
-                                <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
+                                <td class="inhoud_tabel_spatie_rechts_onder">
 
                                     <form action="groep_details_aanpassen.jsp" method="POST" >
                                         <input name="naam" type="hidden" value="<%=strNaam%>"/>
@@ -114,6 +120,8 @@
 
 
                                 </td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <%
@@ -127,7 +135,7 @@
                                 <td></td>
                                 <%}%>
 
-                                <td align='right' style='padding-right: 10px; padding-bottom: 6px;'>
+                                <td class="inhoud_tabel_spatie_rechts_onder">
                                     <form action="groepen_aanpassen.jsp#<%=Integer.parseInt(strID) - 1%>" method="POST">
                                         <%
                                             String knop;
@@ -154,21 +162,30 @@
                                         <input type="submit" value="<%=knop%>" />
                                     </form>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td> </td>
                                 <td> </td>
                                 <td> </td>
+                                <td> </td>
                             </tr>
-                            </form>
+                            
                             </tbody>
                         </table><br />
                         <%
                         }%>
-                        <form action="verwijderen_resultaat.jsp" method="POST">
+                        
                             <table>
                                 <tr>
                                     <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td style='padding-right: 10px; padding-bottom: 6px;'>
+                                                                                <form action="verwijderen_resultaat.jsp" method="POST">
                                         <%
 
                                         for (String element : groepen) {%>
@@ -180,16 +197,19 @@
                                                 status = "visibility: hidden;";
                                             }
                                         %>
-                                    </td>
-                                    <td style='padding-right: 10px; padding-bottom: 6px;'><input type="submit" value="Verwijderen"style="<%= status%>"/> </td>
+                                        
+                                        
+                                        <input type="submit" value="Verwijderen" style="<%= status%>"/> </td>
                                     </form>
                                 <td style='padding-right: 10px; padding-bottom: 6px;'>
-                                <form action="groepen_aanpassen.jsp" method="GET">
+                                <form action="groepen_aanpassen.jsp" method="POST">
                                     <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
 
                                     
-                                        <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/></td>
+                                        <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/>
                                 </form>
+                                </td>
+                                
                                 <td></td>
 
                                 </tr>
