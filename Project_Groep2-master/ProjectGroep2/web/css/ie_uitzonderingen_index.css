@@ -22,18 +22,20 @@ article h2 {
 }
 
 article[id="foto"] {
+    float: left;
     width: 200px;
     text-align: center;
     padding-top: 25px;
 }
 article[id="details"] {
-    
+    float: left;
     text-align: center;
     margin-left: 10px;
     margin-right: 10px;
     width: 420px;
 }
 article[id="overzicht"] {
+    float: left;
     width: 200px;
 }
 

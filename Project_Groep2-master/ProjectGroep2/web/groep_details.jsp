@@ -23,13 +23,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%
-                        if (!"POST".equalsIgnoreCase(request.getMethod())) {
+            if (!"POST".equalsIgnoreCase(request.getMethod())) {
                 response.sendRedirect("./");
                 return;
             }
             // Bean voor gebruikergegevens
             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
-                
+            
+            String browser = request.getHeader("User-Agent");
             String strFouten = "", strBandNaam = "";
             ResultSet rsBand = null, rsFestPBand = null;
             try {
@@ -73,7 +74,11 @@
         <title><%= strBandNaam %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <% if (browser.contains("MSIE")) { %>
+        <link rel="stylesheet" href="css/ie_uitzonderingen.css">
+        <% } else { %>
         <link rel="stylesheet" href="css/detail_pagina.css">
+        <% } %>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="js/vendor/jquery.collapse.js"></script>
