@@ -99,7 +99,7 @@
         <title><%= rsFest.getString(2) %> - Details</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <% if (browser.contains("MSIE")) { %>
+        <% if (!browser.contains("MSIE")) { %>
         <link rel="stylesheet" href="css/ie_uitzonderingen.css">
         <% } else { %>
         <link rel="stylesheet" href="css/detail_pagina.css">
