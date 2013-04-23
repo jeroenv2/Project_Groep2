@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+   <ui:composition template="./template2.xhtml">
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:commandLink action="#{TickettypeController.previous}" value="Previous #{TickettypeController.pageSize}" rendered="#{TickettypeController.hasPreviousPage}"/> 
+                <h:commandLink action="#{TickettypeController.next}" value="Next #{TickettypeController.pageSize}" rendered="#{TickettypeController.hasNextPage}"/> 
+                <h:dataTable value="#{TickettypeController.ticketTypes}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Tickettypes omschrijving"/>
+                        </f:facet>
+                        <h:outputText value="#{item.typOmschr}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value=" "/>
+                        </f:facet>
+                        <h:commandLink action="#{TickettypeController.prepareView}" value="Details"/>
+                    </h:column>
+                </h:dataTable>
+                <br />
+            </h:form>
+        </ui:define>
+   </ui:composition>
+</html>
+
