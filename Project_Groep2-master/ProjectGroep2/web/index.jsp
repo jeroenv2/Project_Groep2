@@ -125,7 +125,7 @@
                                         String naam = res.getString("fest_naam");
                                         String locatie = res.getString("fest_locatie");
                             %>
-                            <table width="100%" style='border: 1px solid white;'>
+                            <table style='min-width: 475px; border: 1px solid white;'>
                                 <tbody align="left" style='padding: 10px;'>
                                 <form action="festival_details.jsp" method="POST">
                                     <tr>
