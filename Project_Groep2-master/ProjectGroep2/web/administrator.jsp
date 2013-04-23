@@ -330,7 +330,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Gebruikersnaam*: </td>
-                                        <td class="inhoud_tabel_spatie_links_boven"><input type="text" id="txtAanmakenGebruikersnaam" name="txtAanmakenGebruikersnaam" placeholder="Gebruikersnaam" required pattern="[a-zA-Z0-9]{4,200}" title="minimum 4 en maximum 200 cijfers/letters"/></td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="text" id="txtAanmakenGebruikersnaam" name="txtAanmakenGebruikersnaam" placeholder="Gebruikersnaam" required pattern="[a-zA-Z0-9]{4,100}" title="minimum 4 en maximum 100 cijfers/letters"/></td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">
