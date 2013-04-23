@@ -37,7 +37,7 @@
                 Databank.Connectie_Databank connectie = new Databank.Connectie_Databank();
                 connectie.maakConnectie();
 
-                String query = "SELECT * FROM geregistreerdegebruikers WHERE lower(gebr_naam) = ? AND gebr_wachtwoord = ?";
+                String query = "SELECT * FROM geregistreerdegebruikers WHERE lower(gebr_naam) = ? AND gebr_wachtwoord = PASSWORD(?)";
                 List<String> lijstParams = new ArrayList<String>();
                 lijstParams.add(request.getParameter("gebruikersnaam").toLowerCase());
                 lijstParams.add(request.getParameter("paswoord"));

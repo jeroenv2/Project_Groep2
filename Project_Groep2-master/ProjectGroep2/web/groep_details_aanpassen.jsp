@@ -124,7 +124,9 @@
                                     <td><input type="url" id="murl" name="band_url" value="<%= strUrl %>"
                                                /></td>
                                     <%} else {%>
-                                    <td><input type="url" id="zurl" name="band_url" value="" /></td>
+                                    <td><input type="url" id="zurl" name="band_url" value=""
+                                               required title="Dit is geen URL"
+                                               pattern="(http://|https://)?www\.[a-zA-Z0-9]+(-[a-zA-Z0-9]|_[a-zA-Z0-9]|[a-zA-Z0-9])*\.[a-zA-Z0-9]+"/></td>
                                     <%}%>
                                 </tr>
                                 <% if (gebruiker != null) { %>

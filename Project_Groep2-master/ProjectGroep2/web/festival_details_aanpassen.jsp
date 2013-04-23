@@ -218,7 +218,9 @@
                                     <td>Website:</td>
                                     <%  String website = rsFest.getString("fest_url");
                                     if (website != null) {%>
-                                    <td><input type="url" id="txtMUrl" name="fest_url" value="<%= website %>"/></td>
+                                    <td><input type="url" id="txtMUrl" name="fest_url" value="<%= website %>"
+                                               required title="Dit is geen URL"
+                                               pattern="(http://|https://)?www\.[a-zA-Z0-9]+(-[a-zA-Z0-9]|_[a-zA-Z0-9]|[a-zA-Z0-9])*\.[a-zA-Z0-9]+"/></td>
                                     <%} else {%>
                                     <td><input type="url" id="txtZUrl" name="fest_url" value="" /></td>
                                     <%}%>
