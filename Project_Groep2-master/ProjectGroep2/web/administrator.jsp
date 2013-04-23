@@ -57,9 +57,11 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
+                var gebruikers = document.getElementById("gebruikersTonen");
                 paswoorden.style.display = 'none';
                 ipLogging.style.display = 'none';
                 accountMaken.style.display = 'none';
+                gebruikers.style.display = 'none';
                 algemeen.style.display = 'inline';
             }
             function klikPaswoord()
@@ -68,9 +70,11 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
+                var gebruikers = document.getElementById("gebruikersTonen");
                 algemeen.style.display = 'none';
                 ipLogging.style.display = 'none';
                 accountMaken.style.display = 'none';
+                gebruikers.style.display = 'none';
                 paswoorden.style.display = 'inline';
             }
             function klikIpLogging()
@@ -79,9 +83,11 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
+                var gebruikers = document.getElementById("gebruikersTonen");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'none';
                 accountMaken.style.display = 'none';
+                gebruikers.style.display = 'none';
                 ipLogging.style.display = 'inline';
             }
             function klikAccountMaken()
@@ -90,6 +96,7 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
+                var gebruikers = document.getElementById("gebruikersTonen");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'none';
                 ipLogging.style.display = 'none';
@@ -101,7 +108,16 @@
             }
             function klikAdmins()
             {
-                
+                var algemeen = document.getElementById("frmAlgemeen");
+                var paswoorden = document.getElementById("frmPaswoorden");
+                var ipLogging = document.getElementById("ipLogging");
+                var accountMaken = document.getElementById("frmAccountMaken");
+                var gebruikers = document.getElementById("gebruikersTonen");
+                paswoorden.style.display = 'none';
+                ipLogging.style.display = 'none';
+                accountMaken.style.display = 'none';
+                algemeen.style.display = 'none';
+                gebruikers.style.display = 'inline';
             }
         </script>
     </head>
@@ -277,6 +293,10 @@
                                 </tbody>
                             </table>
                         </form>
+                                        
+                    <div id="gebruikersTonen" hidden>
+                        <jsp:include page="faces/gebruiker.xhtml"/>             
+                    </div>
                                        
                         
                         <!-- IP adressen te tonen -->
