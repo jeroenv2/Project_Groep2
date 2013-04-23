@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-apr-2013 23:08:44 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="HibernateUtil.Festivals" table="festivals" catalog="groep2_festivals">
+        <id name="festId" type="java.lang.Integer">
+            <column name="fest_id" />
+            <generator class="identity" />
+        </id>
+        <property name="festNaam" type="string">
+            <column name="fest_naam" not-null="true" />
+        </property>
+        <property name="festLocatie" type="string">
+            <column name="fest_locatie" not-null="true" />
+        </property>
+        <property name="festDatum" type="date">
+            <column name="fest_datum" length="10" not-null="true" />
+        </property>
+        <property name="festDuur" type="int">
+            <column name="fest_duur" not-null="true" />
+        </property>
+        <property name="festEinddatum" type="date">
+            <column name="fest_einddatum" length="10" not-null="true" />
+        </property>
+        <property name="festUrl" type="string">
+            <column name="fest_url" />
+        </property>
+        <set name="tickettypesperfestivals" inverse="true">
+            <key>
+                <column name="fest_id" not-null="true" />
+            </key>
+            <one-to-many class="HibernateUtil.Tickettypesperfestival" />
+        </set>
+    </class>
+</hibernate-mapping>
