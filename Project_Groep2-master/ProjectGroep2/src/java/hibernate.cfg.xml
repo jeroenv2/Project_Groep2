@@ -6,6 +6,13 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/groep2_festivals?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <mapping class="MappingFilesAndPojo.Geregistreerdegebruikers"/>
+    <property name="hibernate.connection.password"/>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
+    <mapping resource="HibernateUtil/Festivals.hbm.xml"/>
+    <mapping resource="HibernateUtil/Tickettypes.hbm.xml"/>
+    <mapping resource="HibernateUtil/Geregistreerdegebruikers.hbm.xml"/>
+    <mapping resource="HibernateUtil/Tickettypesperfestival.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

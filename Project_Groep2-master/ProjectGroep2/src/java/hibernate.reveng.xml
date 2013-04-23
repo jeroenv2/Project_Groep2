@@ -2,5 +2,8 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="groep2_festivals"/>
+  <table-filter match-name="tickettypes"/>
   <table-filter match-name="geregistreerdegebruikers"/>
+  <table-filter match-name="tickettypesperfestival"/>
+  <table-filter match-name="festivals"/>
 </hibernate-reverse-engineering>
