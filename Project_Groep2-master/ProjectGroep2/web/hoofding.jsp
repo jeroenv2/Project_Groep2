@@ -199,7 +199,7 @@
                 <% }
                 }
             }
-            if (browser.contains("mie")) { %>
+            if (browser.contains("MSIE")) { %>
             <div id="ie_fout">
                 <p>Uw browser wordt niet ondersteund<br />Indien de website niet goed functioneert:<br />
                 <a href="http://www.google.com/chromeframe/?redirect=true">
