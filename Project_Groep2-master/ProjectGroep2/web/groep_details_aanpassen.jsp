@@ -121,9 +121,8 @@
                                 <tr>
                                     <td>Website:</td>
                                     <% if (strUrl != null) {%>
-                                    <td><input type="text" id="murl" name="band_url" value="<%= strUrl %>"
-                                               pattern="(http:\/\/|https:\/\/)?www\.?([a-zA-Z0-9_%]*)\.[a-zA-Z]{1}[a-zA-Z]+"
-                                               title="http:// of https:// + A-Z + .A-Z"/></td>
+                                    <td><input type="url" id="murl" name="band_url" value="<%= strUrl %>"
+                                               /></td>
                                     <%} else {%>
                                     <td><input type="url" id="zurl" name="band_url" value="" /></td>
                                     <%}%>

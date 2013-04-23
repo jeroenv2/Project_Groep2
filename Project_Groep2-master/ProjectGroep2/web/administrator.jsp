@@ -329,7 +329,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven">Gebruikersnaam: </td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Gebruikersnaam*: </td>
                                         <td class="inhoud_tabel_spatie_links_boven"><input type="text" id="txtAanmakenGebruikersnaam" name="txtAanmakenGebruikersnaam" placeholder="Gebruikersnaam" required pattern="[a-zA-Z0-9]{4,200}" title="minimum 4 en maximum 200 cijfers/letters"/></td>
                                     </tr>
                                     <tr>
@@ -368,14 +368,14 @@
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Geboortedatum: </td>
-                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" placeholder="yyyy-mm-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven">Paswoord: </td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Paswoord*: </td>
                                         <td class="inhoud_tabel_spatie_links_boven"><input type="password" id="txtPaswoord" name="txtAanmakenPaswoord" placeholder="Paswoord" required pattern="[a-zA-Z0-9]{4,12}" title="Minimum 4 en maximum 12 cijfers/letters ingeven"/></td>
                                     </tr>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven">Bevestig paswoord:</td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Bevestig paswoord*:</td>
                                         <td class="inhoud_tabel_spatie_links_boven"><input type="password" id="txtBevestigPaswoord" placeholder="Bevestig Paswoord" required/></td>
                                     </tr>
                                     <tr>
