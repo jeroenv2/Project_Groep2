@@ -193,7 +193,7 @@
 
                         session.setAttribute("gegevensGebruiker", gebruikerInlog);
                         %>
-                        <script>location.reload();</script>      
+                        <script>window.location.href=window.location.href;</script>      
                 <% }
                 }
             }
