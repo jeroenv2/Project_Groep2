@@ -367,8 +367,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven">Geboortedatum: </td>
-                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" placeholder="yyyy-mm-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
+                                        <td class="inhoud_tabel_spatie_links_boven">Geboortedatum*: </td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Paswoord*: </td>
