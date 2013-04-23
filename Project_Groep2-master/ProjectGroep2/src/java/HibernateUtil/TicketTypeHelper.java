@@ -12,22 +12,24 @@ import org.hibernate.Session;
  *
  * @author 3030254
  */
-public class GebruikerHelper {
+public class TicketTypeHelper {
+    
     Session session = null;
 
-    public GebruikerHelper() {
+    public TicketTypeHelper() {
         this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
     
-    public List getGebruikersNamen(int startID, int eindID) {
-    List<Geregistreerdegebruikers> gebruikerslijst = null;
+    public List getTicketTypes(int startID, int eindID) {
+    List<Tickettypes> ticketList = null;
     try {
         org.hibernate.Transaction tx = session.beginTransaction();
-        Query q;
-        q = session.createQuery ("from Geregistreerdegebruikers as gebruiker where gebruiker.gebrId between '"+startID+"' and '"+eindID+"'");
-        gebruikerslijst = (List<Geregistreerdegebruikers>) q.list();
+        Query q = session.createQuery ("from Tickettypes as tickettype where tickettype.typId between '"+startID+"' and '"+eindID+"'");
+        ticketList = (List<Tickettypes>) q.list();
     } catch (Exception e) {
     }
-    return gebruikerslijst;
+    return ticketList;
 }
+    
+    
 }

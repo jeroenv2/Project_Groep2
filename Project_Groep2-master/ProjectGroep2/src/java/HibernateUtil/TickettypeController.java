@@ -14,59 +14,59 @@ import javax.faces.model.ListDataModel;
  * @author 3030254
  */
 
-//Soms engelstalige variabelen/ omdat Netbeans fouten gaf bij het gebruiken van Nederlandstalige namen
+//Soms engelstalige variabelen/methoden omdat Netbeans fouten gaf bij het gebruiken van Nederlandstalige namen
 
-@ManagedBean(name="GebruikerController")
+@ManagedBean(name="TickettypeController")
 @SessionScoped
-public class GebruikerController {
+public class TickettypeController {
     
     int startId;
     int eindId;
-    DataModel gebruikerNamen;
-    GebruikerHelper helper;
-    private int recordTeller = 1000;
+    DataModel ticketTypes;
+    TicketTypeHelper helper;
+    private int recordCount = 1000;
     private int pageSize = 10;
 
-    private Geregistreerdegebruikers current;
+    private Tickettypes current;
     private int selectedItemIndex;
 
     /**
-     * Creates a new instance of GebruikerController
+     * Creates a new instance of TickettypeController
      */
-    public GebruikerController() {
-        helper = new GebruikerHelper();
+    public TickettypeController() {
+        helper = new TicketTypeHelper();
         startId = 1;
         eindId = 10;
     }
     
-     public GebruikerController(int startId, int endId) {
-        helper = new GebruikerHelper();
+     public TickettypeController(int startId, int endId) {
+        helper = new TicketTypeHelper();
         this.startId = startId;
         this.eindId = endId;
     }
 
-    public Geregistreerdegebruikers getSelected() {
+    public Tickettypes getSelected() {
         if (current == null) {
-            current = new Geregistreerdegebruikers();
+            current = new Tickettypes();
             selectedItemIndex = -1;
         }
         return current;
     }
 
 
-    public DataModel getGebruikersNamen() {
-        if (gebruikerNamen == null) {
-            gebruikerNamen = new ListDataModel(helper.getGebruikersNamen(startId, eindId));
+    public DataModel getTicketTypes() {
+        if (ticketTypes == null) {
+            ticketTypes = new ListDataModel(helper.getTicketTypes(startId, eindId));
         }
-        return gebruikerNamen;
+        return ticketTypes;
     }
 
     void recreateModel() {
-        gebruikerNamen = null;
+        ticketTypes = null;
     }
     
      public boolean isHasNextPage() {
-        if (eindId + pageSize <= recordTeller) {
+        if (eindId + pageSize <= recordCount) {
             return true;
         }
         return false;
@@ -83,14 +83,14 @@ public class GebruikerController {
         startId = eindId+1;
         eindId = eindId + pageSize;
         recreateModel();
-        return "gebruiker";
+        return "tickettypes";
     }
 
     public String previous() {
         startId = startId - pageSize;
         eindId = eindId - pageSize;
         recreateModel();
-        return "gebruiker";
+        return "tickettypes";
     }
 
     public int getPageSize() {
@@ -98,11 +98,11 @@ public class GebruikerController {
     }
 
     public String prepareView(){
-        current = (Geregistreerdegebruikers) getGebruikersNamen().getRowData();
-        return "blader";
+        current = (Tickettypes) getTicketTypes().getRowData();
+        return "blader2";
     }
     public String prepareList(){
         recreateModel();
-        return "gebruiker";
+        return "tickettypes";
     }
 }
