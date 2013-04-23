@@ -57,11 +57,9 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
-                var gebruikers = document.getElementById("gebruikersTonen");
                 paswoorden.style.display = 'none';
                 ipLogging.style.display = 'none';
                 accountMaken.style.display = 'none';
-                gebruikers.style.display = 'none';
                 algemeen.style.display = 'inline';
             }
             function klikPaswoord()
@@ -70,11 +68,9 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
-                var gebruikers = document.getElementById("gebruikersTonen");
                 algemeen.style.display = 'none';
                 ipLogging.style.display = 'none';
                 accountMaken.style.display = 'none';
-                gebruikers.style.display = 'none';
                 paswoorden.style.display = 'inline';
             }
             function klikIpLogging()
@@ -83,11 +79,9 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
-                var gebruikers = document.getElementById("gebruikersTonen");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'none';
                 accountMaken.style.display = 'none';
-                gebruikers.style.display = 'none';
                 ipLogging.style.display = 'inline';
             }
             function klikAccountMaken()
@@ -96,29 +90,12 @@
                 var paswoorden = document.getElementById("frmPaswoorden");
                 var ipLogging = document.getElementById("ipLogging");
                 var accountMaken = document.getElementById("frmAccountMaken");
-                var gebruikers = document.getElementById("gebruikersTonen");
                 algemeen.style.display = 'none';
                 paswoorden.style.display = 'none';
                 ipLogging.style.display = 'none';
                 accountMaken.style.display = 'inline';
             }
-            function klikFestival() 
-            {
-
-            }
-            function klikAdmins()
-            {
-                var algemeen = document.getElementById("frmAlgemeen");
-                var paswoorden = document.getElementById("frmPaswoorden");
-                var ipLogging = document.getElementById("ipLogging");
-                var accountMaken = document.getElementById("frmAccountMaken");
-                var gebruikers = document.getElementById("gebruikersTonen");
-                paswoorden.style.display = 'none';
-                ipLogging.style.display = 'none';
-                accountMaken.style.display = 'none';
-                algemeen.style.display = 'none';
-                gebruikers.style.display = 'inline';
-            }
+            
         </script>
     </head>
     <body>
@@ -167,8 +144,12 @@
                         <input type="button" id="btnPaswoord" value=" Paswoord " style="margin-bottom: 2px; width:125px;" onClick="klikPaswoord();" /><br/>
                         <input type="button" id="btnAccountMaken" value=" Account Maken " style="margin-bottom: 2px; width:125px;" onClick="klikAccountMaken();" /><br/>
                         <input type="button" id="btnIpLogging" value=" IP Logging " style="margin-bottom: 2px; width:125px;" onClick="klikIpLogging();" /><br/>
-                        <input type="button" id="btnTicketsPerFestival" value="Tickets" style="margin-bottom: 2px; width:125px;" onClick="klikFestival();" /><br/>
-                        <input type="button" id="btnAdminGegevens" value="Admins" style="margin-bottom: 2px; width:125px;" onClick="klikAdmins();" />
+                        <form action="faces/gebruiker.xhtml" target="_blank">
+                            <input type="submit" value="Admins" style="margin-bottom: 2px; width: 125px;"/>       
+                        </form>
+                        <form action="faces/tickettypes.xhtml" target="_blank">
+                            <input type="submit" value="Tickets" style="margin-bottom: 2px; width: 125px;"/>       
+                        </form>
                     </div>
                     <div id="elementen_centreren">
                         <!-- Formulier om algemene gegevens aan te passen -->
@@ -293,11 +274,7 @@
                                 </tbody>
                             </table>
                         </form>
-                                        
-                    <div id="gebruikersTonen" hidden>
-                        <jsp:include page="faces/gebruiker.xhtml"/>             
-                    </div>
-                                       
+                                             
                         
                         <!-- IP adressen te tonen -->
                         <div id="ipLogging" hidden>
