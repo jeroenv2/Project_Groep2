@@ -164,7 +164,7 @@
                 <section id="inhoud">
                     <article id="foto">
                         <img src="img/festivals/<%= strFoto %>.jpg"
-                             alt="<%= strFoto %>" width="95%"
+                             alt="<%= strFoto %>" width="200px"
                              draggable="true"
                         />
                     </article>

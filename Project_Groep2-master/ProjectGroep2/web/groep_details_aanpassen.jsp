@@ -92,7 +92,7 @@
                     <% if (strFouten.equals("")) { %>
                     <article id="foto">
                         <img src="img/bands/<%= strFoto %>.jpg"
-                             alt="<%= strFoto %>" width="95%"
+                             alt="<%= strFoto %>" width="200px"
                              draggable="true"
                         />
                     </article>
@@ -152,19 +152,20 @@
                                Overzicht festivals 
                             -->
                            <div id="lijsten" data-collapse="persist">
-                           <p class="open menu">Festivals</p>
-                            <ul class="enkel_kolom">
-                            <% if (rsFestPBand.next()) {
-                                  do {%>
-                                <li><form action="festival_details.jsp" method="post">
-                                    <input type="hidden" name="naam" value="<%= rsFestPBand.getString("fest_naam") %>" />
-                                    <a href="javascript:;" onclick="parentNode.submit();"><%= rsFestPBand.getString("fest_naam") %></a>
-                                    </form></li>
-                               <% } while(rsFestPBand.next());
-                                } else {%>
-                                <li>Nog geen festivals</li>
-                            <% } %>
-                            </ul>
+                                <p class="open menu">Festivals</p>
+                                <ul class="enkel_kolom">
+                                <% if (rsFestPBand.next()) {
+                                    do {%>
+                                    <li><form action="festival_details.jsp" method="post">
+                                        <input type="hidden" name="naam" value="<%= rsFestPBand.getString("fest_naam") %>" />
+                                        <a href="javascript:;" onclick="parentNode.submit();"><%= rsFestPBand.getString("fest_naam") %></a>
+                                        </form></li>
+                                    <% } while(rsFestPBand.next());
+                                    } else {%>
+                                    <li>Nog geen festivals</li>
+                                <% } %>
+                                </ul>
+                            </div>
                         </div>
                     </article>
                     <% } else { %>
