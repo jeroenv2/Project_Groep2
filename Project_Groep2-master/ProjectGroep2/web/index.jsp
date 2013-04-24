@@ -124,13 +124,13 @@
                                         String naam = res.getString("fest_naam");
                                         String locatie = res.getString("fest_locatie");
                             %>
+                            <form action="festival_details.jsp" method="POST">
                             <table style='min-width: 475px; border: 1px solid white;'>
-                                <tbody align="left" style='padding: 10px;'>
-                                <form action="festival_details.jsp" method="POST">
+                                <tbody id="inhoud_tabel_links_uitlijning" style='padding: 10px;'>
                                     <tr>
-                                        <td width='150px' style='padding-left: 10px; padding-top: 10px;'><b> <%= naam%> </b></td>
-                                    <input type="hidden" name="naam" value="<%=naam%>">
-                                    <td style='padding-left: 10px; padding-top: 10px;'>Locatie: <%=locatie%> </td>
+                                        <td class="inhoud_tabel_spatie_links_boven inhoud_tabel_breedte_150px"><b> <%= naam%> </b>
+                                        <input type="hidden" name="naam" value="<%=naam%>" /></td>
+                                    <td style='padding-right: 10px; padding-top: 10px;'>Locatie: <%=locatie%> </td>
                                     </tr>
 
                                     <%
@@ -142,36 +142,36 @@
                                             //Als de URL-waarde leeg (null) is, geen URL maar boodschap weergeven
                                             if (url == null) {
                                         %>
-                                        <td style='padding-left: 10px; padding-bottom: 10px;'></td>
-                                        <%                                    } else {
+                                        <td class="inhoud_tabel_spatie_links_onder"></td>
+                                        <% } else {
                                         %>
                                         <td style='padding-left: 10px; padding-bottom: 10px;'><a href='http://<%=url%>' target='_blank'>Site</a></td>
                                         <%
                                             }
                                         %>
 
-                                        <td align='right' style='padding-right: 10px; padding-bottom: 10px;'>
+                                        <td class="inhoud_tabel_spatie_rechts_onder">
                                             <input type="submit" name="Details" value=" Details " />
                                         </td>
                                     </tr>
-                                </form>
+                                
                                 </tbody>
-                            </table><br /> 
+                            </table>
+                            </form><br /> 
                             <%
                                 }
                             } else {
                             %>
                             <h3>Er zijn geen komende festivals</h3>
                             <p>Kom later nog eens terug.</p>
-                            <%                            }
-                            %>
+                            <% }%>
                         </article>
                     </div>
                 </section>
             </div>
             <%
                      connectie.sluitConnectie(); //Connectie met de databank sluiten
-%>
+            %>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
             <jsp:include page="voettekst.jsp" />
         </div>

@@ -299,6 +299,11 @@ input[type="reset"] {
     width: 300px;
 }
 
+#inhoud_tabel_breedte_150px
+{
+    width: 150px;
+}
+
 #tabel_breedte_600px_omrand
 {
     margin-top: 15px;
