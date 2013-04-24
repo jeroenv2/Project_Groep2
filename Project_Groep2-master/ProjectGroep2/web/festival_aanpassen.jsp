@@ -219,7 +219,7 @@
                             %>
 
 
-                            U bent niet ingelogd
+                            <h3>Helaas! U bent niet ingelogd...</h3>
 
                             <%}%>
 
