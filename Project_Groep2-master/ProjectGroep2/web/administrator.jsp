@@ -23,7 +23,7 @@
     <!--<![endif]-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Profiel Wijzigen</title>
+        <title>Administrator</title>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
@@ -176,7 +176,7 @@
                                             Geboortedatum*:
                                         </td>
                                         <td class="inhoud_tabel_spatie_links_boven">
-                                            <input type="date" name="dtGeboorteDatum" value="<%=strGebDatum%>" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" /> 
+                                            <input type="date" name="dtGeboorteDatum" value="<%=strGebDatum%>" required /> 
                                         </td>
                                     </tr>
                                     <tr>
@@ -367,7 +367,7 @@
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Geboortedatum*: </td>
-                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" placeholder="yyyy-MM-dd" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/></td>
+                                        <td class="inhoud_tabel_spatie_links_boven"><input type="date" name="dtAanmakenGebDat" required /></td>
                                     </tr>
                                     <tr>
                                         <td class="inhoud_tabel_spatie_links_boven">Paswoord*: </td>
