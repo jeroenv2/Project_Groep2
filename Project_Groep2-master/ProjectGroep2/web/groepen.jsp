@@ -150,7 +150,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="inhoud_tabel_spatie_links_boven" style="border-top: 1px solid white;"><b>
+                                        <td class="inhoud_tabel_spatie_links_boven" style="border-top: 1px solid white;">
                                                 <div class="tekst_vet"> <%= strNaam %> </div>
                                                 <input type="hidden" name="naam" value="<%= strNaam %>">
                                         </td>
@@ -194,6 +194,7 @@
                                 }
                             %>
                         </div> 
+                    </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

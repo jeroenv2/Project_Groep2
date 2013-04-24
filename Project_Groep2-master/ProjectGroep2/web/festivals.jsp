@@ -236,7 +236,8 @@
                             } catch (Exception e) {
                                 out.println(e.getMessage());
                             }%>
-                        </div> 
+                        </div>
+                    </div>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />
