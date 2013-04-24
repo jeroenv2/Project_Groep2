@@ -147,7 +147,7 @@
                         <input type="button" id="btnAccountMaken" value=" Account Maken " style="margin-bottom: 2px; width:125px;" onClick="klikAccountMaken();" /><br/>
                         <input type="button" id="btnIpLogging" value=" IP Logging " style="margin-bottom: 2px; width:125px;" onClick="klikIpLogging();" /><br/>
                         <form action="faces/gebruiker.xhtml" target="_blank">
-                            <input type="submit" value="Admins" style="margin-bottom: 2px; width: 125px;"/>       
+                            <input type="submit" value="Gebruikers" style="margin-bottom: 2px; width: 125px;"/>       
                         </form>
                         <form action="faces/tickettypes.xhtml" target="_blank">
                             <input type="submit" value="Tickets" style="margin-bottom: 2px; width: 125px;"/>       
