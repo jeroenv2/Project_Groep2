@@ -89,7 +89,7 @@
                                     {%>
                                         <h3>Oeps!</h3>
                                         Er is iets mis gegaan.<br/>
-                                        Waarschijnlijk heeft u verkeerde gegevesn in gegeven. Zoniet, controleer de databank en probeer later nog eens...
+                                        Waarschijnlijk heeft u verkeerde gegevens in gegeven. Zoniet, controleer de databank en probeer later nog eens...
                                     <%}
                                 }
                          }
