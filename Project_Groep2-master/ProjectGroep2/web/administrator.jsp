@@ -105,7 +105,9 @@
             <div id="inhoud_omslag">
                 <section id="inhoud">
                     <%
+                        Connectie_Databank connectie = null;
                         try {
+                            connectie = new Connectie_Databank();
                             beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
 
                             //Conversies adres
@@ -281,8 +283,6 @@
                             <h2>IP Logging</h2>
                             
                             <%
-                                Connectie_Databank connectie = new Connectie_Databank();
-
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
 
@@ -392,7 +392,11 @@
                         <h3>U dient eerst ingelogd te zien alvorens u uw profiel kan wijzigen</h3>
                         Klik <a href="index.jsp">hier</a> om naar de hoofdpagina te gaan...
                     </div>
-                    <%}%>
+                    <%}
+                    finally
+                    {
+                        connectie.sluitConnectie();
+                    }%>
                 </section>
             </div>
             <hr style="width: auto; margin-left: 20px; margin-right: 20px;" />

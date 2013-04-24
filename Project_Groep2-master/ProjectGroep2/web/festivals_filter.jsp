@@ -38,9 +38,9 @@
                 <section id="inhoud">
                     <div id="elementen_centreren">
                         <%
+                            Connectie_Databank connectie = null;
                             try {
-                                Connectie_Databank connectie = new Connectie_Databank();
-
+                                connectie = new Connectie_Databank();
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
                                 String query = "SELECT * FROM festivals"; //Zonder enig iets aangeduid te hebben in festivals.jsp
@@ -196,9 +196,12 @@
                                             Klik <a href="festivals.jsp">hier</a> om terug te keren...
                                       </div>
                                       <%}
-                                connectie.sluitConnectie(); //Connectie met de databank sluiten
                             } catch (Exception e) {
                                 out.println(e.getMessage());
+                            }
+                            finally
+                            {
+                                connectie.sluitConnectie(); //Connectie met de databank sluiten
                             }%>
                         </div> 
                 </section>

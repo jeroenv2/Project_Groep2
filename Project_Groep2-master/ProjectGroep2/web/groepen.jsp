@@ -52,10 +52,11 @@
                 <section id="inhoud">
                     <div id="elementen_centreren">
                         <%
+                            Connectie_Databank connectie = null;
                             try {
+                                connectie = new Connectie_Databank();
+                                
                                 ArrayList<String> alGenres = new ArrayList<String>();
-
-                                Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
                                 List<String> alParams = new ArrayList<String>();
@@ -122,7 +123,7 @@
                                                 <input type='reset' name='btnLeegFilter' value=' Wissen ' /></td>
                                             <td></td>
                                         </tr>
-                                        </tbody >
+                                        </tbody>
                                     </table>
                                 </form>
                             </div>
@@ -191,6 +192,10 @@
                                     connectie.sluitConnectie(); //Connectie met de databank sluiten
                                 } catch (Exception e) {
                                     out.println(e.getMessage());
+                                }
+                                finally
+                                {
+                                    connectie.sluitConnectie();
                                 }
                             %>
                         </div> 

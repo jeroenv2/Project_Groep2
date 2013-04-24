@@ -32,9 +32,9 @@
     <body>
         <%
             gegevensGebruiker gebruiker = new gegevensGebruiker();
-            try
-            {
-                Databank.Connectie_Databank connectie = new Databank.Connectie_Databank();
+            Connectie_Databank connectie = null;
+            try {
+                connectie = new Connectie_Databank();
                 connectie.maakConnectie();
 
                 String query = "SELECT * FROM geregistreerdegebruikers WHERE lower(gebr_naam) = ? AND gebr_wachtwoord = PASSWORD(?)";
@@ -78,6 +78,10 @@
                                         
                             <%  }
                           } catch(Exception e) {}
+                            finally
+                            {
+                                connectie.sluitConnectie();
+                            }
                             %>
                             Klik <a href='index.jsp'>hier</a> om naar de hoofdpagina te gaan
                     </div>

@@ -37,70 +37,77 @@
                     <div id="elementen_centreren">
                         <div class="tekst_centreren">
                             <%
-                                beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
-                                
-                                Connectie_Databank connectie = new Connectie_Databank();
+                                Connectie_Databank connectie = null;
+                                try {
+                                    connectie = new Connectie_Databank();
+                                    beans.gegevensGebruiker gebruiker = (beans.gegevensGebruiker) session.getAttribute("gegevensGebruiker");
 
-                                connectie.maakConnectie();
-                                List<String> lijstParams = new ArrayList<String>();
-                                int aantalUpdate = 0;
-                                
-                                if(request.getParameter("txtLand") != null) //Controle doen om te kijken welke formulier gebruikt werd
-                                {
-                                    String adres = "";
-                                    if(!request.getParameter("txtBus").equals(""))
-                                    {
-                                        adres = request.getParameter("txtHuisnummer") + "-" + request.getParameter("txtBus") + "-" + request.getParameter("txtStraatnaam") + "-" + request.getParameter("txtPostcode") + "-" + request.getParameter("txtGemeente") + "-" + request.getParameter("txtLand");
-                                    }
-                                    else
-                                    {
-                                        adres = request.getParameter("txtHuisnummer") + "-" + request.getParameter("txtStraatnaam") + "-" + request.getParameter("txtPostcode") + "-" + request.getParameter("txtGemeente") + "-" + request.getParameter("txtLand");
-                                    }                                
+                                    connectie.maakConnectie();
+                                    List<String> lijstParams = new ArrayList<String>();
+                                    int aantalUpdate = 0;
 
-                                    lijstParams.add(adres);
-                                    lijstParams.add(request.getParameter("dtGeboorteDatum"));
-                                    lijstParams.add(request.getParameter("txtGebruikersnaam"));
+                                    if(request.getParameter("txtLand") != null) //Controle doen om te kijken welke formulier gebruikt werd
+                                    {
+                                        String adres = "";
+                                        if(!request.getParameter("txtBus").equals(""))
+                                        {
+                                            adres = request.getParameter("txtHuisnummer") + "-" + request.getParameter("txtBus") + "-" + request.getParameter("txtStraatnaam") + "-" + request.getParameter("txtPostcode") + "-" + request.getParameter("txtGemeente") + "-" + request.getParameter("txtLand");
+                                        }
+                                        else
+                                        {
+                                            adres = request.getParameter("txtHuisnummer") + "-" + request.getParameter("txtStraatnaam") + "-" + request.getParameter("txtPostcode") + "-" + request.getParameter("txtGemeente") + "-" + request.getParameter("txtLand");
+                                        }                                
 
-                                    aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
-                                
-                                    if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
-                                    {
-                                        Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("dtGeboorteDatum"));
-                                    
-                                        gebruiker.setAdres(adres);
-                                        gebruiker.setGeboorteDatum(geboortedatum);
-                                    }
-                                }
-                                else if(request.getParameter("passNieuwPaswoord") != null) //Controle om te kijken welke form gebruikt is
-                                {
-                                    String paswoord = request.getParameter("passNieuwPaswoord");
-                                    
-                                    lijstParams.add(request.getParameter("passNieuwPaswoord"));
-                                    lijstParams.add(request.getParameter("txtGebruikersnaam"));
-                                    
-                                    if(gebruiker.getPaswoord().equals(request.getParameter("passHuidigPaswoord")))
-                                    {
-                                        aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=PASSWORD(?) WHERE gebr_naam=?", lijstParams);
-                                
+                                        lijstParams.add(adres);
+                                        lijstParams.add(request.getParameter("dtGeboorteDatum"));
+                                        lijstParams.add(request.getParameter("txtGebruikersnaam"));
+
+                                        aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_adres=?, gebr_gebDat=? WHERE gebr_naam=?", lijstParams);
+
                                         if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
                                         {
-                                            gebruiker.setPaswoord(paswoord);
+                                            Date geboortedatum = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(request.getParameter("dtGeboorteDatum"));
+
+                                            gebruiker.setAdres(adres);
+                                            gebruiker.setGeboorteDatum(geboortedatum);
                                         }
                                     }
-                                    else
-                                    {%>
-                                        <h3>Verkeerd paswoord</h3>
-                                        U heeft uw huidig paswoord verkeerd ingegeven. Gelieve deze na te kijken...<br />
-                                    <%}
+                                    else if(request.getParameter("passNieuwPaswoord") != null) //Controle om te kijken welke form gebruikt is
+                                    {
+                                        String paswoord = request.getParameter("passNieuwPaswoord");
+
+                                        lijstParams.add(request.getParameter("passNieuwPaswoord"));
+                                        lijstParams.add(request.getParameter("txtGebruikersnaam"));
+
+                                        if(gebruiker.getPaswoord().equals(request.getParameter("passHuidigPaswoord")))
+                                        {
+                                            aantalUpdate = connectie.veranderQuery("UPDATE geregistreerdegebruikers SET gebr_wachtwoord=PASSWORD(?) WHERE gebr_naam=?", lijstParams);
+
+                                            if (aantalUpdate > 0) //Bean gegevensGebruiker updaten
+                                            {
+                                                gebruiker.setPaswoord(paswoord);
+                                            }
+                                        }
+                                        else
+                                        {%>
+                                            <h3>Verkeerd paswoord</h3>
+                                            U heeft uw huidig paswoord verkeerd ingegeven. Gelieve deze na te kijken...<br />
+                                        <%}
+                                    }
+                                    if(aantalUpdate > 0)
+                                    {
+                            %>   
+                                        <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
+                            <%      }
+                                    else {%>
+                                        <h3>Er is iets mis gegaan. Probeer later uw profiel aan te passen</h3>
+                            <%      }
                                 }
-                                if(aantalUpdate > 0)
+                                catch(Exception e){}
+                                finally
                                 {
-                        %>   
-                                    <h3>Uw profielgegevens zijn met succes gewijzigd</h3>
-                        <%      }
-                                else {%>
-                                    <h3>Er is iets mis gegaan. Probeer later uw profiel aan te passen</h3>
-                        <%      }%>
+                                    connectie.sluitConnectie();
+                                }%>
                         klik <a href="administrator.jsp">hier</a> om terug naar de adminstratorpagina te gaan... 
                         </div>
                     </div>

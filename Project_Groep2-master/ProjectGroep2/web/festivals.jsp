@@ -64,12 +64,12 @@
                 <section id="inhoud">
                     <div id="elementen_centreren">
                         <%
-                            try
-                            {
+                            Connectie_Databank connectie = null;
+                            try {
+                                connectie = new Connectie_Databank();
+                                
                                 ArrayList<String> lijstLetters = new ArrayList<String>();
                                 ArrayList<String> lijstLocaties = new ArrayList<String>();
-
-                                Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
                                 List<String> lijstParams = new ArrayList<String>();
@@ -232,9 +232,12 @@
                                             Klik <a href="festivals.jsp">hier</a> om terug te keren...
                                       </div>
                                       <%}
-                                connectie.sluitConnectie(); //Connectie met de databank sluiten
                             } catch (Exception e) {
                                 out.println(e.getMessage());
+                            }
+                            finally
+                            {
+                                connectie.sluitConnectie();
                             }%>
                         </div>
                     </div>

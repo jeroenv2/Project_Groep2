@@ -33,11 +33,10 @@
                 <section id="inhoud">
                     <div class="tekst_centreren">
                          <%
-                             try
-                             {
+                             Connectie_Databank connectie = null;
+                             try {
+                                connectie = new Connectie_Databank();
                                 String aanmakenGebruikersnaam = request.getParameter("txtAanmakenGebruikersnaam");
-
-                                Connectie_Databank connectie = new Connectie_Databank();
 
                                 connectie.maakConnectie();
                                 List<String> lijstParamsControle = new ArrayList<String>();
@@ -96,6 +95,10 @@
                          catch(Exception e)
                          {
                             out.println(e.getMessage());
+                         }
+                         finally
+                         {
+                            connectie.sluitConnectie();
                          }%>
                     </div>
                 </section>
