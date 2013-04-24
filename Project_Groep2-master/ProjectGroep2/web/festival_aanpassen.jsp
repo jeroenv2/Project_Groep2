@@ -101,7 +101,7 @@
                                 <tbody style='padding: 10px;'>
 
                                     <tr>
-                                        <td class="inhoud_tabel_breedte_300px"><b> <%= naam%> </b></td>
+                                        <td class="inhoud_tabel_breedte_300px inhoud_tabel_spatie_links_boven"><b> <%= naam%> </b></td>
 
                                         <td style='padding-left: 10px; padding-top: 10px;'>Begindatum: <%=beginDatum%> </td>
                                         <td><input type="hidden" name="naam" value="<%=naam%>"></td>

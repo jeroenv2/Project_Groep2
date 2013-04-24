@@ -90,24 +90,19 @@
                                     styleTable = "";
                                 }
                         %>                  <a id="<%= strID%>"></a>
-                        <table id="tabel_breedte_600px_omrand" style='<%= styleTable%>'>
+                        <table id="tabel_breedte_600px_omrand" style='<%= styleTable%>;'>
                             <tbody  style='padding: 10px;'>
 
                                 <tr>
                                     <td rowspan="4" style="width: 120px; padding: 5px;">
                                         <img id="opmaak_afbeelding" src="img/bands/<%= strFoto %>.jpg" alt="Afbeelding Band" />
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+       
                                 </tr>
                                 <tr>
-                                    <td style='padding-left: 10px; padding-top: 10px;'><b><%= strNaam%></b></td>
+                                    <td style='padding-left: 10px; padding-top: 10px; border-top: 1px solid white;'><b><%= strNaam%></b></td>
                             
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            
+                                    <td style="border-top: 1px solid white;"></td>
                             </tr>
                             <tr>
                                 <td style='padding-left: 10px; padding-top: 10px;'>Genre: <%=strGenre%></td>
@@ -120,8 +115,7 @@
 
 
                                 </td>
-                                <td></td>
-                                <td></td>
+             
                             </tr>
                             <tr>
                                 <%
@@ -162,14 +156,9 @@
                                         <input type="submit" value="<%=knop%>" />
                                     </form>
                                 </td>
-                                <td></td>
+                        
                             </tr>
-                            <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            </tr>
+ 
                             
                             </tbody>
                         </table><br />
@@ -181,11 +170,8 @@
                                     <td>
 
                                     </td>
-                                    <td>
-
-                                    </td>
                                     <td style='padding-right: 10px; padding-bottom: 6px;'>
-                                                                                <form action="verwijderen_resultaat.jsp" method="POST">
+                                             <form action="verwijderen_resultaat.jsp" method="POST">
                                         <%
 
                                         for (String element : groepen) {%>
@@ -198,20 +184,14 @@
                                             }
                                         %>
                                         
-                                        
                                         <input type="submit" value="Verwijderen" style="<%= status%>"/> </td>
                                     </form>
                                 <td style='padding-right: 10px; padding-bottom: 6px;'>
                                 <form action="groepen_aanpassen.jsp" method="POST">
                                     <input id="annuleren_hidden" name="annuleren" type="hidden" value="false"/>
-
-                                    
                                         <input name="annuleren" type="submit" value="Annuleren" style="<%= status%>"/>
                                 </form>
                                 </td>
-                                
-                                <td></td>
-
                                 </tr>
                             </table>
 
@@ -226,7 +206,7 @@
                                 }
                             } else {
                             %>
-                                U bent niet ingelogd
+                            <h3>Helaas! U bent niet ingelogd</h3>
 
                             <%}%>
                     </div>
