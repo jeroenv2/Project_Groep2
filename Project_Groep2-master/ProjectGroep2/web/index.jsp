@@ -66,7 +66,6 @@
 
                             if(lengteRsInhoudIpLogging == 0) //IP is nog niet gelogd in 30 minuten
                             {
-                                out.println("IP Gelogd");
                                 //Wegschrijven van IP Logging                        
                                 Connectie_Databank connectie_ipLogging = new Connectie_Databank();
 
